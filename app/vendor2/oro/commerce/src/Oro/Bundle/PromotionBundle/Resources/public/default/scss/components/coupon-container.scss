@@ -1,0 +1,34 @@
+/* @theme: default; */
+
+.coupon-container {
+    width: $coupon-container-width;
+    float: $coupon-container-float;
+    clear: $coupon-container-clear;
+    padding: $coupon-container-padding;
+
+    &__content {
+        padding: $coupon-container-content-inner-offset;
+    }
+
+    &__input-wrap {
+        padding: $coupon-container-input-wrap-inner-offset;
+        width: $coupon-container-input-wrap-width;
+    }
+
+    &__errors {
+        &:empty {
+            display: none;
+        }
+    }
+}
+
+@include breakpoint('mobile') {
+    .coupon-container {
+        width: $coupon-container-mobile-width;
+        float: $coupon-container-mobile-float;
+
+        &__input-wrap {
+            width: $coupon-container-input-wrap-mobile-width;
+        }
+    }
+}

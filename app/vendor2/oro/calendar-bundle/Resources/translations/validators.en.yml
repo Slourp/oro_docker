@@ -1,0 +1,31 @@
+"This date can't be earlier than {{ field }} date.": "This date can't be earlier than {{ field }} date."
+"This value should be {{ limit }} or more.": "This value should be {{ limit }} or more."
+"This value should be {{ limit }} or less.": "This value should be {{ limit }} or less."
+"This value should not be blank.": "This value should not be blank."
+"This value should be a multiple of {{ multiple_of_value }}.": "This value should be a multiple of {{ multiple_of_value }}."
+"This value should be one of the values: {{ allowed_values }}.": "This value should be one of the values: {{ allowed_values }}."
+"One or more of the given values is not one of the values: {{ allowed_values }}.": "One or more of the given values is not one of the values: {{ allowed_values }}."
+"Parameter 'recurringEventId' can't have the same value as calendar event ID.": "Parameter 'recurringEventId' can't have the same value as calendar event ID."
+"Parameter 'recurringEventId' can be set only for recurring calendar events.": "Parameter 'recurringEventId' can be set only for recurring calendar events."
+"Calendar of calendar event exception can not be changed.": "Calendar of calendar event exception can not be changed."
+"Unexpected error was occurred": "Unexpected error was occurred"
+
+oro:
+    calendar:
+        calendar_event:
+            start:
+                type:
+                    message: 'This value is not a valid date.'
+            end:
+                type:
+                    message: 'This value is not a valid date.'
+            reminder:
+                date_start_less_than_now:
+                    message: 'Reminder start date less than now.'
+        recurrence:
+            start_time:
+                type:
+                    message: 'This value is not a valid date.'
+            end_time:
+                type:
+                    message: 'This value is not a valid date.'

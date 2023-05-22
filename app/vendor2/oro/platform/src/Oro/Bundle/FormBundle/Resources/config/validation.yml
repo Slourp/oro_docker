@@ -1,0 +1,23 @@
+Oro\Bundle\FormBundle\Model\AutocompleteRequest:
+    properties:
+        name:
+            - NotBlank: ~
+            - Type:
+                type: string
+        query:
+            - Type:
+                type: string
+        page:
+            - NotBlank: ~
+            - Type:
+                type: integer
+            - GreaterThan:
+                value: 0
+                message: 'Parameter "page" must be greater than 0'
+        perPage:
+            - NotBlank: ~
+            - Type:
+                type: integer
+            - GreaterThan:
+                value: 0
+                message: 'Parameter "perPage" must be greater than 0'

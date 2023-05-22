@@ -1,0 +1,5 @@
+include:
+    - '@OroCustomerBundle:BuyerCustomerFixture.yml'
+    - '@OroProductBundle:default_webcatalog.yml'
+    - '@OroProductBundle:root_node.yml'
+    - '@OroProductBundle:system_variant.yml'

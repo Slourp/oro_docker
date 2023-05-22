@@ -1,0 +1,115 @@
+/* @theme: admin.oro; */
+
+@use 'sass:color';
+
+.calendar-container {
+    position: relative;
+}
+
+.calendar-sidebar {
+    padding: $content-padding;
+}
+
+.calendar-container .timeline-marker {
+    position: absolute;
+    left: 74px;
+    z-index: 500;
+
+    height: 2px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    background-color: $danger-darken;
+
+    pointer-events: none;
+}
+
+.calendars .control-label {
+    display: none;
+}
+
+.form-horizontal .control-group .controls .recurrent-event-notifier {
+    padding-top: 14px;
+}
+
+.calendar-event-attendees-widget {
+    word-break: break-word;
+}
+
+.event-action-target-select-form {
+    padding: 10px 16px;
+
+    &__item {
+        display: inline-grid;
+        grid-template-areas:
+            'side title'
+            'side desc';
+        grid-template-columns: auto 1fr;
+        gap: 0 8px;
+        margin-bottom: 10px;
+    }
+
+    &__item-side {
+        grid-area: side;
+    }
+
+    &__item-title {
+        color: $body-color;
+        font-weight: font-weight('bold');
+        font-size: 14px;
+        grid-area: title;
+    }
+
+    &__item-desc {
+        color: color.adjust($body-color, $lightness: 25%);
+        font-size: 12px;
+        grid-area: desc;
+    }
+}
+
+.reminder-status {
+    margin-top: 4px;
+    margin-right: 4px;
+
+    float: right;
+}
+
+.invitation-response .control-group {
+    border-top: 1px solid $primary-860;
+}
+
+.calendar-event-organizer {
+    display: flex;
+    align-items: center;
+
+    img {
+        margin-right: 5px;
+    }
+}
+
+.invitation-status {
+    display: inline-block;
+
+    font-size: $base-font-size--s;
+    margin-right: 3px;
+}
+
+.invitation-status-declined {
+    text-decoration: line-through;
+}
+
+.day-of-week {
+    display: block;
+    font-size: $base-font-size--sm;
+    text-align: center;
+}
+
+.day-of-month {
+    display: block;
+    font-size: $base-font-size--xl;
+    line-height: 1;
+    text-align: center;
+    color: $primary-100;
+}

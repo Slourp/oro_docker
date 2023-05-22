@@ -1,0 +1,162 @@
+/* @theme: default; */
+
+@mixin base-input() {
+    margin: 0;
+
+    @include base-ui-element(
+        $use-base-style-for-input,
+        $input-padding,
+        $input-font-size,
+        $input-font-family,
+        $input-line-height,
+        $input-border,
+        $input-border-radius,
+        $input-background-color,
+        $input-color
+    );
+
+    @include placeholder {
+        color: $base-ui-element-placeholder-color;
+    }
+
+    &::-ms-clear {
+        display: none;
+    }
+
+    &[type='date'],
+    &[type='time'] {
+        display: flex;
+        align-items: center;
+    }
+
+    &[type='date'] {
+        min-height: $input-date-height;
+
+        &::-webkit-inner-spin-button {
+            display: none;
+        }
+
+        &::-webkit-calendar-picker-indicator {
+            opacity: 0;
+        }
+
+        // Fix height and text-align Shadow DOM elements
+        &::-webkit-date-and-time-value,
+        &::-webkit-datetime-edit {
+            line-height: 1;
+            text-align: left;
+        }
+    }
+
+    &[type='time'] {
+        // Fix height and text-align Shadow DOM elements
+        &::-webkit-date-and-time-value,
+        &::-webkit-datetime-edit {
+            line-height: 1;
+            text-align: left;
+        }
+    }
+
+    &[type='search'] {
+        &::-webkit-search-decoration,
+        &::-webkit-search-cancel-button,
+        &::-webkit-search-results-button,
+        &::-webkit-search-results-decoration {
+            display: none;
+        }
+    }
+
+    &[type='number'] {
+        appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            margin: 0;
+
+            @include appearance();
+        }
+    }
+
+    @include element-state('hover') {
+        border-color: $input-border-color-hover-state;
+    }
+
+    @include element-state('focus') {
+        border-color: $input-border-color-focus-state;
+        box-shadow: $input-box-shadow-focus-state;
+    }
+
+    &.focus-visible:focus {
+        border-color: $input-border-color-focus-state;
+    }
+
+    @include element-state('error') {
+        border-color: $input-border-color-error-state;
+        box-shadow: $input-box-shadow-error-state;
+    }
+
+    @include element-state('disabled') {
+        background: $input-border-color-disabled-background;
+        box-shadow: none;
+        border: $input-border;
+
+        @include base-disabled-style();
+
+        @include element-state('hover') {
+            border-color: $input-border-color-disabled-hover-border-color;
+        }
+    }
+}
+
+.input {
+    @include base-input;
+
+    &--empty {
+        &[type='date'],
+        &[type='time'] {
+            &::-webkit-date-and-time-value,
+            &::-webkit-datetime-edit {
+                display: none;
+            }
+
+            &::before {
+                content: attr(placeholder);
+                color: $input-time-placeholder-color;
+                text-align: left;
+                flex: 1 1 0%;
+            }
+        }
+    }
+
+    &--short {
+        width: $input-width-short;
+    }
+
+    &--size-m {
+        height: $base-ui-element-height-size-m;
+        padding: $input-padding--m;
+    }
+
+    &--size-s {
+        padding: $input-padding--s;
+
+        &[type='date'],
+        &[type='time'] {
+            min-height: $input-date-size-s-height;
+
+            &::-webkit-calendar-picker-indicator {
+                height: 1em;
+                padding: 0;
+            }
+        }
+    }
+
+    &--size-x-s {
+        padding: $input-padding--x-s;
+    }
+
+    &--has-datepicker {
+        max-width: 140px;
+        padding-left: 39px;
+    }
+}

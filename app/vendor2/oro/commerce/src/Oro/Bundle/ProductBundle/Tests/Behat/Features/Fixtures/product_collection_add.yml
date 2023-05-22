@@ -1,0 +1,4 @@
+include:
+    - '@OroProductBundle:product_collections_web_catalog.yml'
+    - '@OroProductBundle:ConfigurableAttributeFamily.yml'
+    - '@OroProductBundle:products_for_product_collection.yml'

@@ -1,0 +1,12 @@
+{% extends '@OroUI/actions/index.html.twig' %}
+{% import '@OroUI/macros.html.twig' as UI %}
+{% set gridName = 'inventory-grid' %}
+{% set pageTitle = 'oro.inventory.inventorylevel.entity_plural_label'|trans %}
+
+{% block navButtons %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    {% include '@OroImportExport/ImportExport/buttons_from_configuration.html.twig' with {
+        'alias': 'oro_inventory_level'
+    } %}
+{% endblock %}

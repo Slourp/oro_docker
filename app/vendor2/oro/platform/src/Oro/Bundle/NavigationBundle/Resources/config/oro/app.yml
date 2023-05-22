@@ -1,0 +1,10 @@
+framework:
+    assets:
+        packages:
+            routing: ~
+
+knp_gaufrette:
+    filesystems:
+        public_js:
+            adapter: public
+            alias: public_js_filesystem

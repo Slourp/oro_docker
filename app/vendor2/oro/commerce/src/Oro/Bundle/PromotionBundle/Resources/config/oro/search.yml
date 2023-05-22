@@ -1,0 +1,30 @@
+search:
+    Oro\Bundle\PromotionBundle\Entity\Promotion:
+        alias:                          oro_promotion
+        route:
+            name:                       oro_promotion_view
+            parameters:
+                id:                     id
+        search_template:                '@OroPromotion/Promotion/searchResult.html.twig'
+        fields:
+            -
+                name:                   rule
+                relation_type:          many-to-one
+                relation_fields:
+                    -
+                        name: name
+                        target_type: text
+                        target_fields: [ruleName]
+
+    Oro\Bundle\PromotionBundle\Entity\Coupon:
+        alias:                          oro_coupon
+        route:
+            name:                       oro_promotion_coupon_view
+            parameters:
+                id:                     id
+        search_template:                '@OroPromotion/Coupon/searchResult.html.twig'
+        fields:
+            -
+                name:                   code
+                target_type:            text
+                target_fields:          [code]

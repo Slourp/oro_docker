@@ -1,0 +1,13 @@
+placeholders:
+    items:
+        oro_product_visibility_button:
+            template: '@@OroVisibility/ProductVisibility/button.html.twig'
+            applicable:
+                - '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\ProductBundle\Entity\Product)'
+                - '@oro_frontend.placeholder.filter->isBackendRoute()'
+
+        oro_product_visibility_link:
+            template: '@@OroVisibility/ProductVisibility/link.html.twig'
+            applicable:
+                - '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\ProductBundle\Entity\Product)'
+                - '@oro_frontend.placeholder.filter->isBackendRoute()'

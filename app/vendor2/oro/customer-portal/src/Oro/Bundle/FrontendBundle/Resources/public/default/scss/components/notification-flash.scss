@@ -1,0 +1,116 @@
+/* @theme: default; */
+@use 'sass:selector';
+
+// More about placeholders https://github.com/sass/sass/issues/2808#issuecomment-574413393
+%base-notification-flash,
+.notification-flash {
+    margin: 0;
+    padding: $notification-flash-inner-offset;
+
+    display: flex;
+    align-items: center;
+
+    border: $notification-flash-border;
+
+    border-radius: $notification-flash-border-radius;
+
+    &:not(:first-child) {
+        margin: $notification-flash-offset;
+    }
+
+    @at-root #{selector.append(&, '__badge')} {
+        position: relative;
+        width: $notification-flash-badge-size;
+        height: $notification-flash-badge-size;
+        flex: 0 0 auto;
+        align-self: flex-start;
+        background: $notification-flash-badge-background;
+        color: $notification-flash-badge-color;
+        border-radius: $notification-flash-badge-radius;
+
+        [class^='fa-'] {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    @at-root #{selector.append(&, '__close')} {
+        margin: $notification-flash-close-offset;
+        padding: $notification-flash-close-inner-offset;
+        flex: 0 0 auto;
+        align-self: flex-start;
+        background: $notification-flash-close-background;
+        border: $notification-flash-close-border;
+        color: $notification-flash-close-color;
+
+        cursor: $btn-plain-cursor;
+
+        [class^='fa-'] {
+            display: block;
+            font-size: $notification-flash-close-icon-size;
+        }
+    }
+
+    @at-root #{selector.append(&, '__text')} {
+        padding: $notification-flash-text-offset;
+        flex: 1 1 auto;
+
+        @at-root #{selector.append(&, '__center')} {
+            text-align: center;
+        }
+    }
+}
+
+.notification {
+    &-flash--success,
+    &-flash--info,
+    &-flash--notice {
+        @extend %base-notification-flash;
+
+        background: $notification-flash-success-background;
+        color: $notification-flash-success-color;
+
+        .notification-flash__close {
+            color: $notification-flash-success-color;
+        }
+
+        .notification-flash__badge {
+            background: $notification-flash-success-badge-background;
+        }
+    }
+
+    &-flash--warning,
+    &-flash--warn,
+    &-flash--process,
+    &-flash--alert {
+        @extend %base-notification-flash;
+
+        background: $notification-flash-warning-background;
+        color: $notification-flash-warning-color;
+
+        .notification-flash__close {
+            color: $notification-flash-warning-close-color;
+        }
+
+        .notification-flash__badge {
+            background: $notification-flash-warning-badge-background;
+        }
+    }
+
+    &-flash--error {
+        @extend %base-notification-flash;
+
+        background: $notification-flash-error-background;
+        color: $notification-flash-error-color;
+
+        .notification-flash__close {
+            color: $notification-flash-error-close-color;
+        }
+
+        .notification-flash__badge {
+            background: $notification-flash-error-badge-background;
+        }
+    }
+}

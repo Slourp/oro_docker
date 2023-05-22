@@ -1,0 +1,18 @@
+/* @theme: default; */
+
+.catalog-switcher {
+    &__tooltip-trigger {
+        position: absolute;
+        inset: 0;
+    }
+
+    .dropdown-toggle {
+        position: relative;
+    }
+
+    .dropdown-menu[x-placement] {
+        .dropdown-item {
+            white-space: $catalog-switcher-dropdown-item-white-space;
+        }
+    }
+}

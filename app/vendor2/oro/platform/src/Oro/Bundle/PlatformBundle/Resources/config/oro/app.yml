@@ -1,0 +1,56 @@
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                url:            '%database_dsn%'
+                server_version: '%database_server_version%'
+            session:
+                url:            '%database_dsn%'
+                server_version: '%database_server_version%'
+            config:
+                url:            '%database_dsn%'
+                server_version: '%database_server_version%'
+    orm:
+        default_entity_manager:      default
+        auto_generate_proxy_classes: '%kernel.debug%'
+        resolve_target_entities:
+            Symfony\Component\Security\Core\User\UserInterface: Oro\Bundle\UserBundle\Entity\User
+        entity_managers:
+            default:
+                connection:   default
+                auto_mapping: true
+                class_metadata_factory_name: Oro\Bundle\EntityExtendBundle\Mapping\ExtendClassMetadataFactory
+                mappings:
+                    OroDistributionBundle:
+                        mapping:   false
+                        is_bundle: true
+                metadata_cache_driver:
+                    type: service
+                    id:   doctrine.metadata.cache
+                query_cache_driver:
+                    type: service
+                    id:   doctrine.query.cache
+            config:
+                connection: config
+                mappings: ~
+                metadata_cache_driver:
+                    type: service
+                    id:   doctrine.metadata.cache.config
+                query_cache_driver:
+                    type: service
+                    id:   doctrine.query.cache.config
+
+fos_rest:
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+    view:
+        failed_validation: HTTP_BAD_REQUEST
+        formats:
+            json: true
+            xml: false
+    format_listener:
+        rules:
+            - { path: '^/api/rest', priorities: [ json ], fallback_format: json, prefer_extension: false }
+            - { path: '^/', stop: true }

@@ -1,0 +1,2 @@
+bundles:
+    - '@OroFedexShipping/Form/fields.html.twig'

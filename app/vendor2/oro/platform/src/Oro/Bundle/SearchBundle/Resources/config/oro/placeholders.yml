@@ -1,0 +1,11 @@
+placeholders:
+    placeholders:
+        navbar:
+            items:
+                search:
+                    order: 200
+
+    items:
+       search:
+            action: Oro\Bundle\SearchBundle\Controller\SearchController::searchBarAction
+            applicable: "@oro_user.placeholder.filter->isUserApplicable()"

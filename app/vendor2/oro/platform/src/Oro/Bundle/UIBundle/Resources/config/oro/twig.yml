@@ -1,0 +1,2 @@
+bundles:
+    - '@OroUI/Form/fields.html.twig'

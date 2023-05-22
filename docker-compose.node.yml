@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+    node:
+      container_name: ${PROJECT_NODE}_NODE
+      hostname: ${PROJECT_NODE}_NODE
+      build:
+        context: .
+        dockerfile: ./docker/node/Dockerfile
+        target: ${NODE_ENV}
+        args:
+          - NODE_ENV=${NODE_ENV}
+      environment:
+        - NODE_ENV=${NODE_ENV}
+        - SERVER_PORT=${SERVER_PORT}
+
+      volumes:
+        - .:/node/app:delegated
+        - /node/app/node_modules
+      env_file:
+        - .env-app
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.${PROJECT_NODE}_NODE.loadbalancer.server.port=${SERVER_PORT}"
+        - "traefik.http.routers.${PROJECT_NODE}_NODE.rule=Host(`${DOMAIN}.traefik.me`)"
+        - "traefik.http.routers.${PROJECT_NODE}_NODE-tls.tls.domains[0].main=${DOMAIN}.traefik.me"
+        - "traefik.http.routers.${PROJECT_NODE}_NODE-tls.tls.domains[0].sans=${DOMAIN}-*.traefik.me"
+        - "traefik.http.routers.${PROJECT_NODE}_NODE.tls=true"
+
+      networks:
+        - default
+        - project-network
+
+networks:
+    default:
+        name: ${NETWORK_NAME}
+    project-network:
+        name: ${PROJECT_NAME}-NETWORK
+        internal: true
+
+volumes:
+    mysql_data:
+        name: ${PROJECT_NAME}_mysql_data

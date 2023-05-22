@@ -1,0 +1,72 @@
+Oro\Bundle\CampaignBundle\Entity\Campaign:
+    constraints:
+        - Oro\Bundle\CampaignBundle\Validator\Constraints\CampaignCode: ~
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 100
+        code:
+            - NotBlank: ~
+            - Regex:
+                pattern: '/^[a-zA-Z0-9_\-]*$/'
+                message: "This value should contain only alphabetic symbols, underscore, hyphen and numbers."
+            - Length:
+                max: 20
+        startDate:
+            - Type:
+                type: DateTimeInterface
+                message: oro.campaign.campaign.start_date.type.message
+                payload:
+                    jsValidation:
+                        type: Date
+            - Oro\Bundle\PlatformBundle\Validator\Constraints\DateEarlierThan:
+                field: endDate
+                message: This date should be earlier than End date
+                groups: [Campaign]
+        endDate:
+            - Type:
+                type: DateTimeInterface
+                message: oro.campaign.campaign.end_date.type.message
+                payload:
+                    jsValidation:
+                        type: Date
+        budget:
+            - Range:
+                min: 0
+        reportPeriod:
+            - NotBlank: ~
+
+Oro\Bundle\CampaignBundle\Entity\EmailCampaign:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 100
+        senderEmail:
+            - Email: ~
+            - Length:
+                max: 100
+        senderName:
+            - Length:
+                max: 100
+        scheduledFor:
+            - Type:
+                  type: DateTimeInterface
+                  message: oro.campaign.email_campaign.scheduled_for.type.message
+                  payload:
+                      jsValidation:
+                          type: DateTime
+        marketingList:
+            - NotBlank: ~
+        owner:
+            - NotBlank: ~
+        transport:
+            - NotBlank: ~
+        organization:
+            - NotBlank: ~
+
+Oro\Bundle\CampaignBundle\Entity\InternalTransportSettings:
+    properties:
+        template:
+            - NotBlank: ~

@@ -1,0 +1,13 @@
+Oro\Bundle\TranslationBundle\Entity\Language:
+    language1:
+        code: 'en_CA'
+        enabled: false
+        organization: '@organization'
+    language2:
+        code: 'fr_FR'
+        enabled: true
+        organization: '@organization'
+    language3:
+        code: 'en_US'
+        enabled: true
+        organization: '@organization'

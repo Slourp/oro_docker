@@ -1,0 +1,4 @@
+dashboards:
+    dashboards:
+        e_commerce:
+            twig: '@OroDashboard/Index/default.html.twig'

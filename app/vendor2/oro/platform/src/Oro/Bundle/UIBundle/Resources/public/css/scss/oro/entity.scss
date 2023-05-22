@@ -1,0 +1,54 @@
+/* @theme: admin.oro; */
+
+.entity-create-or-select-container {
+    &.entity-create-multi-enabled {
+        .dropdown-menu {
+            li button {
+                padding: 2px 12px;
+                display: block;
+                clear: both;
+                font-weight: font-weight('light');
+                text-align: left;
+                white-space: nowrap;
+                background-color: transparent;
+                border: none;
+                margin: 0;
+                min-width: 100%;
+                appearance: none;
+            }
+        }
+    }
+
+    .btn-group.entity-create-dropdown {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: $content-padding-small * .5;
+        border-radius: 0 4px 4px 0;
+
+        > .btn {
+            font-size: 14px;
+        }
+    }
+}
+
+.entity-field-path {
+    > * {
+        &::before {
+            content: '/';
+            display: inline;
+            padding: 0 3px;
+        }
+
+        &:first-child {
+            &::before {
+                display: none;
+            }
+        }
+
+        &:last-child {
+            @include fa-icon(var(--fa-var-angle-right), before, true, true) {
+                font-weight: font-weight('light');
+            }
+        }
+    }
+}

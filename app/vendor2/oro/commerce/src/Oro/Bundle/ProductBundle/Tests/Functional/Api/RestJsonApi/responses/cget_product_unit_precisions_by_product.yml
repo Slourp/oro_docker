@@ -1,0 +1,65 @@
+data:
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision->id)>'
+        attributes:
+            precision: 0
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision1->id)>'
+        attributes:
+            precision: 1
+            conversionRate: 10
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@set->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision2->id)>'
+        attributes:
+            precision: 0
+            conversionRate: null
+            sell: false
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@piece->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision3->id)>'
+        attributes:
+            precision: 0
+            conversionRate: null
+            sell: false
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@kg->code)>'

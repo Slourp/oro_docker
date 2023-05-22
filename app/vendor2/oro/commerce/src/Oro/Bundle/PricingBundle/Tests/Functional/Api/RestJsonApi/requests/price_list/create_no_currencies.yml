@@ -1,0 +1,7 @@
+data:
+    type: 'pricelists'
+    attributes:
+        active: true
+        actual: true
+        productAssignmentRule: 'product.category.id == 1'
+        name: 'New'

@@ -1,0 +1,2 @@
+bundles:
+    - '@OroQueryDesigner/Form/fields.html.twig'

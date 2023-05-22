@@ -1,0 +1,14 @@
+/* @theme: default; */
+
+@use 'sass:math';
+
+$collapse-overflow-max-height: math.round($base-font-size * $base-line-height) * 3 !default;
+$collapse-overflow-increased-max-height: math.round($base-font-size * $base-line-height) * 8 !default;
+
+$collapse-overflow-blur-height: math.round($base-font-size * $base-line-height) !default;
+$collapse-overflow-increased-blur-height: math.round($base-font-size * $base-line-height) * 3 !default;
+$collapse-overflow-blur-bg: linear-gradient(
+    to top,
+    get-color('additional', 'ultra'),
+    get-color('additional', 'ultra', 10%)
+) !default;

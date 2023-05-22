@@ -1,0 +1,6 @@
+services:
+    oro_email.mailer.checker.smtp_settings.stub:
+        decorates: oro_email.mailer.checker.smtp_settings
+        class: Oro\Bundle\EmailBundle\Tests\Behat\Mock\Mailer\SmtpSettingsCheckerStub
+        arguments:
+            - '@.inner'

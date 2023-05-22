@@ -1,0 +1,57 @@
+oro_behat_extension:
+  suites:
+    OroCallBundle:
+      contexts:
+        - Oro\Bundle\DataGridBundle\Tests\Behat\Context\GridContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FormContext
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\FixturesContext
+        - Oro\Bundle\SecurityBundle\Tests\Behat\Context\ACLContext
+        - Oro\Bundle\SearchBundle\Tests\Behat\Context\SearchContext
+        - Oro\Bundle\DashboardBundle\Tests\Behat\Context\FeatureContext
+      paths:
+        - '@OroCallBundle/Tests/Behat/Features'
+
+  elements:
+    Call log accordion:
+      selector:
+        locator: '//div[@class="accordion-heading"]'
+        type: xpath
+
+    Log Call Form:
+      selector: 'form[name="oro_call_form"]'
+      class: Oro\Bundle\TestFrameworkBundle\Behat\Element\Form
+      options:
+        mapping:
+          Call date & time: 'oro_call_form[callDateTime]'
+
+    Recent Calls:
+        selector:
+            type: 'xpath'
+            locator: '//div[@title="Recent calls"]/../..'
+
+    Recent Calls Actions:
+        selector:
+            type: 'xpath'
+            locator: '//div[@title="Recent calls"]/..//div[@class="default-actions-container"]//button[contains(@id,"dashboard-action")]'
+
+    Recent Calls Grid:
+        class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
+        selector: 'div[data-page-component-name="dashboard-recent-calls-grid"]'
+
+  pages:
+    Call Create:
+      class: Oro\Bundle\CallBundle\Tests\Behat\Page\CallCreate
+      route: 'oro_call_create'
+
+    Call Edit:
+      class: Oro\Bundle\CallBundle\Tests\Behat\Page\CallEdit
+      route: 'oro_call_update'
+
+    Call View:
+      class: Oro\Bundle\CallBundle\Tests\Behat\Page\CallView
+      route: 'oro_call_view'
+
+    Call Index:
+      class: Oro\Bundle\CallBundle\Tests\Behat\Page\CallIndex
+      route: 'oro_call_index'

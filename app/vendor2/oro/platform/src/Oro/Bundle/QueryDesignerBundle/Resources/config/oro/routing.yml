@@ -1,0 +1,14 @@
+#
+# OLD REST API ROUTES
+#
+
+oro_api_querydesigner_fields_entity:
+    path: '/api/rest/{version}/querydesigner/entities/fields.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\QueryDesignerBundle\Controller\Api\Rest\QueryDesignerEntityController::fieldsAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1

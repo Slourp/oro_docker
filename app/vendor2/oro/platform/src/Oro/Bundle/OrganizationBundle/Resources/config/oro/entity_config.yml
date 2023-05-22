@@ -1,0 +1,29 @@
+entity_config:
+    ownership:
+        # You can find out more about attributes in the documentation: https://doc.oroinc.com/backend/configuration/annotation/config/#ownership
+        entity:
+            items:
+                owner_type:
+                    options:
+                        create_only:        true
+                        priority:           100
+                        indexed:            true
+                    grid:
+                        type:               select
+                        label:              'Ownership Type'
+                        filter_type:        choice
+                        required:           true
+                        sortable:           true
+                        filterable:         true
+                        show_filter:        true
+                        choices:            "@oro_organization.form.type.ownership_type->getOwnershipsArray"
+                    form:
+                        type:               Oro\Bundle\OrganizationBundle\Form\Type\OwnershipType
+                        options:
+                            block:          other
+                            required:       true
+                            label:          'Ownership Type'
+    global_organization:
+        entity:
+            items:
+                is_global_aware:

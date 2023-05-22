@@ -1,0 +1,14 @@
+#
+# OLD REST API ROUTES
+#
+
+oro_api_post_reminder_shown:
+    path: '/api/rest/{version}/reminders/showns.{_format}'
+    methods: [POST]
+    defaults:
+        _controller: 'Oro\Bundle\ReminderBundle\Controller\Api\Rest\ReminderController::postShownAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1

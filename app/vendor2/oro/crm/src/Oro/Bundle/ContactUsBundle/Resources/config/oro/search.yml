@@ -1,0 +1,37 @@
+search:
+    Oro\Bundle\ContactUsBundle\Entity\ContactRequest:
+        alias:                          oro_contactus_request
+        route:
+            name:                       oro_contactus_request_view
+            parameters:
+                id:                     id
+        search_template:                '@OroContactUs/Search/result.html.twig'
+        fields:
+            -
+                name:                   contactReason
+                relation_type:          many-to-one
+                relation_fields:
+                    -
+                        name:           defaultTitle
+                        target_type:    text
+                        target_fields:  [contactReason]
+            -
+                name:                   firstName
+                target_type:            text
+                target_fields:          [firstName]
+            -
+                name:                   lastName
+                target_type:            text
+                target_fields:          [lastName]
+            -
+                name:                   emailAddress
+                target_type:            text
+                target_fields:          [emailAddress]
+            -
+                name:                   phone
+                target_type:            text
+                target_fields:          [phone]
+            -
+                name:                   comment
+                target_type:            text
+                target_fields:          [comment]

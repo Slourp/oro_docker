@@ -1,0 +1,7 @@
+services:
+    Oro\Bundle\CacheBundle\Command\InvalidateCacheScheduleCommand:
+        class: Oro\Bundle\CacheBundle\Command\InvalidateCacheScheduleCommand
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: console.command }

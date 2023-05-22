@@ -1,0 +1,13 @@
+search:
+    Oro\Bundle\PaymentTermBundle\Entity\PaymentTerm:
+        alias:                          oro_payment_term
+        route:
+            name:                       oro_payment_term_view
+            parameters:
+                id:                     id
+        search_template:                '@OroPaymentTerm/PaymentTerm/searchResult.html.twig'
+        fields:
+            -
+                name:                   label
+                target_type:            text
+                target_fields:          [label]

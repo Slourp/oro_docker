@@ -1,0 +1,28 @@
+services:
+    _defaults:
+        public: true
+
+    Oro\Bundle\CampaignBundle\Controller\EmailCampaignController:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    Oro\Bundle\CampaignBundle\Controller\Dashboard\DashboardController:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    Oro\Bundle\CampaignBundle\Controller\CampaignEventController:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    Oro\Bundle\CampaignBundle\Controller\CampaignController:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: oro_campaign.campaign.form }

@@ -1,0 +1,49 @@
+/* @theme: default; */
+
+.quick-order-import {
+    grid-area: import;
+
+    &__title {
+        margin: $quick-order-import-title-margin;
+
+        font-size: $base-font-size;
+        font-weight: font-weight('bold');
+        text-transform: uppercase;
+    }
+
+    &__container {
+        position: relative;
+        padding: $quick-order-import-container-padding;
+
+        text-align: center;
+
+        background: $quick-order-import-container-background;
+    }
+
+    &__link {
+        position: relative;
+        z-index: 2;
+
+        display: inline-block;
+        margin: $quick-order-import-link-margin;
+    }
+
+    &__content {
+        margin-bottom: $offset-y-m;
+    }
+
+    &__btn {
+        width: $quick-order-import-button-width;
+        max-width: 100%;
+    }
+
+    .filename {
+        display: none;
+    }
+}
+
+.quick_add_import_help {
+    ol {
+        padding-bottom: 40px;
+    }
+}

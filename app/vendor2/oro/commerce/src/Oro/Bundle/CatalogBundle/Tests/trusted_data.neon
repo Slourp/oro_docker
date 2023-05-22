@@ -1,0 +1,9 @@
+# Configuration for https://github.com/oroinc/phpstan-rules/
+trusted_data:
+    safe_methods:
+        Oro\Bundle\CatalogBundle\EventListener\ExportDatagridListener:
+            applyCategory: true
+            applyIncludeNotCategorizedProducts: true
+            getCategoryFilterField: true
+        Oro\Bundle\CatalogBundle\ImportExport\Datagrid\CategoryFilterInterface:
+            getFieldName: true

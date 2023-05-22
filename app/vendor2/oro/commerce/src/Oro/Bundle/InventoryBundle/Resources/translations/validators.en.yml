@@ -1,0 +1,12 @@
+oro:
+    inventory:
+        checkout:
+            validators:
+                ship_until: 'This order cannot be shipped in time, as it contains products that will not be available yet. Please adjust Do Not Ship Later Than date, or remove upcoming products'
+        product:
+            validators:
+                quantity_min_over_max: 'The maximum quantity to order must be higher or equal to the minimum quantity to order'
+        quick_add_row:
+            quantity_to_order:
+                max_message: 'You cannot order more than %limit% units of product "%sku%".'
+                min_message: 'You cannot order less than %limit% units of product "%sku%".'

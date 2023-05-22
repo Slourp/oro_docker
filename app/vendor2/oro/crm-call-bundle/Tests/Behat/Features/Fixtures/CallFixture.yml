@@ -1,0 +1,9 @@
+Oro\Bundle\CallBundle\Entity\Call:
+    call1:
+        subject: 'Test Call'
+        phoneNumber: '1'
+        notes: 'test'
+        organization: '@organization'
+        owner: '@admin'
+        callStatus: '@call_in_progress'
+        direction: '@call_incoming'

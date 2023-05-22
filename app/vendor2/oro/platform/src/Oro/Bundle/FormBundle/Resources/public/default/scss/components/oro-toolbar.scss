@@ -1,0 +1,116 @@
+/* @theme: default; */
+
+.oro-toolbar {
+    position: relative;
+
+    display: inline-block;
+    vertical-align: top;
+
+    &__icon {
+        display: inline-block;
+        vertical-align: top;
+
+        margin-left: $oro-toolbar-icon-offset;
+    }
+
+    &__content {
+        min-width: $oro-toolbar-content-min-width;
+
+        padding: $oro-toolbar-content-inner-offset;
+
+        line-height: $oro-toolbar-content-line-height;
+        font-family: $oro-toolbar-content-font-family;
+        text-align: $oro-toolbar-content-text-align;
+
+        cursor: pointer;
+    }
+
+    &__dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: auto;
+        margin: 0;
+        padding: $oro-toolbar-dropdown-inner-offset;
+        z-index: $oro-toolbar-dropdown-z-index;
+
+        display: none;
+        min-width: $oro-toolbar-toolbar-min-width;
+
+        font-size: $base-font-size;
+
+        background: $base-ui-popup-background;
+        border-radius: $base-ui-popup-border-radius;
+        box-shadow: $base-ui-popup-box-shadow;
+    }
+
+    &__list {
+        text-align: left;
+
+        white-space: nowrap;
+
+        @include list-normalize;
+
+        &-item {
+            margin-top: $oro-toolbar-list-item-offset;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    &__link {
+        display: block;
+        line-height: 2;
+
+        color: $oro-toolbar-link-color;
+
+        &:hover {
+            color: $oro-toolbar-link-hover-color;
+        }
+
+        &--active {
+            font-weight: font-weight('bold');
+        }
+    }
+
+    &__currency,
+    &__text {
+        display: inline-block;
+        vertical-align: baseline;
+    }
+
+    &__currency {
+        margin-right: $offset-y-m * .5;
+    }
+
+    // toolbar open
+    &.active,
+    &.show {
+        .oro-toolbar__content {
+            box-shadow: $oro-toolbar-open-content-box-shadow;
+        }
+
+        .oro-toolbar__dropdown {
+            display: block;
+        }
+    }
+
+    // toolbar in fullscreen popup
+    &.fullscreen-mode {
+        display: block;
+
+        .oro-toolbar__list-item {
+            margin-top: 0;
+        }
+
+        .oro-toolbar__link {
+            padding: 8px 16px;
+
+            text-transform: uppercase;
+
+            border-bottom: $oro-toolbar-fullscreen-link-border;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+parameters:
+    oro_fixed_product_shipping.integration.channel.type: 'fixed_product'
+    oro_fixed_product_shipping.integration.transport.type: 'fixed_product'
+
+services:
+    oro_fixed_product_shipping.integration.channel:
+        class: 'Oro\Bundle\FixedProductShippingBundle\Integration\FixedProductChannelType'
+        public: false
+        tags:
+            - { name: oro_integration.channel, type: '%oro_fixed_product_shipping.integration.channel.type%' }
+
+    oro_fixed_product_shipping.integration.transport:
+        class: 'Oro\Bundle\FixedProductShippingBundle\Integration\FixedProductTransport'
+        public: false
+        tags:
+            - { name: oro_integration.transport, type: '%oro_fixed_product_shipping.integration.transport.type%', channel_type: '%oro_fixed_product_shipping.integration.channel.type%' }
+
+    oro_fixed_product_shipping.method.provider:
+        class: 'Oro\Bundle\ShippingBundle\Method\Provider\Integration\ChannelShippingMethodProvider'
+        arguments:
+            - '%oro_fixed_product_shipping.integration.channel.type%'
+            - '@oro_fixed_product_shipping.factory.method'
+            - '@oro_shipping.method.loader'
+        tags:
+            - { name: oro_shipping_method_provider }
+
+    oro_fixed_product_shipping.method.identifier_generator.method:
+        parent: oro_integration.generator.prefixed_identifier_generator
+        public: true
+        arguments:
+            - '%oro_fixed_product_shipping.integration.channel.type%'
+
+    oro_fixed_product_shipping.acl.access_rule.price_attribute_price_list_access_rule:
+        class: 'Oro\Bundle\FixedProductShippingBundle\Acl\AccessRule\PriceAttributePriceListAccessRule'
+        tags:
+            - { name: oro_security.access_rule, entityClass: Oro\Bundle\PricingBundle\Entity\PriceAttributePriceList }
+
+    oro_fixed_product_shipping.shipping_cost.provider:
+        class: 'Oro\Bundle\FixedProductShippingBundle\Provider\ShippingCostProvider'
+        arguments:
+            - '@oro_pricing.providers.price_attribute_prices'
+            - '@doctrine'
+
+    oro_fixed_product_shipping.handler.shipping_cost_attribute_delete_handler:
+        class: Oro\Bundle\FixedProductShippingBundle\Handler\ShippingCostAttributeDeleteHandler
+        public: true
+        arguments:
+            - '@doctrine'
+            - '@oro_shipping.method.integration_channel_loader'

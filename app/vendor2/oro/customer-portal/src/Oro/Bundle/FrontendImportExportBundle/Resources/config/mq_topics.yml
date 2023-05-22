@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    tags:
+      - { name: oro_message_queue.topic }
+
+  Oro\Bundle\FrontendImportExportBundle\Async\Topic\PreExportTopic:
+    arguments:
+      - '@security.token_storage'
+  Oro\Bundle\FrontendImportExportBundle\Async\Topic\ExportTopic:
+    arguments:
+      - '@security.token_storage'
+  Oro\Bundle\FrontendImportExportBundle\Async\Topic\PostExportTopic: ~
+  Oro\Bundle\FrontendImportExportBundle\Async\Topic\SaveExportResultTopic: ~

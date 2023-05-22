@@ -1,0 +1,34 @@
+services:
+    oro_installer.script_manager:
+        class: Oro\Bundle\InstallerBundle\ScriptManager
+        arguments:
+            - '@kernel'
+
+    oro_installer.platform_update_checker:
+        class: Oro\Bundle\InstallerBundle\ChainPlatformUpdateChecker
+        arguments:
+            - !tagged_iterator oro.installer.platform_update_checker
+
+    oro_installer.requirements_provider:
+        class: Oro\Bundle\InstallerBundle\Provider\PlatformRequirementsProvider
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '%kernel.project_dir%'
+            - '@oro_attachment.processor_helper'
+        tags:
+            - { name: oro.requirements_provider }
+
+    oro_installer.requirements_provider.database.mysql:
+        class: Oro\Bundle\InstallerBundle\Provider\MysqlDatabaseRequirementsProvider
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: oro.requirements_provider }
+
+    kernel.listener.install.event:
+        class: Oro\Bundle\InstallerBundle\EventListener\RequestListener
+        arguments:
+            - '@oro_distribution.handler.application_status'
+            - '%kernel.debug%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 10 }

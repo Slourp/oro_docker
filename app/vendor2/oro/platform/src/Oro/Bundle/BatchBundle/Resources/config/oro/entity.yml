@@ -1,0 +1,6 @@
+oro_entity:
+    entity_alias_exclusions:
+        - Oro\Bundle\BatchBundle\Entity\JobExecution
+        - Oro\Bundle\BatchBundle\Entity\JobInstance
+        - Oro\Bundle\BatchBundle\Entity\StepExecution
+        - Oro\Bundle\BatchBundle\Entity\Warning

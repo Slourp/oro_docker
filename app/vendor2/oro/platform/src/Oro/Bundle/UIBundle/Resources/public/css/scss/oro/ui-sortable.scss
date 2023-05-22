@@ -1,0 +1,11 @@
+/* @theme: admin.oro; */
+
+.ui-sortable {
+    &-handle {
+        cursor: move;
+
+        &.disabled {
+            cursor: not-allowed;
+        }
+    }
+}

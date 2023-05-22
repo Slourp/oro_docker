@@ -1,0 +1,25 @@
+/* @theme: admin.oro; */
+
+table.acl-table {
+    /* stylelint-disable selector-max-compound-selectors */
+    tr table tr td {
+        vertical-align: middle;
+    }
+
+    tr table tr:first-child td {
+        border-top: 0;
+    }
+
+    tr.default-field table tr.default-field td {
+        background-color: $primary-860;
+    }
+    /* stylelint-enable selector-max-compound-selectors */
+
+    .access_level_value {
+        min-height: 30px;
+    }
+
+    .select2-container {
+        width: 120px;
+    }
+}

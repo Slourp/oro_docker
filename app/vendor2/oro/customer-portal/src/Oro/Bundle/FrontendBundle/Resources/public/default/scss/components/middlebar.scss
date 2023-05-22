@@ -1,0 +1,29 @@
+/* @theme: default; */
+
+.middlebar {
+    --grid-gap: #{$middlebar-grid-gap};
+    --grid-template-columns: #{$middlebar-grid-template-columns};
+
+    align-items: $middlebar-align-items;
+    padding: $middlebar-padding;
+}
+
+@include breakpoint('tablet') {
+    .middlebar {
+        --grid-template-columns: #{$middlebar-tablet-grid-template-columns};
+
+        padding: $middlebar-tablet-padding;
+
+        &__left {
+            justify-self: $middlebar-left-tablet-justify-self;
+        }
+
+        &__right {
+            display: $middlebar-right-tablet-display;
+        }
+
+        &__center {
+            display: $middlebar-center-tablet-display;
+        }
+    }
+}

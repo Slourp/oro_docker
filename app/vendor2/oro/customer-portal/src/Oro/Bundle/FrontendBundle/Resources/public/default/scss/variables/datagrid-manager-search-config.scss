@@ -1,0 +1,5 @@
+/* @theme: default; */
+
+@use 'sass:color';
+
+$datagrid-manager-search-pseudo-color: color.scale(get-color('additional', 'middle'), $alpha: -27%) !default;

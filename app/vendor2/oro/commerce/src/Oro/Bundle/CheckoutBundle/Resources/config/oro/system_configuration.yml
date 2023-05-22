@@ -1,0 +1,218 @@
+system_configuration:
+    groups:
+        orders_history:
+            title: oro.order.system_configuration.groups.orders_history.title
+            icon: fa-book
+        orders_history_open_orders:
+            title: oro.checkout.system_configuration.groups.open_orders.title
+        checkout:
+            title: oro.checkout.system_configuration.groups.checkout.title
+            icon: fa-credit-card
+            page_reload: true
+        guest_checkout:
+            title: oro.checkout.system_configuration.groups.guest_checkout.title
+        guest_checkout_owner_section:
+            title: oro.checkout.system_configuration.groups.guest_checkout_owner.title
+        checkout_customer_users_registration:
+            title: oro.checkout.system_configuration.groups.customer_users_registration.title
+            icon: 'fa-user-plus'
+        allow_checkout_without_email_confirmation_section:
+            title: oro.checkout.system_configuration.groups.allow_checkout_without_email_confirmation.title
+            icon: 'fa-user-plus'
+        checkout_options:
+            title: oro.checkout.system_configuration.groups.checkout_options.title
+        multishipping_options:
+            title: oro.checkout.system_configuration.groups.multishipping_options.title
+            icon: 'fa-object-ungroup'
+        multishipping_general_options:
+            title: oro.checkout.system_configuration.groups.multishipping_general_options.title
+        multishipping_line_items_grouping_options:
+            title: oro.checkout.system_configuration.groups.multishipping_line_items_grouping_options.title
+        multishipping_order_history_options:
+            title: oro.checkout.system_configuration.groups.multishipping_order_history_options.title
+
+    fields:
+        oro_checkout.frontend_show_open_orders:
+            data_type: boolean
+            type: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+            priority: 15
+            options:
+                label: oro.checkout.system_configuration.fields.frontend_show_open_orders.title
+                choices:
+                     No: 0
+                     Yes: 1
+        oro_checkout.frontend_open_orders_separate_page:
+            data_type: boolean
+            type: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+            priority: 10
+            options:
+                label: oro.checkout.system_configuration.fields.frontend_open_orders_separate_page.title
+                choices:
+                     No: 0
+                     Yes: 1
+        oro_checkout.guest_checkout:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 10
+            options:
+                label: oro.checkout.system_configuration.fields.guest_checkout.title
+                tooltip: oro.checkout.system_configuration.fields.guest_checkout.tooltip
+        oro_checkout.registration_allowed:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 20
+            options:
+                label: oro.checkout.system_configuration.fields.registration_allowed.title
+                tooltip: oro.checkout.system_configuration.fields.registration_allowed.tooltip
+        oro_checkout.default_guest_checkout_owner:
+            ui_only: true
+            data_type: string
+            type: Oro\Bundle\UserBundle\Form\Type\UserSelectType
+            priority: 30
+            options:
+                label: oro.checkout.system_configuration.fields.default_guest_checkout_owner.title
+                tooltip: oro.checkout.system_configuration.fields.default_guest_checkout_owner.tooltip
+                required: true
+                constraints:
+                    - NotBlank: ~
+
+        oro_checkout.allow_checkout_without_email_confirmation:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 15
+            options:
+                label: oro.checkout.system_configuration.fields.allow_checkout_without_email_confirmation.title
+                tooltip: oro.checkout.system_configuration.fields.allow_checkout_without_email_confirmation.tooltip
+
+        oro_checkout.checkout_max_line_items_per_page:
+            data_type: integer
+            type: Symfony\Component\Form\Extension\Core\Type\IntegerType
+            search_type: text
+            options:
+                label: oro.checkout.system_configuration.fields.checkout_max_line_items_per_page.label
+                tooltip: oro.checkout.system_configuration.fields.checkout_max_line_items_per_page.tooltip
+                required: true
+                constraints:
+                    - NotBlank: ~
+                    - Range:
+                        min: 200
+                        max: 1000
+
+        oro_checkout.enable_line_item_grouping:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 30
+            options:
+                label: oro.checkout.system_configuration.fields.enable_line_item_grouping.label
+                tooltip: oro.checkout.system_configuration.fields.enable_line_item_grouping.tooltip
+                attr:
+                    'data-dependee-id': 'enable_line_item_grouping'
+                    'data-page-component-module': 'orosale/js/app/components/dependent-field-component'
+                    'data-depend-on': 'enable_shipping_method_selection_per_line_item'
+                    'data-page-component-options': '{"selectors": {"rowContainer": "fieldset"}}'
+                    'data-show-if': 'checked'
+
+        oro_checkout.group_line_items_by:
+            data_type: string
+            type: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+            priority: 20
+            options:
+                label: oro.checkout.system_configuration.fields.group_line_items_by.label
+                choice_translation_domain: messages
+                choices:
+                    oro.product.entity_label:
+                        oro.product.id.label: product.id
+                        oro.product.category.label: product.category
+                        oro.product.brand.label: product.brand
+                    oro.checkout.checkoutlineitem.entity_label:
+                        oro.checkout.checkoutlineitem.parent_product.label: parentProduct
+                attr:
+                    'data-page-component-module': 'orosale/js/app/components/dependent-field-component'
+                    'data-depend-on': 'enable_line_item_grouping'
+                    'data-show-if': 'checked'
+
+        oro_checkout.create_suborders_for_each_group:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 20
+            options:
+                label: oro.checkout.system_configuration.fields.create_suborders_for_each_group.label
+                tooltip: oro.checkout.system_configuration.fields.create_suborders_for_each_group.tooltip
+                attr:
+                    'data-page-component-module': 'orosale/js/app/components/dependent-field-component'
+                    'data-depend-on': 'enable_line_item_grouping'
+                    'data-show-if': 'checked'
+
+        oro_checkout.show_suborders_in_order_history:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 10
+            options:
+                label: oro.checkout.system_configuration.fields.show_suborders_in_order_history.label
+                tooltip: oro.checkout.system_configuration.fields.show_suborders_in_order_history.tooltip
+                attr:
+                    'data-dependee-id': 'show_suborders_in_order_history'
+
+        oro_checkout.show_main_orders_in_order_history:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 10
+            options:
+                label: oro.checkout.system_configuration.fields.show_main_orders_in_order_history.label
+                tooltip: oro.checkout.system_configuration.fields.show_main_orders_in_order_history.tooltip
+                attr:
+                    'data-page-component-module': 'orosale/js/app/components/dependent-field-component'
+                    'data-depend-on': 'show_suborders_in_order_history'
+                    'data-show-if': 'checked'
+
+        oro_checkout.enable_shipping_method_selection_per_line_item:
+            data_type: boolean
+            type: Oro\Bundle\ConfigBundle\Form\Type\ConfigCheckbox
+            priority: 50
+            options:
+                label: oro.checkout.system_configuration.fields.enable_shipping_method_selection_per_line_item.label
+                tooltip: oro.checkout.system_configuration.fields.enable_shipping_method_selection_per_line_item.tooltip
+                attr:
+                    'data-dependee-id': 'enable_shipping_method_selection_per_line_item'
+
+    tree:
+        system_configuration:
+            commerce:
+                children:
+                    sales:
+                        children:
+                            checkout:
+                                children:
+                                    checkout_customer_users_registration:
+                                        children:
+                                            - oro_checkout.registration_allowed
+                                            - oro_checkout.allow_checkout_without_email_confirmation
+                                    guest_checkout:
+                                        children:
+                                            - oro_checkout.guest_checkout
+                                    guest_checkout_owner_section:
+                                        children:
+                                            - oro_checkout.default_guest_checkout_owner
+                                    checkout_options:
+                                        children:
+                                            - oro_checkout.checkout_max_line_items_per_page
+                            orders_history:
+                                children:
+                                    orders_history_open_orders:
+                                        children:
+                                            - oro_checkout.frontend_show_open_orders
+                                            - oro_checkout.frontend_open_orders_separate_page
+                            multishipping_options:
+                                children:
+                                    multishipping_general_options:
+                                        children:
+                                            - oro_checkout.enable_shipping_method_selection_per_line_item
+                                    multishipping_line_items_grouping_options:
+                                        children:
+                                            - oro_checkout.enable_line_item_grouping
+                                            - oro_checkout.group_line_items_by
+                                            - oro_checkout.create_suborders_for_each_group
+                                    multishipping_order_history_options:
+                                        children:
+                                            - oro_checkout.show_suborders_in_order_history
+                                            - oro_checkout.show_main_orders_in_order_history

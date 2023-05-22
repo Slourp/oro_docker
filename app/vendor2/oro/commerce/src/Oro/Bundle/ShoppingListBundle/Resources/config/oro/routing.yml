@@ -1,0 +1,130 @@
+oro_shopping_list:
+    resource:     "@OroShoppingListBundle/Controller/ShoppingListController.php"
+    type:         annotation
+    prefix:       /shoppinglist
+
+oro_shopping_list_frontend:
+    resource: "@OroShoppingListBundle/Controller/Frontend/ShoppingListController.php"
+    type:     annotation
+    prefix:   /customer/shoppinglist
+    options:
+        frontend: true
+
+oro_shopping_list_matrix_grid_order_frontend:
+    resource: "@OroShoppingListBundle/Controller/Frontend/MatrixGridOrderController.php"
+    type:     annotation
+    prefix:   /shoppinglist/matrix-grid-order
+    options:
+        frontend: true
+
+oro_shopping_list_line_item_frontend:
+    resource: "@OroShoppingListBundle/Controller/Frontend/AjaxLineItemController.php"
+    type:     annotation
+    prefix:   /customer/shoppinglist/lineitem/ajax
+    options:
+        frontend: true
+
+oro_shopping_list_product_kit_line_item_frontend:
+    resource: "@OroShoppingListBundle/Controller/Frontend/AjaxProductKitLineItemController.php"
+    type:     annotation
+    prefix:   /customer/shoppinglist/product-kit-lineitem/ajax
+    options:
+        frontend: true
+
+oro_shopping_list_mass_action_frontend:
+    resource: "@OroShoppingListBundle/Controller/Frontend/AjaxMassActionController.php"
+    type:     annotation
+    prefix:   /customer/shoppinglist/mass-action/ajax
+    options:
+        frontend: true
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_set_shopping_list_current:
+    path: '/api/rest/{version}/shoppinglists/current/{id}.{_format}'
+    methods: [PUT]
+    defaults:
+        _controller: 'Oro\Bundle\ShoppingListBundle\Controller\Frontend\Api\Rest\ShoppingListController::setCurrentAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1
+    options:
+        frontend: true
+
+oro_api_set_shopping_list_owner:
+    path: '/api/rest/{version}/shoppinglists/{id}/owner.{_format}'
+    methods: [PUT]
+    defaults:
+        _controller: 'Oro\Bundle\ShoppingListBundle\Controller\Frontend\Api\Rest\ShoppingListController::setOwnerAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1
+    options:
+        frontend: true
+
+oro_api_shopping_list_frontend_delete_line_item:
+    path: '/api/rest/{version}/lines/{id}/items/{onlyCurrent}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'Oro\Bundle\ShoppingListBundle\Controller\Frontend\Api\Rest\LineItemController::deleteAction'
+        onlyCurrent: 0
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        onlyCurrent: (0)|(1)
+        _format: json
+        version: latest|v1
+    options:
+        frontend: true
+
+oro_api_shopping_list_frontend_delete_line_item_configurable:
+    path: '/api/rest/{version}/lines/{shoppingListId}/items/{productId}/configurables/{unitCode}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'Oro\Bundle\ShoppingListBundle\Controller\Frontend\Api\Rest\LineItemController::deleteConfigurableAction'
+        _format: json
+        version: latest
+    requirements:
+        shoppingListId: \d+
+        productId: \d+
+        _format: json
+        version: latest|v1
+    options:
+        frontend: true
+
+oro_api_shopping_list_frontend_put_line_item:
+    path: '/api/rest/{version}/lines/{id}/item.{_format}'
+    methods: [PUT]
+    defaults:
+        _controller: 'Oro\Bundle\ShoppingListBundle\Controller\Frontend\Api\Rest\LineItemController::putAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1
+    options:
+        frontend: true
+
+oro_api_shopping_list_frontend_options_line_items:
+    path: '/api/rest/{version}/line/items.{_format}'
+    methods: [OPTIONS]
+    defaults:
+        _controller: 'Oro\Bundle\ShoppingListBundle\Controller\Frontend\Api\Rest\LineItemController::optionsAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1
+    options:
+        frontend: true

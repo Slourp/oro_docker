@@ -1,0 +1,94 @@
+/* @theme: admin.oro; */
+
+@use 'sass:math';
+
+$menu-user-agent-offset-y: 10px !default;
+
+.menu-user-agent-condition {
+    position: relative;
+    padding: $menu-user-agent-offset-y 40px $menu-user-agent-offset-y 10px;
+    margin-bottom: $menu-user-agent-offset-y;
+    background: $primary-900;
+    border-radius: 4px;
+
+    .menu-user-agent-inner-condition-label {
+        font-size: $base-font-size;
+        line-height: $line-height-base;
+        min-height: math.ceil($base-font-size * $line-height-base);
+    }
+
+    .menu-user-agent-condition-wrap {
+        [data-validation-optional-group] {
+            > .row-oro {
+                // stylelint-disable-next-line selector-max-compound-selectors
+                .btn {
+                    position: absolute;
+                    top: $menu-user-agent-offset-y + math.ceil($base-font-size * $line-height-base);
+                    right: 4px;
+                }
+            }
+        }
+
+        [data-validate-element] + [data-validation-optional-group] {
+            /* stylelint-disable selector-max-compound-selectors */
+            .menu-user-agent-inner-condition-label {
+                display: none;
+            }
+
+            .btn {
+                top: $menu-user-agent-offset-y;
+            }
+            /* stylelint-enable selector-max-compound-selectors */
+        }
+
+        .add-list-item {
+            margin-left: auto;
+        }
+    }
+
+    .btn-remove-main-row {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+    }
+}
+
+.menu-user-agent-condition-container {
+    &:first-of-type {
+        .menu-user-agent-condition-label {
+            display: none;
+        }
+    }
+}
+
+.menu-user-agent-condition-item {
+    .menu-user-agent-condition-item-container {
+        display: flex;
+        padding: $menu-user-agent-offset-y 40px $menu-user-agent-offset-y 10px;
+        border-radius: 4px;
+        background: $primary-inverse;
+    }
+
+    .menu-user-agent-condition-operation {
+        margin-right: 10px;
+    }
+
+    .menu-user-agent-condition-operation,
+    .menu-user-agent-condition-value {
+        width: 260px;
+    }
+
+    input,
+    .input-widget-select {
+        width: 100%;
+        max-width: 100%;
+
+        span {
+            max-width: 100%;
+        }
+    }
+
+    + .removeRow {
+        @include fa-icon($fa-var-close);
+    }
+}

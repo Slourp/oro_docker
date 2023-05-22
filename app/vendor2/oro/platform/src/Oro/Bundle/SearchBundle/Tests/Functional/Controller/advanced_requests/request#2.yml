@@ -1,0 +1,40 @@
+# common test case
+request:
+    query: "from oro_test_item where stringValue != item5@mail.com order_by stringValue desc max_results 10"
+response:
+    records_count: 8
+    count: 8
+    rest:
+        data:
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/
+            -
+                entity_name: Oro\Bundle\TestFrameworkBundle\Entity\Item
+                entity_label: "oro.testframework.item.entity_label"
+                record_url: http://localhost%oro_default_prefix%search/

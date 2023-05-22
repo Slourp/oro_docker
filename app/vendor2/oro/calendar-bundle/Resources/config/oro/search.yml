@@ -1,0 +1,25 @@
+search:
+    Oro\Bundle\CalendarBundle\Entity\CalendarEvent:
+        alias:                          oro_clendar_event
+        route:
+            name:                       oro_calendar_event_view
+            parameters:
+                id:                     id
+        search_template:                '@OroCalendar/Search/result.html.twig'
+        fields:
+            -
+                name:                   title
+                target_type:            text
+                target_fields:          [title]
+            -
+                name:                   description
+                target_type:            text
+                target_fields:          [description]
+            -
+                name:                   start
+                target_type:            datetime
+                target_fields:          [start]
+            -
+                name:                   end
+                target_type:            datetime
+                target_fields:          [end]

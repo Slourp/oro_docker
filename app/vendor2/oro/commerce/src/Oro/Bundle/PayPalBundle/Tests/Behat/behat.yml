@@ -1,0 +1,61 @@
+oro_behat_extension:
+  elements:
+    PayPalForm:
+      selector: 'form[name="oro_integration_channel_form"]'
+      class: Oro\Bundle\TestFrameworkBundle\Behat\Element\Form
+      options:
+        mapping:
+          Name: 'oro_integration_channel_form[name]'
+          Label: 'oro_integration_channel_form[transport][creditCardLabels][values][default]'
+          Short Label: 'oro_integration_channel_form[transport][creditCardShortLabels][values][default]'
+          Allowed Credit Card Types: 'oro_integration_channel_form[transport][allowedCreditCardTypes][]'
+          Partner: 'oro_integration_channel_form[transport][partner]'
+          Vendor: 'oro_integration_channel_form[transport][vendor]'
+          User: 'oro_integration_channel_form[transport][user]'
+          Password: 'oro_integration_channel_form[transport][password]'
+          Payment Action: 'oro_integration_channel_form[transport][creditCardPaymentAction]'
+          Express Checkout Name: 'oro_integration_channel_form[transport][expressCheckoutName]'
+          Express Checkout Label: 'oro_integration_channel_form[transport][expressCheckoutLabels][values][default]'
+          Express Checkout Short Label: 'oro_integration_channel_form[transport][expressCheckoutShortLabels][values][default]'
+          Zero Amount Authorization: 'oro_integration_channel_form[transport][zeroAmountAuthorization]'
+          Authorization For Required Amount: 'oro_integration_channel_form[transport][authorizationForRequiredAmount]'
+    PayPalCreditCardForm:
+      selector:
+        type: 'xpath'
+        locator: '//input[@id[starts-with(.,"oro_paypal_credit_card_ACCT")]]/ancestor::div[contains(@class,"checkout-form__payment-methods-form")]'
+
+      class: Oro\Bundle\TestFrameworkBundle\Behat\Element\Form
+      options:
+        mapping:
+          CreditCardNumber: 'ACCT'
+          Month: 'oro_paypal_credit_card[expirationDate][month]'
+          Year: 'oro_paypal_credit_card[expirationDate][year]'
+          CVV: 'CVV2'
+    Transaction Capture Button:
+      selector: 'div.action-row a.action[title="Capture"]'
+    Transactions History Grid:
+      selector:
+        locator: '//div[contains(@class, "responsive-section ")]/h4[text()="Payment History"]/..//div[@class="oro-datagrid"]//table'
+        type: xpath
+      class: Oro\Bundle\TestFrameworkBundle\Behat\Element\Table
+  suites:
+    OroPayPalBundle:
+      contexts:
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bundle\ApplicationBundle\Tests\Behat\Context\CommerceMainContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FormContext
+        - Oro\Bundle\ConfigBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\ProductBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\AttachmentBundle\Tests\Behat\Context\AttachmentImageContext
+        - Oro\Bundle\PayPalBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\CheckoutBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\ShoppingListBundle\Tests\Behat\Context\ShoppingListContext
+        - Oro\Bundle\ShoppingListBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\DataGridBundle\Tests\Behat\Context\GridContext
+        - Oro\Bundle\LocaleBundle\Tests\Behat\Context\LocalizationContext
+        - Oro\Bundle\FrontendLocalizationBundle\Tests\Behat\Context\LocalizationSwitcherContext
+        - Oro\Bundle\PaymentBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\WorkflowBundle\Tests\Behat\Context\FeatureContext
+      paths:
+        - '@OroPayPalBundle/Tests/Behat/Features'

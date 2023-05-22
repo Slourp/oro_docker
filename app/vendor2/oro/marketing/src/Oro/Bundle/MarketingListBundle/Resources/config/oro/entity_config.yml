@@ -1,0 +1,20 @@
+entity_config:
+    entity:
+        # You can find out more about attributes in the documentation: https://doc.oroinc.com/backend/configuration/annotation/config-field/#entity
+        field:
+            items:
+                contact_information:
+                    options:
+                        allowed_type: [string, text]
+                    form:
+                        type: Oro\Bundle\EntityConfigBundle\Form\Type\ChoiceType
+                        options:
+                            choices:
+                                oro.marketinglist.entity_config.choices.email: email
+                                oro.marketinglist.entity_config.choices.phone: phone
+                            block: other
+                            label: oro.marketinglist.entity_config.contact_information.label
+                            required: false
+                    import_export:
+                        import_template:
+                            use_in_template: true

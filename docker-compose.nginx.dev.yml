@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+    nginx:
+        container_name: ${PROJECT_NAME}_WEB
+        networks:
+            - default
+            - project-network
+        image: nginx:${NGINX_VERSION}
+        restart: always
+        volumes:
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d/
+            - .:/var/www/app
+        env_file:
+            - .env-app
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.services.${PROJECT_NAME}_NGINX.loadbalancer.server.port=80"
+            - "traefik.http.routers.${PROJECT_NAME}_NGINX.rule=Host(`${DOMAIN}.traefik.me`)"
+            - "traefik.http.routers.${PROJECT_NAME}_NGINX-tls.tls.domains[0].main=${DOMAIN}.traefik.me"
+            - "traefik.http.routers.${PROJECT_NAME}_NGINX-tls.tls.domains[0].sans=*.${DOMAIN}.traefik.me"
+            - "traefik.http.routers.${PROJECT_NAME}_NGINX.tls=true"
+networks:
+    default:
+        name: ${NETWORK_NAME}
+    project-network:
+        name: ${PROJECT_NAME}-NETWORK
+        internal: true
+
+volumes:
+    mysql_data:
+        name: ${PROJECT_NAME}_mysql_data

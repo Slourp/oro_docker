@@ -1,0 +1,30 @@
+/* @theme: default; */
+
+%customer-form {
+    .form-group {
+        legend {
+            text-transform: uppercase;
+            padding: 2rem 0;
+            font-size: 1.6rem;
+        }
+
+        .grid {
+            padding: 28px 32px;
+            background: $customer-form-group-grid-background;
+        }
+    }
+
+    .form-row {
+        margin-bottom: 0;
+    }
+}
+
+%customer-form-grid {
+    padding: 28px 32px;
+
+    background: $customer-form-grid-background;
+}
+
+.form-buttons {
+    margin-top: 28px;
+}

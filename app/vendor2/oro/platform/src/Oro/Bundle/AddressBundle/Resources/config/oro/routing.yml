@@ -1,0 +1,69 @@
+#
+# OLD REST API ROUTES
+#
+
+oro_api_get_addresstypes:
+    path: '/api/rest/{version}/addresstypes.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AddressBundle\Controller\Api\Rest\AddressTypeController::cgetAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1
+
+oro_api_get_addresstype:
+    path: '/api/rest/{version}/addresstypes/{name}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AddressBundle\Controller\Api\Rest\AddressTypeController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1
+
+oro_api_get_countries:
+    path: '/api/rest/{version}/countries.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AddressBundle\Controller\Api\Rest\CountryController::cgetAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1
+
+oro_api_get_country:
+    path: '/api/rest/{version}/countries/{id}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AddressBundle\Controller\Api\Rest\CountryController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1
+
+oro_api_get_region:
+    path: '/api/rest/{version}/region/{id}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AddressBundle\Controller\Api\Rest\RegionController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1
+
+oro_api_country_get_regions:
+    path: '/api/rest/{version}/country/regions/{country}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AddressBundle\Controller\Api\Rest\CountryRegionsController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1

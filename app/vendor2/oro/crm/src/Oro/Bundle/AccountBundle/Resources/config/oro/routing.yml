@@ -1,0 +1,78 @@
+oro_account_bundle:
+    resource:     "@OroAccountBundle/Controller"
+    type:         annotation
+    prefix:       /account
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_get_accounts:
+    path: '/api/rest/{version}/accounts.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AccountBundle\Controller\Api\Rest\AccountController::cgetAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json|html
+        version: latest|v1
+
+oro_api_get_account:
+    path: '/api/rest/{version}/accounts/{id}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\AccountBundle\Controller\Api\Rest\AccountController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json|html
+        version: latest|v1
+
+oro_api_put_account:
+    path: '/api/rest/{version}/accounts/{id}.{_format}'
+    methods: [PUT]
+    defaults:
+        _controller: 'Oro\Bundle\AccountBundle\Controller\Api\Rest\AccountController::putAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json|html
+        version: latest|v1
+
+oro_api_post_account:
+    path: '/api/rest/{version}/accounts.{_format}'
+    methods: [POST]
+    defaults:
+        _controller: 'Oro\Bundle\AccountBundle\Controller\Api\Rest\AccountController::postAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json|html
+        version: latest|v1
+
+oro_api_delete_account:
+    path: '/api/rest/{version}/accounts/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'Oro\Bundle\AccountBundle\Controller\Api\Rest\AccountController::deleteAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json|html
+        version: latest|v1
+
+oro_api_options_accounts:
+    path: '/api/rest/{version}/accounts.{_format}'
+    methods: [OPTIONS]
+    defaults:
+        _controller: 'Oro\Bundle\AccountBundle\Controller\Api\Rest\AccountController::optionsAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json|html
+        version: latest|v1

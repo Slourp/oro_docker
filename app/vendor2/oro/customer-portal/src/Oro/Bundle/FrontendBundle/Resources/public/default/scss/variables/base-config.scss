@@ -1,0 +1,8 @@
+/* @theme: default; */
+
+$use-basic-styles: true !default;
+$enable-safe-area: true !default;
+
+$body-bg-color: get-color('additional', 'ultra') !default;
+$body-color: get-color('additional', 'dark') !default;
+$body-min-width: 375px !default;

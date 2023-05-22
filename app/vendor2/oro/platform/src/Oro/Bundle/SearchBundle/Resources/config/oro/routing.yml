@@ -1,0 +1,31 @@
+oro_search:
+    resource:     "@OroSearchBundle/Controller"
+    type:         annotation
+    prefix:       /search
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_get_search:
+    path: '/api/rest/{version}/search.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\SearchBundle\Controller\Api\SearchController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json|html
+        version: latest|v1
+
+oro_api_get_search_advanced:
+    path: '/api/rest/{version}/search/advanced.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\SearchBundle\Controller\Api\SearchAdvancedController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1

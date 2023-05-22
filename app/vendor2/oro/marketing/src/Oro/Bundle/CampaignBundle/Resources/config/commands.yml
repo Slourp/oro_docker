@@ -1,0 +1,16 @@
+services:
+    _defaults:
+        public: false
+
+    Oro\Bundle\CampaignBundle\Command\CalculateTrackingEventSummaryCommand:
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\CampaignBundle\Command\SendEmailCampaignsCommand:
+        arguments:
+            - '@doctrine'
+            - '@oro_campaign.email_campaign.sender.builder'
+        tags:
+            - { name: console.command }

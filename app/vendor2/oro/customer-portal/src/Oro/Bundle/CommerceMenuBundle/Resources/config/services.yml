@@ -1,0 +1,410 @@
+services:
+    oro_commerce_menu.scope_criteria_provider.customer:
+        parent: oro_customer.customer_scope_criteria_provider
+        tags:
+            - { name: oro_scope.provider, scopeType: menu_frontend_visibility, priority: 40 }
+
+    oro_commerce_menu.scope_criteria_provider.customer_group:
+        parent: oro_customer.customer_group_scope_criteria_provider
+        tags:
+            - { name: oro_scope.provider, scopeType: menu_frontend_visibility, priority: 30 }
+
+    oro_commerce_menu.menu_update.applier:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Applier\MenuUpdateApplier
+        arguments:
+            - '@oro_commerce_menu.menu_update.propagator.to_menu_item'
+
+    oro_commerce_menu.menu_update.propagator.to_menu_item:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuItem\CompositePropagator
+        arguments:
+            - !tagged_iterator { tag: oro_commerce_menu.menu_update.propagator.to_menu_item }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_item.basic:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuItem\BasicPropagator
+        arguments:
+            - '@oro_locale.helper.localization'
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_item }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_item.common_extras:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuItem\ExtrasPropagator
+        arguments:
+            - '@oro_locale.helper.localization'
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_item }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_item.extras:
+        class: Oro\Bundle\CommerceMenuBundle\MenuUpdate\Propagator\ToMenuItem\ExtrasPropagator
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_item }
+
+    oro_commerce_menu.menu.menu_update_builder:
+        class: 'Oro\Bundle\NavigationBundle\Menu\MenuUpdateBuilder'
+        arguments:
+            - '@oro_commerce_menu.provider.menu_update_provider'
+            - '@oro_commerce_menu.menu_update.applier'
+            - '@event_dispatcher'
+        tags:
+            - { name: oro_menu.builder, priority: 200 }
+
+    oro_commerce_menu.provider.menu_update_provider:
+        class: 'Oro\Bundle\NavigationBundle\Provider\MenuUpdateProvider'
+        arguments:
+            - '@oro_scope.scope_manager'
+            - '@oro_commerce_menu.manager.menu_update'
+
+    oro_commerce_menu.menu.lost_items_builder:
+        class: 'Oro\Bundle\NavigationBundle\Menu\LostItemsBuilder'
+        tags:
+            - { name: oro_menu.builder, priority: 250 }
+            - { name: kernel.event_listener, event: Oro\Bundle\NavigationBundle\Event\MenuUpdatesApplyAfterEvent, method: onMenuUpdatesApplyAfter }
+
+    oro_commerce_menu.menu.orphan_items_builder:
+        class: 'Oro\Bundle\NavigationBundle\Menu\OrphanItemsBuilder'
+        tags:
+            - { name: oro_menu.builder, priority: 260 }
+            - { name: kernel.event_listener, event: Oro\Bundle\NavigationBundle\Event\MenuUpdatesApplyAfterEvent, method: onMenuUpdatesApplyAfter }
+
+    oro_commerce_menu.manager.menu_update:
+        class: Oro\Bundle\NavigationBundle\Manager\MenuUpdateManager
+        public: true
+        arguments:
+            - '@doctrine'
+            - '@oro_commerce_menu.menu_update.factory'
+            - '@oro_commerce_menu.menu_update.propagator.to_menu_update'
+            - 'Oro\Bundle\CommerceMenuBundle\Entity\MenuUpdate'
+            - 'menu_frontend_visibility'
+
+    oro_commerce_menu.manager.menu_update.move:
+        class: Oro\Bundle\NavigationBundle\Manager\MenuUpdateMoveManager
+        arguments:
+            - '@doctrine'
+            - '@oro_commerce_menu.manager.menu_update'
+            - '@oro_commerce_menu.menu_update.propagator.to_menu_update'
+            - 'Oro\Bundle\CommerceMenuBundle\Entity\MenuUpdate'
+
+    oro_commerce_menu.manager.menu_update.display:
+        class: Oro\Bundle\NavigationBundle\Manager\MenuUpdateDisplayManager
+        arguments:
+            - '@doctrine'
+            - '@oro_commerce_menu.manager.menu_update'
+            - 'Oro\Bundle\CommerceMenuBundle\Entity\MenuUpdate'
+
+    oro_commerce_menu.menu_update.factory:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Factory\MenuUpdateFactory
+        arguments:
+            - '@property_accessor'
+            - 'Oro\Bundle\CommerceMenuBundle\Entity\MenuUpdate'
+
+    oro_commerce_menu.menu_update.propagator.to_menu_update:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuUpdate\CompositePropagator
+        arguments:
+            - !tagged_iterator { tag: oro_commerce_menu.menu_update.propagator.to_menu_update }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_update.basic:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuUpdate\BasicPropagator
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_update }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_update.extras:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuUpdate\ExtrasPropagator
+        arguments:
+            - '@property_accessor'
+        calls:
+            - [setExcludeKeys, [['titles', 'description', 'synthetic']]]
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_update }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_update.description:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuUpdate\DescriptionPropagator
+        arguments:
+            - '@oro_navigation.menu_helper.menu_update'
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_update }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_update.title:
+        class: Oro\Bundle\NavigationBundle\MenuUpdate\Propagator\ToMenuUpdate\TitlePropagator
+        arguments:
+            - '@property_accessor'
+            - '@oro_navigation.menu_helper.menu_update'
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_update }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_update.is_synthetic.content_node:
+        class: Oro\Bundle\CommerceMenuBundle\MenuUpdate\Propagator\ToMenuUpdate\ContentNodeSyntheticPropagator
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_update }
+
+    oro_commerce_menu.menu_update.propagator.to_menu_update.is_synthetic.category:
+        class: Oro\Bundle\CommerceMenuBundle\MenuUpdate\Propagator\ToMenuUpdate\CategorySyntheticPropagator
+        tags:
+            - { name: oro_commerce_menu.menu_update.propagator.to_menu_update }
+
+    oro_commerce_menu.menu.condition.config_value_expression_language_provider:
+        class: 'Oro\Bundle\CommerceMenuBundle\Menu\Condition\ConfigValueExpressionLanguageProvider'
+        public: false
+        arguments:
+            - '@oro_config.manager'
+        tags:
+            - { name: oro_commerce_menu.condition.expression_language_provider }
+
+    oro_commerce_menu.menu.condition.logged_in_expression_language_provider:
+        class: 'Oro\Bundle\CommerceMenuBundle\Menu\Condition\LoggedInExpressionLanguageProvider'
+        public: false
+        arguments:
+            - '@oro_security.token_accessor'
+        tags:
+            - { name: oro_commerce_menu.condition.expression_language_provider }
+
+    oro_commerce_menu.twig.menu_extension:
+        class: 'Oro\Bundle\CommerceMenuBundle\Twig\MenuExtension'
+        public: false
+        arguments:
+            - '@oro_platform.twig.service_locator'
+        tags:
+            - { name: twig.extension }
+
+    oro_commerce_menu.data_provider.menu:
+        class: 'Oro\Bundle\CommerceMenuBundle\Layout\DataProvider\MenuProvider'
+        arguments:
+          - '@oro_menu.builder_chain'
+        tags:
+            - { name: layout.data_provider, alias: menu }
+
+    oro_commerce_menu.event_listener.scope_grid_listener:
+        class: 'Oro\Bundle\NavigationBundle\EventListener\MenuGridListener'
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.pre.frontend-menu-by-scope-grid, method: onPreBuild }
+
+    oro_commerce_menu.menu_scope_provider.abstract:
+        abstract: true
+        arguments:
+            - '@oro_scope.scope_manager'
+            - '@oro_website.website.provider'
+            - 'menu_frontend_visibility'
+
+    Oro\Bundle\CommerceMenuBundle\Menu\ContextProvider\CustomerMenuContextProvider:
+        alias: oro_commerce_menu.menu_context_provider.customer
+
+    oro_commerce_menu.menu_context_provider.customer:
+        class: 'Oro\Bundle\CommerceMenuBundle\Menu\ContextProvider\CustomerMenuContextProvider'
+        public: true
+        arguments:
+            - '@oro_website.manager'
+
+    Oro\Bundle\CommerceMenuBundle\Menu\ContextProvider\CustomerGroupMenuContextProvider:
+        alias: oro_commerce_menu.menu_context_provider.customer_group
+
+    oro_commerce_menu.menu_context_provider.customer_group:
+        class: 'Oro\Bundle\CommerceMenuBundle\Menu\ContextProvider\CustomerGroupMenuContextProvider'
+        public: true
+        arguments:
+            - '@oro_website.manager'
+
+    oro_commerce_menu.repository.menu_update:
+        alias: Oro\Bundle\CommerceMenuBundle\Entity\Repository\MenuUpdateRepository
+
+    Oro\Bundle\CommerceMenuBundle\Entity\Repository\MenuUpdateRepository:
+        parent: oro_entity.abstract_repository
+        arguments:
+            - 'Oro\Bundle\CommerceMenuBundle\Entity\MenuUpdate'
+        calls:
+            - [ setQueryResultCache, [ '@oro_navigation.menu_update.cache' ] ]
+        tags:
+            - { name: doctrine.repository_service }
+
+    oro_commerce_menu.event_listener.menu_update_cache_flusher:
+        class: Oro\Bundle\NavigationBundle\EventListener\MenuUpdateCacheFlusher
+        arguments:
+            - '@oro_navigation.repository.menu_update'
+            - '@oro_navigation.menu_update.cache'
+            - '@oro_scope.scope_manager'
+            - 'menu_frontend_visibility'
+        tags:
+            - { name: kernel.event_listener, event: oro_menu.menu_update_change, method: onMenuUpdateScopeChange }
+            - { name: kernel.event_listener, event: oro_menu.menu_update_with_scope_change, method: onMenuUpdateWithScopeChange }
+
+    oro_commerce_menu.event_listener.frontend_menu_item_listener:
+        class: Oro\Bundle\CommerceMenuBundle\EventListener\MenuListFrontendItemNavigationListener
+        arguments:
+            - '@security.authorization_checker'
+            - '@oro_security.token_accessor'
+        tags:
+            - { name: kernel.event_listener, event: oro_menu.configure.application_menu, method: onNavigationConfigure }
+
+    oro_commerce_menu.form.extension.menu_update_type.general:
+        class: 'Oro\Bundle\CommerceMenuBundle\Form\Extension\MenuUpdateGeneralExtension'
+        arguments:
+            - '@oro_commerce_menu.provider.menu_templates_provider'
+        tags:
+            - { name: form.type_extension }
+
+    oro_commerce_menu.form.extension.menu_update_type.conditions:
+        class: 'Oro\Bundle\CommerceMenuBundle\Form\Extension\MenuUpdateConditionsExtension'
+        tags:
+            - { name: form.type_extension }
+
+    oro_commerce_menu.form.extension.menu_update_type.target_type:
+        class: 'Oro\Bundle\CommerceMenuBundle\Form\Extension\MenuUpdateTargetTypeExtension'
+        arguments:
+            - '@oro_web_catalog.web_catalog_provider'
+        tags:
+            - { name: form.type_extension }
+
+    oro_commerce_menu.scope_criteria_provider.website:
+        parent: oro_website.website_scope_criteria_provider
+        tags:
+            - { name: oro_scope.provider, scopeType: menu_frontend_visibility, priority: 20 }
+
+    oro_commerce_menu.expression_language.cache:
+        public: false
+        parent: oro.data.cache
+        tags:
+            - { name: 'cache.pool', namespace: 'oro_commerce_menu_expression_language' }
+
+    oro_commerce_menu.expression_language:
+        class: Symfony\Component\ExpressionLanguage\ExpressionLanguage
+        arguments:
+            - '@oro_commerce_menu.expression_language.cache'
+            - []
+
+    oro_commerce_menu.builder.menu_display_builder:
+        class: 'Oro\Bundle\CommerceMenuBundle\Builder\MenuDisplayBuilder'
+        abstract: true
+        public: false
+
+    oro_commerce_menu.menu.condition_evaluator.condition:
+        class: 'Oro\Bundle\CommerceMenuBundle\Menu\ConditionEvaluator\MenuConditionEvaluator'
+        public: false
+        arguments:
+            - '@oro_commerce_menu.expression_language'
+            - '@monolog.logger'
+
+    oro_commerce_menu.builder.menu_condition_builder:
+        parent: oro_commerce_menu.builder.menu_display_builder
+        arguments:
+            - '@oro_commerce_menu.menu.condition_evaluator.condition'
+        tags:
+            - { name: oro_menu.builder, priority: 210 }
+
+    oro_commerce_menu.validator.menu_update_expression:
+        class: 'Oro\Bundle\CommerceMenuBundle\Validator\Constraints\MenuUpdateExpressionValidator'
+        arguments:
+            - "@oro_commerce_menu.expression_language"
+        tags:
+            - { name: validator.constraint_validator, alias: oro_commerce_menu_update_expression_validator }
+
+    oro_commerce_menu.builder.menu_screens_condition_builder:
+        public: false
+        class: 'Oro\Bundle\CommerceMenuBundle\Builder\MenuScreensConditionBuilder'
+        arguments:
+            - '@oro_frontend.provider.screens'
+        tags:
+            - { name: oro_menu.builder, priority: 225 }
+
+    oro_commerce_menu.user_agent_conditions_evaluator:
+        class: 'Oro\Bundle\CommerceMenuBundle\Menu\ConditionEvaluator\UserAgentConditionsEvaluator'
+        arguments:
+            - "@oro_ui.user_agent_provider"
+
+    oro_commerce_menu.builder.menu_user_agent_conditions_evaluator:
+        parent: oro_commerce_menu.builder.menu_display_builder
+        arguments:
+            - '@oro_commerce_menu.user_agent_conditions_evaluator'
+        tags:
+            - { name: oro_menu.builder, priority: 220 }
+
+    oro_commerce_menu.builder.system_page_target_builder:
+        class: Oro\Bundle\CommerceMenuBundle\Builder\SystemPageTargetBuilder
+        arguments:
+            - '@router'
+            - '@oro_featuretoggle.checker.feature_checker'
+        calls:
+            - ['setLogger', ['@logger']]
+        tags:
+            - { name: oro_menu.builder, priority: 207 }
+
+    oro_commerce_menu.listener.content_node_delete:
+        class: Oro\Bundle\CommerceMenuBundle\EventListener\ContentNodeDeleteListener
+        arguments:
+            - '@oro_navigation.menu_update.cache'
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }
+
+    oro_commerce_menu.layout_theme_config_extension.menu_templates:
+        class: Oro\Bundle\CommerceMenuBundle\Layout\Extension\MenuTemplatesThemeConfigurationExtension
+        tags:
+            - { name: layout.theme_config_extension }
+
+    oro_commerce_menu.provider.menu_templates_provider:
+        class: Oro\Bundle\CommerceMenuBundle\Provider\MenuTemplatesProvider
+        arguments:
+            - '@oro_layout.theme_manager'
+            - '@oro_cms.content_widget_layout_cache'
+
+    oro_commerce_menu.layout.menu_item_renderer:
+        class: Oro\Bundle\CommerceMenuBundle\Layout\MenuItemRenderer
+        arguments:
+            - '@oro_layout.layout_manager'
+            - '%kernel.debug%'
+        calls:
+            - ['setLogger', ['@logger']]
+        tags:
+            - { name: monolog.logger, channel: oro_commerce_menu }
+
+    oro_commerce_menu.layout.path_provider.menu_template:
+        class: Oro\Bundle\CommerceMenuBundle\Layout\PathProvider\MenuTemplatePathProvider
+        arguments:
+            - '@oro_layout.theme_manager'
+        tags:
+            # Should be called as late as possible to ensure it can override previously added paths.
+            - { name: layout.resource.path_provider, priority: -100 }
+
+    oro_commerce_menu.builder.content_node_tree_builder:
+        class: Oro\Bundle\CommerceMenuBundle\Builder\ContentNodeTreeBuilder
+        arguments:
+            - '@doctrine'
+            - '@oro_web_catalog.menu.content_nodes_provider'
+            - '@oro_locale.helper.localization'
+        tags:
+            - { name: oro_menu.builder, priority: 210 }
+            - { name: kernel.event_listener, event: Oro\Bundle\NavigationBundle\Event\MenuUpdatesApplyAfterEvent, method: onMenuUpdatesApplyAfter }
+
+    oro_commerce_menu.builder.category_tree_builder:
+        class: Oro\Bundle\CommerceMenuBundle\Builder\CategoryTreeBuilder
+        arguments:
+            - '@doctrine'
+            - '@router'
+            - '@oro_catalog.menu.menu_categories_provider'
+            - '@oro_security.token_accessor'
+            - '@oro_locale.helper.localization'
+        tags:
+            - { name: oro_menu.builder, priority: 210 }
+            - { name: kernel.event_listener, event: Oro\Bundle\NavigationBundle\Event\MenuUpdatesApplyAfterEvent, method: onMenuUpdatesApplyAfter }
+
+    oro_commerce_menu.builder.navigation_root:
+        class: Oro\Bundle\CommerceMenuBundle\Builder\NavigationRootBuilder
+        arguments:
+            - '@oro_web_catalog.web_catalog_provider'
+            - '@oro_commerce_menu.builder.navigation_root.master_catalog'
+            - '@oro_commerce_menu.builder.navigation_root.web_catalog'
+            - '@oro_config.manager'
+        tags:
+            # Should be located before menu update builders.
+            - { name: oro_menu.builder, priority: 50 }
+
+    oro_commerce_menu.builder.navigation_root.master_catalog:
+        class: Oro\Bundle\CommerceMenuBundle\Builder\MasterCatalogNavigationRootBuilder
+        arguments:
+            - '@oro_catalog.provider.master_catalog_root'
+            - '@oro_commerce_menu.provider.menu_templates_provider'
+
+    oro_commerce_menu.builder.navigation_root.web_catalog:
+        class: Oro\Bundle\CommerceMenuBundle\Builder\WebCatalogNavigationRootBuilder
+        arguments:
+            - '@oro_web_catalog.web_catalog_provider'
+            - '@oro_commerce_menu.provider.menu_templates_provider'
+        calls:
+            - ['setLogger', ['@logger']]
+        tags:
+            - { name: monolog.logger, channel: oro_commerce_menu }

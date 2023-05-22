@@ -1,0 +1,32 @@
+services:
+    _defaults:
+        public: false
+
+    Oro\Bundle\MigrationBundle\Command\DumpMigrationsCommand:
+        arguments:
+            - '@doctrine'
+            - '@oro_migration.tools.schema_dumper'
+            - '@oro_entity_config.config_manager'
+            - '%kernel.bundles%'
+            - "@=container.hasParameter('debug.file_link_format') && parameter('debug.file_link_format') ? parameter('debug.file_link_format') : 'phpstorm'"
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\MigrationBundle\Command\LoadDataFixturesCommand:
+        arguments:
+            - '@kernel'
+            - '@oro_migration.data_fixtures.loader'
+            - '@oro_migration.data_fixtures.executor'
+            - '@oro_migration.locator.fixture_path_locator'
+            - '@oro_config.global'
+            - '@doctrine'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\MigrationBundle\Command\LoadMigrationsCommand:
+        arguments:
+            - '@oro_migration.migrations.loader'
+            - '@oro_migration.migrations.executor'
+            - '@oro_entity_config.tools.command_executor'
+        tags:
+            - { name: console.command }

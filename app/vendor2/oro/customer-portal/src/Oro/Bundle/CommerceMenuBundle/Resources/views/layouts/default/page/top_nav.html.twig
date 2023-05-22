@@ -1,0 +1,30 @@
+{% block _top_nav_container_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        '~class': " topbar"
+    }) %}
+    <div {{ block('block_attributes') }}>
+        <div class="page-area-container page-header-content">
+            {{ block_widget(block) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block _top_nav_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        '~class': " topbar-navigation topbar-navigation--align-end"
+    }) %}
+
+    {% set child_attr = layout_attr_defaults(child_attr, {
+        '~class': ' topbar-navigation__item'
+    }) %}
+
+    {% set link_attr = layout_attr_defaults(link_attr, {
+        '~class': 'topbar-navigation__link'
+    }) %}
+
+    {{ parent_block_widget(block) }}
+{% endblock %}
+
+{% block _top_nav_menu_container_widget %}
+    {{ block_widget(block) }}
+{% endblock %}

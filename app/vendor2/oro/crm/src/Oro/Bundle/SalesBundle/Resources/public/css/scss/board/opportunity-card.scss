@@ -1,0 +1,7 @@
+/* @theme: admin.oro; */
+
+.opportunity-card-view {
+    .card-probability {
+        @include text-line-truncate();
+    }
+}

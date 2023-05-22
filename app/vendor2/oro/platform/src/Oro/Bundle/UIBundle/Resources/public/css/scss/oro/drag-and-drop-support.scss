@@ -1,0 +1,11 @@
+/* @theme: admin.oro; */
+
+.force-grabbed-cursor * {
+    // stylelint-disable-next-line declaration-no-important
+    cursor: move !important;
+}
+
+.force-grabbed-cursor {
+    -webkit-touch-callout: none;
+    user-select: none;
+}

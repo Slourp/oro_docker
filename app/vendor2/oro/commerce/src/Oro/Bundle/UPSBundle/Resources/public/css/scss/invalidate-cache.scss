@@ -1,0 +1,39 @@
+/* @theme: admin.oro; */
+
+.invalidate-cache-tr {
+    white-space: nowrap;
+
+    td {
+        height: 50px;
+    }
+
+    .invalidate-cache-td-labels {
+        vertical-align: middle;
+    }
+
+    .invalidate-cache-td-fields {
+        .selector {
+            width: auto;
+        }
+
+        .datepicker-input {
+            width: 120px;
+        }
+
+        .timepicker-input {
+            width: 100px;
+        }
+    }
+
+    .cache-invalidate-type {
+        width: auto;
+    }
+}
+
+.invalidate-cache-content {
+    height: 105px;
+}
+
+.invalidate-cache-form {
+    padding-top: 20px;
+}

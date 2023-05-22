@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        public: true
+
+    Oro\Bundle\FedexShippingBundle\Controller\ValidateConnectionController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: oro_shipping.system_shipping_origin_provider, key: Oro\Bundle\ShippingBundle\Provider\SystemShippingOriginProvider }

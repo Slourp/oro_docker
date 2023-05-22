@@ -1,0 +1,23 @@
+oro_behat_extension:
+  suites:
+    OroCustomerAccountBridgeBundle:
+      contexts:
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bridge\CustomerAccount\Tests\Behat\Context\CustomerAccountContext
+        - Oro\Bundle\DataGridBundle\Tests\Behat\Context\GridContext
+        - Oro\Bundle\SecurityBundle\Tests\Behat\Context\ACLContext
+        - Oro\Bundle\EmailBundle\Tests\Behat\Context\EmailContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FormContext
+        - Oro\Bundle\ImportExportBundle\Tests\Behat\Context\ImportExportContext
+        - Oro\Bundle\ApplicationBundle\Tests\Behat\Context\CommerceMainContext
+        - Oro\Bundle\ShippingBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\ConfigBundle\Tests\Behat\Context\FeatureContext
+      paths:
+        - '@OroCustomerAccountBridgeBundle/Tests/Behat/Features'
+
+  elements:
+    Next opportunity icon:
+      selector: 'i.fa-chevron-right'
+
+    Opportunity Title:
+      selector: 'div.top-row'

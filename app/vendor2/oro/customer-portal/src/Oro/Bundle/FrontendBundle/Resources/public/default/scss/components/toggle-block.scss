@@ -1,0 +1,17 @@
+/* @theme: default; */
+
+.toggle-block {
+    &__content {
+        position: relative;
+        display: none;
+    }
+
+    &__trigger {
+        &.checked,
+        &.active {
+            + .toggle-block__content {
+                display: block;
+            }
+        }
+    }
+}

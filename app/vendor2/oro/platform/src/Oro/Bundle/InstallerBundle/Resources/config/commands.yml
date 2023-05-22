@@ -1,0 +1,45 @@
+services:
+    _defaults:
+        public: false
+
+    Oro\Bundle\InstallerBundle\Command\CheckRequirementsCommand:
+        arguments:
+            - !tagged_iterator oro.requirements_provider
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\InstallerBundle\Command\InstallCommand:
+        arguments:
+            - '@service_container'
+            - '@doctrine'
+            - '@event_dispatcher'
+            - '@oro_distribution.handler.application_status'
+            - '@oro_installer.script_manager'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\InstallerBundle\Command\LoadPackageDemoDataCommand:
+        arguments:
+            - '@kernel'
+            - '@?oro_migration.data_fixtures.loader'
+            - '@?oro_migration.data_fixtures.executor'
+            - '@?oro_migration.locator.fixture_path_locator'
+            - '@oro_config.global'
+            - '@doctrine'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\InstallerBundle\Command\PlatformUpdateCommand:
+        arguments:
+            - '@service_container'
+            - '@oro_installer.platform_update_checker'
+            - '@oro_config.global'
+            - '@doctrine'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\InstallerBundle\Command\RunScriptsCommand:
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: console.command }

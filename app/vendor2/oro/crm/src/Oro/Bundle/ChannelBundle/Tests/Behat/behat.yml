@@ -1,0 +1,22 @@
+oro_behat_extension:
+  elements:
+    Channel Form:
+      selector: 'form[name="oro_channel_form"]'
+      class: Oro\Bundle\TestFrameworkBundle\Behat\Element\Form
+      options:
+        mapping:
+          Entities Select:
+            type: 'xpath'
+            locator: '//input[@data-purpose="entity-selector"]'
+            element: Select2Entity
+
+  suites:
+    OroChannelBundle:
+      contexts:
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\FixturesContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FormContext
+        - Oro\Bundle\NavigationBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\DataGridBundle\Tests\Behat\Context\GridContext
+      paths:
+        - '@OroChannelBundle/Tests/Behat/Features'

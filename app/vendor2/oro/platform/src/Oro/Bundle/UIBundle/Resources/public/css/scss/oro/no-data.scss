@@ -1,0 +1,48 @@
+/* @theme: admin.oro; */
+
+@use 'sass:selector';
+
+// More about placeholders https://github.com/sass/sass/issues/2808#issuecomment-574413393
+%base-no-data,
+.no-data {
+    margin: $no-data-offset;
+    padding: 0 $content-padding;
+    text-align: center;
+    font-size: $no-data-font-size;
+    line-height: $no-data-line-height;
+
+    color: $no-data-color;
+
+    white-space: normal;
+
+    // Floating the elements, such as quickly accessible buttons close to datagrids, are not allowed to float on both sides
+    clear: both;
+
+    @at-root #{selector.append(&, '__title')} {
+        margin: 0;
+
+        font-size: $no-data-title-font-size;
+        line-height: 1;
+        font-weight: $no-data-title-font-weight;
+
+        color: $no-data-title-color;
+
+        @include fa-icon($no-data-icon, before, true) {
+            display: inline-block;
+
+            margin-right: $no-data-icon-offset;
+        }
+
+        &:first-child {
+            margin-bottom: $no-data-title-offset;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    @at-root #{selector.append(&, '__text')} {
+        margin: 0;
+    }
+}

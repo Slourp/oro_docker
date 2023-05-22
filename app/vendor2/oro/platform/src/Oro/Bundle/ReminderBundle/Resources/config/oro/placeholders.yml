@@ -1,0 +1,17 @@
+placeholders:
+    placeholders:
+        after_body_start:
+            items:
+               oro_reminder_subscribe_script:
+                  order: 10
+
+        content_before:
+            items:
+               oro_reminder_show_script: ~
+
+    items:
+        oro_reminder_subscribe_script:
+            template: '@@OroReminder/Reminder/subscribeScript.html.twig'
+
+        oro_reminder_show_script:
+            template: '@@OroReminder/Reminder/showScript.html.twig'

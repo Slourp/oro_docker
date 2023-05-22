@@ -1,0 +1,21 @@
+Oro\Bundle\TaskBundle\Entity\Task:
+    constraints:
+        - Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired: ~
+    properties:
+        subject:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        dueDate:
+            - Type:
+                type: DateTimeInterface
+                message: oro.task.task.due_date.type.message
+                payload:
+                    jsValidation:
+                        type: DateTime
+        status:
+            - NotBlank: ~
+        taskPriority:
+            - NotBlank: ~
+        reminders:
+            - Valid: ~

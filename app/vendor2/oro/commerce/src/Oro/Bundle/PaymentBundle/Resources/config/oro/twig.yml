@@ -1,0 +1,2 @@
+bundles:
+    - '@OroPayment/Form/fields.html.twig'

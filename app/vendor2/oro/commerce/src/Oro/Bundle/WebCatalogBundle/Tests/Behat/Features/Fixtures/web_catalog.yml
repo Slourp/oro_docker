@@ -1,0 +1,98 @@
+include:
+    - '@OroProductBundle:default_webcatalog.yml'
+
+Oro\Bundle\WebCatalogBundle\Entity\ContentNode:
+    nodeDefaultWebCatalog:
+        __calls:
+            - addTitle: ['@localValueDefaultWebCatalog']
+            - addContentVariant: ['@systemPageVariant1']
+            - addScope: ['@defaultWebCatalogScope']
+        webCatalog: '@webCatalog'
+
+    nodeProducts:
+        __calls:
+            - addTitle: ['@localValueProducts']
+            - addSlugPrototype: ['@localValueProductsSlug']
+            - addLocalizedUrl: ['@localValueProductsSlug']
+            - addContentVariant: ['@systemPageVariant2']
+            - addScope: ['@defaultWebCatalogScope']
+        ParentNode: '@nodeDefaultWebCatalog'
+        webCatalog: '@webCatalog'
+
+    nodeNewArrivals:
+        __calls:
+            - addTitle: ['@localValueNewArrivals']
+            - addSlugPrototype: ['@localValueNewArrivalsSlug']
+            - addLocalizedUrl: ['@localValueNewArrivalsSlug']
+            - addContentVariant: ['@systemPageVariant3']
+            - addScope: ['@defaultWebCatalogScope']
+        ParentNode: '@nodeDefaultWebCatalog'
+        webCatalog: '@webCatalog'
+
+    nodeClearance:
+        __calls:
+            - addTitle: ['@localValueClearance']
+            - addSlugPrototype: ['@localValueClearanceSlug']
+            - addLocalizedUrl: ['@localValueClearanceSlug']
+            - addContentVariant: ['@clearanceVariant']
+            - addScope: ['@defaultWebCatalogScope']
+        ParentNode: '@nodeDefaultWebCatalog'
+        webCatalog: '@webCatalog'
+
+    nodeByBrand:
+        __calls:
+            - addTitle: ['@localValueByBrand']
+            - addSlugPrototype: ['@localValueByBrandSlug']
+            - addLocalizedUrl: ['@localValueByBrandSlug']
+            - addContentVariant: ['@brandVariant']
+            - addScope: ['@defaultWebCatalogScope']
+        ParentNode: '@nodeClearance'
+        webCatalog: '@webCatalog'
+
+Oro\Bundle\LocaleBundle\Entity\LocalizedFallbackValue:
+    localValueDefaultWebCatalog:
+        string: 'Default Web Catalog'
+
+    localValueProducts:
+        string: 'Products'
+
+    localValueProductsSlug:
+        string: 'products'
+
+    localValueNewArrivals:
+        string: 'New Arrivals'
+
+    localValueNewArrivalsSlug:
+        string: 'new-arrivals'
+
+    localValueClearance:
+        string: 'Clearance'
+
+    localValueClearanceSlug:
+        string: 'clearance'
+
+    localValueByBrand:
+        string: 'By Brand'
+
+    localValueByBrandSlug:
+        string: 'by-brand'
+
+Oro\Bundle\WebCatalogBundle\Entity\ContentVariant:
+    systemPageVariant{1..3}:
+        type: 'system_page'
+        systemPageRoute: 'oro_customer_frontend_customer_user_index'
+        default: true
+        __calls:
+            - addScope: [ '@defaultWebCatalogScope' ]
+    clearanceVariant:
+        type: 'system_page'
+        systemPageRoute: 'oro_customer_frontend_customer_user_index'
+        default: true
+        __calls:
+            - addScope: [ '@defaultWebCatalogScope' ]
+    brandVariant:
+        type: 'system_page'
+        systemPageRoute: 'oro_customer_frontend_customer_user_index'
+        default: true
+        __calls:
+            - addScope: [ '@defaultWebCatalogScope' ]

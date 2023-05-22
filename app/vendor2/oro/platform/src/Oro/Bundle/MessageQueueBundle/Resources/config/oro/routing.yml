@@ -1,0 +1,21 @@
+oro_message_queue_bundle:
+    resource:     "@OroMessageQueueBundle/Controller"
+    type:         annotation
+    prefix:       /message-queue
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_message_queue_job_interrupt_root_job:
+    path: '/api/rest/{version}/message-queue/job/interrupt/{id}.{_format}'
+    methods: [POST]
+    defaults:
+        _controller: 'Oro\Bundle\MessageQueueBundle\Controller\Api\Rest\JobController::interruptRootJobAction'
+        version: latest
+        _format: json
+    requirements:
+        id: \d+
+        version: latest|v1
+        _format: json

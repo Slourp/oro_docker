@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  php:
+    container_name: ${PROJECT_NAME}_PHP
+    networks:
+      - project-network
+      - default
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+      target: "${BUILD_TARGET:-app}"
+      args:
+        USER_ID: '${USER_ID:-1000}'
+        GROUP_ID: '${USER_yID:-1000}'
+        USER: '${USER:-User}'
+    volumes:
+      - .:/var/www/app:z
+      - ./docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+      - ./docker/php/init.sh:/init.sh:ro
+    env_file:
+      - .env-app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+    # command: ["/init.sh"]
+
+  mysql:
+    extends:
+      file: docker-compose.mysql.dev.yml
+      service: mysql
+
+networks:
+  default:
+    name: ${NETWORK_NAME}
+  project-network:
+    name: ${PROJECT_NAME}-NETWORK
+    internal: true
+
+volumes:
+  mysql_data:
+    name: ${PROJECT_NAME}_mysql_data

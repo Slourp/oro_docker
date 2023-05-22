@@ -1,0 +1,291 @@
+{% block _rfp_request_view_toolbar_actions_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        '~class': " controls-list"
+    }) %}
+
+    <div {{ block('block_attributes') }}>
+        {{ block_widget(block) }}
+    </div>
+{% endblock %}
+
+{% block _rfp_request_view_customer_status_widget %}
+    {% set text %}
+        {{ 'oro.frontend.rfp.request.customer_status.label'|trans }}: {{ text }}
+    {% endset %}
+    <div class="box-toolbar__content">{{ parent_block_widget(block) }}</div>
+{% endblock %}
+
+{% block _rfp_request_view_information_widget %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    <div class="customer-info-grid">
+        <h2 class="customer-info-grid__title">
+            {{- 'oro.frontend.rfp.request.sections.general'|trans -}}
+        </h2>
+        <div class="grid">
+            <div class="grid-col-6 grid-col-mobile-landscape-12">
+                <table class="customer-info-grid__table">
+                    <tbody>
+                        <tr class="customer-info-grid__row">
+                            <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.first_name.label'|trans }}</td>
+                            <td class="customer-info-grid__element-content">{{ request.firstName }}</td>
+                        </tr>
+                        <tr class="customer-info-grid__row">
+                            <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.last_name.label'|trans }}</td>
+                            <td class="customer-info-grid__element-content">{{ request.lastName }}</td>
+                        </tr>
+                        <tr class="customer-info-grid__row">
+                            <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.email.label'|trans }}</td>
+                            <td class="customer-info-grid__element-content"><bdo dir="ltr">{{ request.email }}</bdo></td>
+                        </tr>
+                        {% if request.phone %}
+                            <tr class="customer-info-grid__row">
+                                <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.phone.label'|trans }}</td>
+                                <td class="customer-info-grid__element-content"><bdo dir="ltr">{{ request.phone }}</bdo></td>
+                            </tr>
+                        {% endif %}
+                        <tr class="customer-info-grid__row">
+                            <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.company.label'|trans }}</td>
+                            <td class="customer-info-grid__element-content">{{ request.company|default('N/A'|trans) }}</td>
+                        </tr>
+                        {% if request.role %}
+                            <tr class="customer-info-grid__row">
+                                <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.role.label'|trans }}</td>
+                                <td class="customer-info-grid__element-content">{{ request.role }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if request.poNumber %}
+                            <tr class="customer-info-grid__row">
+                                <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.po_number.label'|trans }}</td>
+                                <td class="customer-info-grid__element-content"><bdo dir="ltr">{{ request.poNumber }}</bdo></td>
+                            </tr>
+                        {% endif %}
+                        {% if request.shipUntil %}
+                            <tr class="customer-info-grid__row">
+                                <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.ship_until.label'|trans }}</td>
+                                <td class="customer-info-grid__element-content"><bdo dir="ltr">{{ request.shipUntil|oro_format_date }}</bdo></td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid-col-6 grid-col-mobile-landscape-12">
+                <table class="customer-info-grid__table">
+                    <tbody>
+                        {% if is_granted_view_customer_user(request) and request.customerUser %}
+                            <tr class="customer-info-grid__row">
+                                <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.customer_user.label'|trans }}</td>
+                                <td class="customer-info-grid__element-content">
+                                    {{ UI.entityViewLink(request.customerUser, request.customerUser.fullName, 'oro_customer_frontend_customer_user_view') }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if request.assignedCustomerUsers|length %}
+                            <tr>
+                                <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.assigned_customer_users.label'|trans }}</td>
+                                <td class="customer-info-grid__element-content">
+                                    {{ UI.entityViewLinks(request.assignedCustomerUsers, 'fullName', 'oro_customer_frontend_customer_user_view') }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if request.note %}
+                            <tr class="account-oq__order-info__control">
+                                <td class="customer-info-grid__element-label">{{ 'oro.frontend.rfp.request.note.label'|trans }}</td>
+                                <td class="customer-info-grid__element-content">{{ request.note|nl2br }}</td>
+                            </tr>
+                        {% endif %}
+                        {{ block_widget(block) }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _rfp_request_view_additional_notes_widget %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+    {% if block.vars.visible %}
+        {% set attr = attr|merge({
+            class: attr.class|default('') ~ " notes"
+        }) %}
+
+        {% set collapseId = 'collapse-'|uniqid %}
+        <div {{ block('block_attributes') }}>
+            <h3 class="section-title section-title--size-m">
+                {{ 'oro.frontend.rfp.request.sections.notes.label'|trans }}
+                <span class="notes__count">({{ requestAdditionalNotes|length }})</span>
+                <button type="button" class="btn btn--plain btn--default-color" title="{{ 'Show less'|trans }}"
+                      data-toggle="collapse"
+                      data-target="{{ '#' ~  collapseId }}"
+                      aria-expanded="false"
+                      aria-controls="{{ collapseId }}"
+                >
+                    <span class="fa-caret-down fa--no-offset" aria-hidden="true" data-icon></span>
+                </button>
+            </h3>
+            <div id="{{ collapseId }}"
+                 class="collapse show"
+                 data-toggle="false"
+                 data-state-id="{{ id }}"
+                 data-trigger-icon-show-class="fa-caret-down"
+                 data-trigger-icon-hide-class="fa-caret-right"
+                 data-collapsed-title="{{ 'Show more'|trans }}"
+                 data-expanded-title="{{ 'Show less'|trans }}"
+            >
+                {% for requestAdditionalNote in requestAdditionalNotes %}
+                    <article class="notes__item">
+                        <header class="notes__info">
+                            <p class="notes__text">
+                                <span class="bold">{{ requestAdditionalNote.author }}</span>
+                                <span class="notes__date">{{ requestAdditionalNote.createdAt|oro_format_datetime }}</span>
+                            </p>
+                        </header>
+                        <div>
+                            <p>{{ requestAdditionalNote.text|e|nl2br }}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block _rfp_request_view_line_items_widget %}
+    <div class="customer-line-items">
+        <h2 class="customer-line-items__title">
+            {{- 'oro.frontend.rfp.request.sections.request_products.label'|trans -}}
+        </h2>
+        <table class="oro-grid-table customer-line-items__table">
+            <thead class="grid-header hide-on-mobile-landscape">
+                <tr class="grid-header-row">
+                    <th class="grid-cell" colspan="2">{{ 'oro.frontend.rfp.request.sections.request_products.columns.item.label'|trans }}</th>
+                    <th class="grid-cell">{{ 'oro.frontend.rfp.request.sections.request_products.columns.quantity.label'|trans }}</th>
+                    <th class="grid-cell">{{ 'oro.frontend.rfp.request.sections.request_products.columns.price.label'|trans }}</th>
+                </tr>
+            </thead>
+            {% for requestProduct in requestProducts %}
+                {%- for child in block -%}
+                    <tbody class="grid-body">
+                    {{ block_widget(child, {requestProduct: requestProduct}) }}
+                    </tbody>
+                {%- endfor -%}
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block _rfp_request_view_line_item_products_widget %}
+    {% for requestProductItem in requestProduct.requestProductItems %}
+    {% set isFirst = loop.first %}
+    <tr class="grid-row">
+        {% for child in block %}
+            {{ block_widget(child, {requestProduct: requestProduct, requestProductItem: requestProductItem, isFirst: isFirst }) }}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block _rfp_request_view_line_item_product_item_widget %}
+    {% if isFirst %}
+    <td class="grid-cell grid-cell--offset-none-mobile primary-cell" colspan="2" rowspan="{{ requestProduct.requestProductItems|length }}">
+        {%- for child in block -%}
+            {{ block_widget(child, {requestProduct: requestProduct, requestProductItem: requestProductItem, isFirst: isFirst }) }}
+        {% endfor %}
+    </td>
+    {% endif %}
+{% endblock %}
+
+{% block _rfp_request_view_line_item_product_item_title_widget %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+    <h3 class="oro-grid-table__title">
+        {% if (requestProduct.product.id is defined) %}
+            {{ UI.link({
+                path: path('oro_product_frontend_product_view', {'id': requestProduct.product.id}),
+                label : requestProduct.product.names|localized_value|trim,
+            }) }}
+        {% else %}
+            {{ requestProduct.product }}
+        {% endif %}
+    </h3>
+{% endblock %}
+
+{% block _rfp_request_view_line_item_product_item_attributes_widget %}
+    <div class="customer-line-items__row">
+    {%- for child in block -%}
+        {{ block_widget(child, {requestProduct: requestProduct, requestProductItem: requestProductItem }) }}
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block _rfp_request_view_line_item_product_item_attributes_sku_widget %}
+    {{ 'oro.frontend.rfp.requestproduct.product_sku.label'|trans }} <span class="customer-line-items__sku-value">{{ requestProduct.productSku }}</span>
+{% endblock %}
+
+{% block _rfp_request_view_line_item_product_item_attributes_mobile_widget %}
+    <div class="grid-row hide-on-desktop hide-on-strict-tablet">
+        <div class="grid-head grid-cell--offset-l-none-mobile" aria-hidden="true">
+            {{ 'oro.frontend.rfp.request.sections.request_products.columns.quantity.label'|trans }}
+        </div>
+        <div class="grid-head" aria-hidden="true">
+            {{ 'oro.frontend.rfp.request.sections.request_products.columns.price.label'|trans }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block _rfp_request_view_line_item_product_quantity_widget %}
+    <td class="grid-cell grid-cell--offset-l-none-mobile">
+        {% if oro_is_unit_code_visible(requestProductItem.productUnit.code) %}
+            {{ requestProductItem.quantity|oro_format_short_product_unit_value(requestProductItem.productUnit) }}
+        {% else %}
+            {{ requestProductItem.quantity|oro_format_decimal }}
+        {% endif %}
+    </td>
+{% endblock %}
+
+{% block _rfp_request_view_line_item_product_price_widget %}
+    {% import '@OroDataGrid/macros.html.twig' as dataGrid %}
+    <td class="grid-cell">
+        {% if requestProductItem.price %}
+            {{ requestProductItem.price|oro_format_price }}
+        {% else %}
+            {{ dataGrid.renderBlankCellValue() }}
+        {% endif %}
+    </td>
+{% endblock %}
+
+{% block _rfp_request_view_line_item_comment_widget %}
+    {% if (requestProduct.comment is not empty) %}
+    <tr class="grid-row">
+        <td class="grid-cell notes-cell" colspan="4">
+            <div class="customer-line-items__row customer-line-items__notes">
+                {{ 'oro.frontend.rfp.requestproduct.comment.label'|trans }}:
+                <span class="customer-line-items__value">{{ requestProduct.comment }}</span>
+            </div>
+        </td>
+    </tr>
+    {% endif %}
+{% endblock %}
+
+{% block _rfp_request_view_notes_container_widget %}
+    {% if block.vars.visible %}
+        <div {{ block('block_attributes') }}>
+            <h3 class="customer-navigation-title">
+                {{ 'oro.frontend.rfp.request.sections.notes.label'|trans }}
+            </h3>
+            {{ block_widget(block) }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block _rfp_request_view_notes_widget %}
+    {{ block_widget(block)|nl2br }}
+{% endblock %}
+
+{% block _rfp_request_view_bottom_widget %}
+    {% set attr = attr|merge({
+        class: attr.class|default('') ~ " order-checkout-widget"
+    }) %}
+    <div {{ block('block_attributes') }}>
+        {{ block_widget(block) }}
+    </div>
+{% endblock %}

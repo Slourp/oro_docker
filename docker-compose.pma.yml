@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  
+    phpmyadmin:
+        container_name: ${PROJECT_NAME}_PMA
+        networks:
+            - default
+            - project-network
+        image: phpmyadmin
+        restart: on-failure
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+            PMA_HOSTS: mysql
+            PMA_ABSOLUTE_URI: https://${DOMAIN}.traefik.me/pma/
+        env_file:
+            - .env-app
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.${PROJECT_NAME}_phpmyadmin.rule=Host(`${DOMAIN}.traefik.me`) && PathPrefix(`/pma`)"
+            - "traefik.http.services.${PROJECT_NAME}_phpmyadmin.loadbalancer.server.port=80"
+            - "traefik.http.routers.${PROJECT_NAME}_phpmyadmin.tls=true"
+            - "traefik.http.routers.${PROJECT_NAME}_phpmyadmin.middlewares=phpmyadmin"
+            - "traefik.http.middlewares.phpmyadmin.stripprefix.prefixes=/pma"
+
+volumes:
+    mysql_data:
+        name: ${PROJECT_NAME}_mysql_data

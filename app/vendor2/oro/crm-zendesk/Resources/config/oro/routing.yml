@@ -1,0 +1,16 @@
+#
+# OLD REST API ROUTES
+#
+
+oro_api_post_ticket_sync_case:
+    path: '/api/rest/{version}/ticket/sync/case/{id}/channel/{channelId}.{_format}'
+    methods: [POST]
+    defaults:
+        _controller: 'Oro\Bundle\ZendeskBundle\Controller\Api\Rest\TicketController::postSyncCaseAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        channelId: \d+
+        _format: json
+        version: latest|v1

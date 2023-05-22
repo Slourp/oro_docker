@@ -1,0 +1,46 @@
+/* @theme: admin.oro; */
+
+.account-customer-info {
+    .tab-content .nav-tabs {
+        width: 100%;
+    }
+
+    &.multicustomer > .oro-tabs {
+        > .nav-tabs {
+            margin-bottom: 16px;
+
+            > .tab {
+                float: none;
+            }
+
+            > .dropdown {
+                /* stylelint-disable selector-max-compound-selectors */
+                &.active > a {
+                    border-bottom: 1px solid $additional-lighten;
+                }
+
+                > .dropdown-menu.pull-right {
+                    left: 0;
+                    right: auto;
+                }
+                /* stylelint-enable selector-max-compound-selectors */
+            }
+        }
+
+        > .tab-content {
+            border: 0 none;
+        }
+
+        .account-customer-title {
+            height: 0;
+            padding: 0;
+        }
+
+        .orocrm-channel-lifetime-value-label {
+            float: none;
+            position: absolute;
+            right: 10px;
+            top: 16px;
+        }
+    }
+}

@@ -1,0 +1,3 @@
+dynamic-imports:
+    commons:
+        - oroanalytics/js/app/components/rfm-settings

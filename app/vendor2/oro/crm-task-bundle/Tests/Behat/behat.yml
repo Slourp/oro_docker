@@ -1,0 +1,44 @@
+oro_behat_extension:
+  elements:
+    My Tasks Choose Color Menu:
+      class: Oro\Bundle\TaskBundle\Tests\Behat\Element\MyTasksChooseColorMenu
+      selector: 'li[data-calendar-alias="tasks"] a.context-menu-button'
+
+    Tasks Grid:
+      class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
+      selector: 'div[data-page-component-name="tasks-grid"]'
+
+    User Tasks Grid:
+      class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
+      selector: 'div[data-page-component-name="user-tasks-grid"]'
+
+    Task Form:
+      selector: 'form[name="oro_task"]'
+      class: Oro\Bundle\TestFrameworkBundle\Behat\Element\Form
+      options:
+        mapping:
+          Due date: 'oro_task[dueDate]'
+
+    Task View Delete Test Context:
+      selector:
+        type: xpath
+        locator: '//div[@class="activity-context-activity-items"]//span[text()="Test Record"]/parent::a/following-sibling::span'
+
+  suites:
+    OroTaskBundle:
+      contexts:
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\FixturesContext
+        - Oro\Bundle\SecurityBundle\Tests\Behat\Context\ACLContext
+        - Oro\Bundle\UserBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\SalesBundle\Tests\Behat\Context\SalesContext
+        - Oro\Bundle\DataGridBundle\Tests\Behat\Context\GridContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FormContext
+        - Oro\Bundle\QueryDesignerBundle\Tests\Behat\Context\QueryDesignerContext
+        - Oro\Bundle\UIBundle\Tests\Behat\Context\ContextSelectorContext
+        - Oro\Bundle\ConfigBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\NavigationBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\LocaleBundle\Tests\Behat\Context\LocalizationContext
+        - Oro\Bundle\ActivityListBundle\Tests\Behat\Context\ActivityContext
+      paths:
+        - '@OroTaskBundle/Tests/Behat/Features'

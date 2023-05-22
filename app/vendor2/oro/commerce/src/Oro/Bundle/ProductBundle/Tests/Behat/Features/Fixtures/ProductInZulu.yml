@@ -1,0 +1,24 @@
+include:
+  - '@OroLocaleBundle:ZuluLocalization.yml'
+
+Oro\Bundle\ProductBundle\Entity\ProductName:
+  productInZulu1Name:
+    string: 'ProductInZulu1'
+
+Oro\Bundle\ProductBundle\Entity\ProductUnitPrecision:
+  productInZulu1UnitPrecision:
+    unit: '@each'
+    precision: '1'
+
+Oro\Bundle\ProductBundle\Entity\Product:
+  productInZulu1:
+    type: 'simple'
+    sku: 'SKUZULU1'
+    inventoryStatus: '@enumInventoryStatuses'
+    status: 'enabled'
+    organization: '@organization'
+    attributeFamily: '@defaultProductFamily'
+    primaryUnitPrecision: '@productInZulu1UnitPrecision'
+    unitPrecisions: [ '@productInZulu1UnitPrecision' ]
+    __calls:
+      - addName: ['@productInZulu1Name']

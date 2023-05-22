@@ -1,0 +1,13 @@
+<td class="datagrid-manager__item">
+    <div class="datagrid-manager__container">
+        <span class="datagrid-manager__handle handle"></span>
+        <div class="datagrid-manager__label">
+            <label data-checkbox class="checkbox-label">
+                <input type="checkbox" data-role="renderable"
+                <% if (disabledVisibilityChange) { %> disabled <% } %>
+                <% if (renderable) { %> checked <% } %>>
+                <%- label %>
+            </label>
+        </div>
+    </div>
+</td>

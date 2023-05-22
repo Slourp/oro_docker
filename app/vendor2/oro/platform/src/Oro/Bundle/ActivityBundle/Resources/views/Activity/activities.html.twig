@@ -1,0 +1,6 @@
+{% import '@OroUI/macros.html.twig' as UI %}
+
+{% set panelContent %}
+    {% include '@OroUI/tab_panel.html.twig' %}
+{% endset %}
+{{ UI.scrollSubblock(null, [panelContent]) }}

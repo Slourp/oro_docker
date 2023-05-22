@@ -1,0 +1,41 @@
+knp_gaufrette:
+    adapters:
+        import_files:
+            local:
+                directory: '%kernel.project_dir%/var/data/import_files'
+
+    filesystems:
+        attachments:
+            adapter: private
+            alias: attachments_filesystem
+        attachments_cleanup_data:
+            adapter: private
+            alias: attachments_cleanup_data_filesystem
+        public_mediacache:
+            adapter: public
+            alias: public_mediacache_filesystem
+        protected_mediacache:
+            adapter: private
+            alias: protected_mediacache_filesystem
+        import_files:
+            adapter: import_files
+            alias: import_files_filesystem
+
+    stream_wrapper: ~
+
+liip_imagine:
+    filter_sets:
+        original: {}
+
+oro_api:
+    api_doc_cache:
+        resettable_services:
+            - oro_attachment.api.attachment_association_provider
+    error_title_overrides:
+        'file constraint from system config constraint': 'file constraint'
+
+oro_security:
+    login_target_path_excludes:
+        - oro_attachment_get_file
+        - oro_resize_attachment
+        - oro_filtered_attachment

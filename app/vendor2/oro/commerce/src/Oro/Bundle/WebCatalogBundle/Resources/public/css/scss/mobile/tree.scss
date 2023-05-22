@@ -1,0 +1,15 @@
+/* @theme: admin.oro; */
+
+.content-with-sidebar--content {
+    .entity-create-or-select-container {
+        .input-append {
+            display: grid;
+            grid-auto-flow: column;
+            grid-template-columns: minmax(100px, 100%);
+        }
+    }
+
+    .select2-choice {
+        width: 100%;
+    }
+}

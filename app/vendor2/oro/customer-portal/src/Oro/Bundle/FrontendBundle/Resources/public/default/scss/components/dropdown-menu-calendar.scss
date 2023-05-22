@@ -1,0 +1,80 @@
+/* @theme: default; */
+
+.dropdown-menu-calendar {
+    min-width: 270px;
+    padding: 0;
+
+    background: $dropdown-menu-calendar-background;
+
+    .tab-content {
+        padding: $offset-y-m ($offset-x-m - 2px) 0;
+    }
+
+    .ui-datevariables-div {
+        padding: $offset-x-m;
+
+        .ui_date_variable {
+            @include element-state('hover') {
+                color: $dropdown-menu-calendar-date-variable-color;
+
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .ui-datepicker {
+        padding: 0;
+
+        border: 0;
+    }
+
+    .nav-tabs-oro {
+        display: flex;
+        align-items: center;
+
+        text-align: center;
+
+        > li {
+            width: 50%;
+
+            > a {
+                display: block;
+                padding: 7px 0;
+                border: none;
+
+                text-decoration: none;
+
+                color: $dropdown-menu-calendar-tabs-link-color;
+                background-color: $dropdown-menu-calendar-tabs-link-background-color;
+
+                &::before {
+                    margin-right: $offset-x-s;
+                    display: inline-block;
+                }
+
+                &.calendar {
+                    @include fa-icon($fa-var-calendar);
+                }
+
+                &.variables {
+                    @include fa-icon($fa-var-list-ul);
+                }
+
+                @include element-state('active') {
+                    color: $dropdown-menu-calendar-tabs-link-active-color;
+                }
+
+                @include element-state('hover') {
+                    color: $dropdown-menu-calendar-tabs-link-hover-color;
+                    background-color: $dropdown-menu-calendar-tabs-link-hover-background-color;
+                }
+            }
+
+            &.active {
+                > a {
+                    background-color: $dropdown-menu-calendar-tabs-active-link-hover-background-color;
+                }
+            }
+        }
+    }
+}

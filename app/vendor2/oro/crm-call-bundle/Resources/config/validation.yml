@@ -1,0 +1,28 @@
+Oro\Bundle\CallBundle\Entity\Call:
+    properties:
+        subject:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        callDateTime:
+            - NotBlank: ~
+            - Type:
+                type: DateTimeInterface
+                message: oro.call.call.call_date_time.type.message
+                payload:
+                    jsValidation:
+                        type: DateTime
+        callStatus:
+            - NotBlank: ~
+        duration:
+            - NotBlank: ~
+            - Range:
+                min: 0
+                max: 2147483647
+                notInRangeMessage: oro.call.duration.not_in_range.message
+        direction:
+            - NotBlank: ~
+        phoneNumber:
+            - NotBlank: ~
+            - Length:
+                max: 255

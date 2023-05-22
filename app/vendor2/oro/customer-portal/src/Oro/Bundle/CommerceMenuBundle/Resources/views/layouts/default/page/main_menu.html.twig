@@ -1,0 +1,161 @@
+{% block _header_row_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        'data-page-component-module': 'oroui/js/app/components/view-component',
+        'data-page-component-options': {view: 'orocommercemenu/js/app/views/header-row-view'},
+        'data-sticky-target': 'top-sticky-panel',
+        '~data-sticky': {
+            isSticky: true,
+            autoWidth: true,
+            toggleClass: 'header-row--fixed slide-in-down',
+            placeholderId: 'sticky-header-row',
+            viewport: 'tablet'
+        },
+        '~class': 'header-row' ~ (blocks.header_row.children|length > 2 ? ' header-row--from-left')
+    }) %}
+
+    <div class="page-area-container">
+        <div {{ block('block_attributes') }}>
+            {{ block_widget(block) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block _main_menu_extra_container_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        'data-main-menu-extra-container': '',
+        'data-header-row-toggle': ''
+    }) %}
+
+    <div {{ block('block_attributes') }}>
+        {{ block_widget(block) }}
+    </div>
+{% endblock %}
+
+{% block _header_row_main_menu_widget %}
+    <div class="header-row__container header-row__container--unstack">
+        <button class="header-row__trigger hidden-on-desktop"
+                type="button"
+                aria-label="{{ 'oro.commercemenu.menuupdate.menu.label'|trans }}"
+                data-page-component-module="oroui/js/app/components/viewport-component"
+                data-page-component-options="{{ {
+                    viewport: 'tablet',
+                    component: 'oroui/js/app/components/view-component',
+                    view: 'orofrontend/default/js/app/views/fullscreen-popup-view',
+                    contentElement: '[data-main-menu-extra-container]',
+                    popupLabel: 'oro_frontend.fullscreen_popup.menu.label'|trans,
+                    popupIcon: 'fa-navicon fa--gray fa--x-large',
+                    contentAttributes: {
+                        'class': 'fullscreen-mode'
+                    }
+                }|json_encode() }}"
+        >
+            <span class="nav-trigger__icon nav-trigger__icon--transparent nav-trigger__icon--large" aria-hidden="true">
+                <span class="fa-navicon fa--no-offset"></span>
+            </span>
+        </button>
+        <div class="header-row__toggle">
+            <div class="header-row__dropdown" data-main-menu-container>
+                {{ block_widget(block) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _main_menu_container_widget %}
+    {% set hoverPriority = hoverPriority|default(false) %}
+    {% set attr =  layout_attr_defaults(attr, {
+        '~class': " main-menu-outer#{hoverPriority ? ' is-hoverable'}",
+        'data-page-component-view': {
+            view: 'orocommercemenu/js/app/views/menu-traveling-view',
+            hoverPriority: hoverPriority
+        },
+        'data-dom-relocation-options': {
+            responsive: [
+                {
+                    viewport: 'tablet',
+                    moveTo: '[data-main-menu-extra-container]'
+                }
+            ]
+        }
+    }) %}
+
+    <div {{ block('block_attributes') }}>
+        {{ block_widget(block) }}
+    </div>
+{% endblock %}
+
+{% block _main_menu_back_trigger_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        '~class': ' main-menu__back-trigger',
+        'type': 'button',
+        'data-go-to': 'prev'
+    }) %}
+
+    <button {{ block('block_attributes') }}>
+        <span class="fa-chevron-left" aria-hidden="true"></span>
+        {{ 'oro_frontend.fullscreen_popup.back.label'|trans }}
+    </button>
+{% endblock %}
+
+{% block _main_menu_outer_container_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        '~class': ' main-menu-outer__container',
+        'data-page-component-view': {
+            view: 'oronavigation/js/app/views/navigation-menu-view',
+            listenToMouseEvents: false
+        }
+    }) %}
+
+    <div {{ block('block_attributes') }}>
+        {{ block_widget(block) }}
+    </div>
+{% endblock %}
+
+{% block _main_menu_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        '~class': 'main-menu',
+        'role': 'menu'
+    }) %}
+
+    {% set child_attr = layout_attr_defaults(child_attr, {
+        '~class': 'main-menu__item',
+        'data-role': 'menuitem'
+    }) %}
+
+    {% set link_attr = layout_attr_defaults(link_attr, {
+        '~class': 'main-menu__link',
+        'role': 'menuitem'
+    }) %}
+
+    {% set firstClass = null %}
+    {% set lastClass = null %}
+    {% set customItemBlock = customItemBlock|default('_main_menu_root_item') %}
+
+    {{ parent_block_widget(block) }}
+{% endblock %}
+
+{% block _main_menu_root_item %}
+    {% import '@OroNavigation/Menu/menu.html.twig' as oro_menu %}
+    {% if item.displayed and item.extras.isAllowed and not (item.extras.divider is defined and item.extras.divider) %}
+        {% apply spaceless %}
+            {% if item.extras[constant('Oro\\Bundle\\CommerceMenuBundle\\Entity\\MenuUpdate::MENU_TEMPLATE')]|default('') %}
+                {{ oro_commercemenu_render_menu_item(item) }}
+            {% else %}
+                {% set itemAttributes = layout_attr_defaults(itemAttributes, {
+                    'data-main-menu-item': item.level
+                }) %}
+                <li {{ oro_menu.attributes(itemAttributes) }}>
+                    <div class="main-menu__actions">
+                        {% set linkAttributes = layout_attr_defaults(item.linkAttributes, link_attr) %}
+                        {% set labelAttributes = layout_attr_defaults(item.labelAttributes, label_attr) %}
+                        {%- if item.uri is not empty and (not oro_commercemenu_is_current(item) or options.currentAsLink) %}
+                            {{ block('linkElement') }}
+                        {%- else %}
+                            {{ block('spanElement') }}
+                        {%- endif %}
+                    </div>
+                </li>
+            {%- endif %}
+        {% endapply %}
+    {% endif %}
+{% endblock %}

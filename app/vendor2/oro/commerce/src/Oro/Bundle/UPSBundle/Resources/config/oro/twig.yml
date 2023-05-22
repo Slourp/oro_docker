@@ -1,0 +1,2 @@
+bundles:
+    - '@OroUPS/Form/fields.html.twig'

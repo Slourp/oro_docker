@@ -1,0 +1,192 @@
+parameters:
+    oro_message_queue.maintenance.idle_time: 5
+
+services:
+    oro_message_queue.consumption.extensions:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\ChainExtension'
+        arguments:
+            - []
+            - '@oro_message_queue.log.consumer_state'
+
+    oro_message_queue.consumption.maintenance_extension:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\MaintenanceExtension'
+        arguments:
+            - '@oro_maintenance.maintenance_state'
+            - '%oro_message_queue.maintenance.idle_time%'
+        calls:
+            - ['setFilePathServerLockFromConfig', ['%kernel.project_dir%/config/oro_env.conf']]
+        tags:
+            - { name: 'oro_message_queue.consumption.extension', priority: 512 }
+
+    oro_message_queue.consumption.doctrine_clear_identity_map_extension:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\DoctrineClearIdentityMapExtension'
+        arguments:
+            - '@service_container'
+            - '%doctrine.entity_managers%'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension', priority: -245 }
+
+    oro_message_queue.consumption.database_connections_clear:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\DatabaseConnectionsClearExtension'
+        arguments:
+            - '@service_container'
+            - '%doctrine.connections%'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension', priority: -250 }
+
+    oro_message_queue.consumption.container_reset_extension:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\ContainerResetExtension'
+        arguments:
+            - [] # clearers. They are set by Oro\Bundle\MessageQueueBundle\DependencyInjection\Compiler\ConfigureClearersPass
+        tags:
+            - { name: 'oro_message_queue.consumption.extension', priority: -255, persistent: true }
+
+    oro_message_queue.consumption.interrupt_consumption_extension:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\InterruptConsumptionExtension'
+        arguments:
+            - '@oro_message_queue.interrupt_consumption.cache'
+            - '@oro_message_queue.consumption.cache_state'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension', persistent: true }
+
+    oro_message_queue.consumption.consumer_heartbeat_extension:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\ConsumerHeartbeatExtension'
+        arguments:
+            - '%oro_message_queue.consumer_heartbeat_update_period%'
+            - '@oro_message_queue.consumption.consumer_heartbeat'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension' }
+
+    oro_message_queue.consumption.security_aware_extension:
+        class: 'Oro\Bundle\MessageQueueBundle\Security\SecurityAwareConsumptionExtension'
+        arguments:
+            - [] # security agnostic processors
+            - '@security.token_storage'
+            - '@oro_security.token_serializer'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension' }
+
+    oro_message_queue.consumption.locale_extension:
+        class: 'Oro\Bundle\MessageQueueBundle\Consumption\Extension\LocaleExtension'
+        arguments:
+            - '@oro_locale.settings'
+            - '@stof_doctrine_extensions.listener.translatable'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension' }
+
+    oro_message_queue.consumption.clear_logger_extension:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\Extension\ClearLoggerExtension
+        arguments:
+            - '@service_container'
+            - [] # persistentLoggers; set by Oro\Bundle\MessageQueueBundle\DependencyInjection\Compiler\MakeLoggerServicesPersistentPass
+        tags:
+            - { name: oro_message_queue.consumption.extension, priority: -255, persistent: true }
+
+    # Optional cunsumtion extension with tag `oro_message_queue.consumption.extension`
+    # see Oro\Bundle\MessageQueueBundle\DependencyInjection\OroMessageQueueExtension::buildOptionalExtensions
+    oro_message_queue.consumption.redelivery_message_extension:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\Extension\RedeliveryMessageExtension
+        arguments:
+            - '@oro_message_queue.client.driver'
+            - ~
+
+    # Optional cunsumtion extension with tag `oro_message_queue.consumption.extension`
+    # see Oro\Bundle\MessageQueueBundle\DependencyInjection\OroMessageQueueExtension::buildOptionalExtensions
+    oro_message_queue.consumption.signal_extension:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\Extension\SignalExtension
+
+    oro_message_queue.consumption.container_clearer:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\Extension\ContainerClearer
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: oro_message_queue.consumption.clearer, priority: -250 }
+
+    oro_message_queue.consumption.garbage_collector_clearer:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\Extension\GarbageCollectorClearer
+        tags:
+            - { name: oro_message_queue.consumption.clearer, priority: -255 }
+
+    oro_message_queue.consumption.queue_consumer:
+        class: 'Oro\Component\MessageQueue\Consumption\QueueConsumer'
+        arguments:
+            - '@oro_message_queue.transport.connection'
+            - '@oro_message_queue.consumption.extensions'
+            - '@oro_message_queue.log.consumer_state'
+            - '@oro_message_queue.client.message_processor_registry'
+
+    oro_message_queue.listener.update_schema:
+        class: 'Oro\Bundle\MessageQueueBundle\EventListener\UpdateSchemaListener'
+        arguments:
+            - '@oro_message_queue.interrupt_consumption.cache'
+        tags:
+            - { name: 'kernel.event_listener', event: 'oro.entity_extend.entity.schema.update', priority: -250, method: 'onSchemaUpdate' }
+
+    oro_message_queue.consumption.cache_state:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\CacheState
+        public: true
+        arguments:
+            - '@oro_message_queue.consumption.cache_state_driver.dbal'
+
+    oro_message_queue.consumption.cache_state_driver.dbal:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\StateDriver\DbalStateDriver
+        arguments:
+            - 'cache'
+            - '@doctrine'
+            - '@logger'
+
+    oro_message_queue.consumption.consumer_heartbeat:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\ConsumerHeartbeat
+        arguments:
+            - '@oro_message_queue.consumption.consumer_state_driver.dbal'
+            - '%oro_message_queue.consumer_heartbeat_update_period%'
+
+    oro_message_queue.consumption.consumer_state_driver.dbal:
+        class: Oro\Bundle\MessageQueueBundle\Consumption\StateDriver\DbalStateDriver
+        arguments:
+            - 'consumers'
+            - '@doctrine'
+            - '@logger'
+
+    oro_message_queue.listener.authentication:
+        class: 'Oro\Bundle\MessageQueueBundle\EventListener\LoginListener'
+        arguments:
+            - '@oro_message_queue.consumption.consumer_heartbeat'
+            - '@translator'
+            - '%oro_message_queue.consumer_heartbeat_update_period%'
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
+
+    oro_message_queue.listener.console_fatal_error:
+        class: Oro\Bundle\MessageQueueBundle\EventListener\ConsoleFatalErrorListener
+        arguments:
+            - '@monolog.logger.consumer'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    oro_message_queue.topic.message_queue_heartbeat:
+        class: Oro\Bundle\SyncBundle\Topic\BroadcastTopic
+        arguments:
+            - 'oro_message_queue.message_queue_heartbeat'
+        tags:
+            - { name: gos_web_socket.topic }
+
+    oro_message_queue.cache.doctrine_metadata:
+        parent: oro.data.cache.without_memory_cache
+        tags:
+            - { name: 'cache.pool', namespace: 'doctrine_metadata_message_queue' }
+
+    oro_message_queue.platform.optional_listener_extension:
+        class: Oro\Bundle\MessageQueueBundle\Platform\OptionalListenerExtension
+        arguments:
+            - '@oro_platform.optional_listeners.manager'
+        tags:
+            - { name: oro_message_queue.consumption.extension, persistent: true }
+
+    oro_message_queue.topic.registry:
+        class: Oro\Component\MessageQueue\Topic\TopicRegistry
+
+    oro_message_queue.interrupt_consumption.cache:
+        parent: oro.data.cache
+        tags:
+            - { name: 'cache.pool', namespace: 'oro_message_queue_interrupt_consumption' }

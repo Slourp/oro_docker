@@ -1,0 +1,2 @@
+bundles:
+    - '@OroTax/Form/fields.html.twig'

@@ -1,0 +1,16 @@
+services:
+    _defaults:
+        public: true
+
+    Oro\Bundle\ContactUsBundle\Controller\ContactRequestController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    Oro\Bundle\ContactUsBundle\Controller\ContactReasonController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }

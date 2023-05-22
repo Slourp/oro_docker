@@ -1,0 +1,21 @@
+oro_notification:
+    resource:     "@OroNotificationBundle/Controller"
+    type:         annotation
+    prefix:       /notification
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_delete_emailnotication:
+    path: '/api/rest/{version}/emailnotications/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'Oro\Bundle\NotificationBundle\Controller\Api\Rest\EmailNotificationController::deleteAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1

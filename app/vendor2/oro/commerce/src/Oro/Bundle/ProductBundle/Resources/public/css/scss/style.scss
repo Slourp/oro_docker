@@ -1,0 +1,290 @@
+/* @theme: admin.oro; */
+
+/* stylelint-disable no-descending-specificity, selector-max-compound-selectors */
+
+.product-inventory-status-in_stock {
+    color: $success;
+}
+
+.product-inventory-status-out_of_stock {
+    color: $danger;
+}
+
+.float-holder {
+    tr {
+        vertical-align: top;
+    }
+}
+
+.quick-editable {
+    margin-top: -3px;
+    height: 13px;
+    font-size: 13px;
+
+    [class^='fa-'] {
+        margin: 0 $content-padding-small * .5;
+    }
+}
+
+.mobile-version {
+    .quick-editable {
+        margin-left: auto;
+    }
+
+    .product-container {
+        .box-type1 {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+}
+
+.oro-item-collection {
+    td {
+        .sell {
+            margin-top: -2px;
+        }
+
+        table {
+            thead th > span {
+                padding: 0;
+            }
+        }
+    }
+
+    &__row--align-top td {
+        vertical-align: top;
+    }
+
+    &__row--align-middle td {
+        vertical-align: middle;
+    }
+
+    input[type='text'],
+    input[type='number'] {
+        &.precision,
+        &.conversionRate {
+            width: 56px;
+        }
+    }
+}
+
+.unit-precisions-collection {
+    .collection-fields-list {
+        td {
+            white-space: normal;
+        }
+    }
+
+    .unit-conversion,
+    .unit-precision {
+        width: 162px;
+    }
+
+    .selector {
+        display: block;
+    }
+
+    @include selector-width(104px);
+
+    select {
+        &.hidden-unit {
+            display: none;
+            visibility: hidden;
+        }
+    }
+
+    .grid-scrollable-container {
+        margin-bottom: $content-padding-small;
+    }
+}
+
+.product-container {
+    div.box-type1 {
+        div.title {
+            // stylelint-disable-next-line declaration-no-important
+            padding: 0 !important;
+        }
+    }
+}
+
+.row-oro {
+    &.add-products {
+        float: left;
+        width: auto;
+
+        .add-list-item,
+        .add-buttons {
+            margin-top: 10px;
+        }
+
+        .add-products-sku {
+            width: 310px;
+            padding-right: 0;
+        }
+
+        .add-products-quantity {
+            padding-left: 2px;
+        }
+
+        .product-autocomplete-success {
+            display: none;
+            float: right;
+        }
+
+        .fa-check-circle-o {
+            font-size: 20px;
+            color: $success;
+            line-height: 30px;
+        }
+    }
+}
+
+.image-collection {
+    overflow-x: auto;
+
+    &.view table {
+        width: 60%;
+    }
+
+    + .add-list-item {
+        margin-top: $content-padding-small;
+        margin-left: 0;
+    }
+
+    th,
+    td {
+        vertical-align: top;
+
+        &:not(:first-child) {
+            text-align: center;
+        }
+
+        [type='checkbox'],
+        [type='radio'] {
+            margin-top: $content-padding-small;
+        }
+
+        .image-widget-preview {
+            .controls:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    th {
+        &.file {
+            width: 320px;
+        }
+
+        &.remove {
+            width: 65px;
+        }
+    }
+}
+
+.web-catalog-page-data,
+.oro-content-variant-collection {
+    .scope-collection {
+        div[data-validation-optional-group=''] {
+            display: block;
+            padding-right: 0;
+        }
+    }
+}
+
+.content-variant-item,
+.product-collection-segment {
+    .oro-tabs {
+        .tab-pane {
+            min-height: 0;
+        }
+    }
+
+    .tab-content {
+        border: none;
+    }
+
+    .nav-tabs {
+        width: 100%;
+    }
+
+    div.other-scroll-container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .box-type1 {
+        .title {
+            padding-left: 0;
+        }
+    }
+
+    div.control-group {
+        max-width: 100%;
+
+        &.control-group-oro_segment_filter_builder {
+            .control-label {
+                &.wrap {
+                    float: none;
+                    width: 60px;
+                    text-align: left;
+
+                    i {
+                        float: right;
+                        line-height: 20px;
+                    }
+
+                    label {
+                        color: $primary-550;
+                        font-size: 14px;
+                        font-weight: font-weight('bold');
+                        display: block;
+
+                        // stylelint-disable-next-line max-nesting-depth
+                        em {
+                            // stylelint-disable-next-line declaration-no-important
+                            display: none !important;
+                        }
+                    }
+                }
+            }
+
+            .controls {
+                margin-left: 0;
+            }
+        }
+
+        &.control-group-oro_segment_filter_builder_segment_name {
+            .control-label {
+                &.wrap {
+                    float: none;
+                    text-align: left;
+
+                    label {
+                        color: $primary-550;
+                        font-size: 14px;
+                        font-weight: font-weight('bold');
+                        display: block;
+                    }
+                }
+            }
+
+            .controls {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+.related-items-widget {
+    overflow: hidden;
+
+    &__button {
+        float: right;
+    }
+
+    ~ div .grid-views {
+        margin-top: -28px;
+    }
+}

@@ -1,0 +1,35 @@
+services:
+    _defaults:
+        public: true
+
+    Oro\Bundle\DotmailerBundle\Controller\DataFieldMappingController:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: oro_dotmailer.entity_provider }
+
+    Oro\Bundle\DotmailerBundle\Controller\DotmailerController:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    Oro\Bundle\DotmailerBundle\Controller\DataFieldController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    Oro\Bundle\DotmailerBundle\Controller\OauthController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    Oro\Bundle\DotmailerBundle\Controller\AddressBookController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: oro_dotmailer.form.address_book }

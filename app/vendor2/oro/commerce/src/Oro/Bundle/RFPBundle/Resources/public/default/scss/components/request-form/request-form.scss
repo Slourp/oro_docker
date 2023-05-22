@@ -1,0 +1,21 @@
+.request-form {
+    &__title {
+        margin: 0 0 12px;
+
+        font-size: 20px;
+
+        text-transform: uppercase;
+    }
+
+    &__row {
+        margin: 14px 0 20px;
+        padding-bottom: 20px;
+
+        border-bottom: $request-form-border-bottom;
+    }
+}
+
+.request-form-editline textarea,
+.request-form-container textarea {
+    width: 100%;
+}

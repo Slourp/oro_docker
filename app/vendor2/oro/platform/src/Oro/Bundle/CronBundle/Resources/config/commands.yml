@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        public: false
+
+    Oro\Bundle\CronBundle\Command\CronCommand:
+        arguments:
+            - '@doctrine'
+            - '@oro_maintenance.maintenance_state'
+            - '@oro_cron.cron_helper'
+            - '@oro_cron.async.command_runner'
+            - '@oro_cron.command_feature_checker'
+            - '@logger'
+            - '%kernel.environment%'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\CronBundle\Command\CronDefinitionsLoadCommand:
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: console.command }

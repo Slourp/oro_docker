@@ -1,0 +1,11 @@
+//@theme: default;
+
+.checkout-sidebar {
+    margin-top: $offset-x-m;
+}
+
+@include breakpoint('tablet') {
+    .checkout-sidebar {
+        display: none;
+    }
+}

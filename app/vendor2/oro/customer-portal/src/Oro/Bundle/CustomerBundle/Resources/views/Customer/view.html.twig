@@ -1,0 +1,132 @@
+{% extends '@OroUI/actions/view.html.twig' %}
+{% import '@OroDataGrid/macros.html.twig' as dataGrid %}
+
+{% oro_title_set({params : {"%title%": entity.name } }) %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity': entity,
+        'indexPath': path('oro_customer_customer_index'),
+        'indexLabel': 'oro.customer.customer.entity_plural_label'|trans,
+        'entityTitle': entity.name|default('N/A'|trans)
+    } %}
+
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set customerInfo %}
+        {{ oro_widget_render({
+            'widgetType': 'block',
+            'url': path('oro_customer_customer_info', {id: entity.id}),
+            'alias': 'customer-info-widget'
+        }) }}
+    {% endset %}
+
+    {% set addressBookWidget %}
+        {% if is_granted('oro_customer_customer_address_view') %}
+            {{ oro_widget_render({
+                'widgetType': 'block',
+                'contentClasses': [],
+                'url': path('oro_customer_address_book', {id: entity.id}),
+                'title': 'oro.customer.customer.address_book.label'|trans
+            }) }}
+        {% endif %}
+    {% endset %}
+
+    {% set dataBlocks = [{
+        'title': 'oro.customer.sections.general'|trans,
+        'subblocks': [
+            {'data' : [customerInfo]},
+            {'data' : [addressBookWidget]},
+        ]
+    }] %}
+
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    {% set childrensDataBlocks = [] %}
+    {% if is_granted('oro_customer_create') %}
+        {% set childrensDataBlocks = childrensDataBlocks|merge([
+            UI.renderButtonsRow(UI.quickAccessAddButton({
+                'dataUrl': path('oro_customer_customer_create_subsidiary', { parentCustomer: entity.id }),
+                'title': 'oro.customer.customer.quick_access_button.new_subsidiary.label'|trans,
+                'label': 'oro.customer.customer.quick_access_button.new_subsidiary.label'|trans,
+                'widget': {
+                    'reload-grid-name': 'children-by-customer-grid',
+                    'options': {
+                        'alias': 'oro_customer_customer_create_subsidiary_dialog',
+                        'dialogOptions': {
+                            'title': 'oro.customer.customer.quick_access_button.create_subsidiary.widget.title'|trans,
+                        }
+                    }
+                }
+            }))
+        ]) %}
+    {% endif %}
+    {% set dataBlocks = dataBlocks|merge([
+        {
+            'title' : 'oro.customer.children.label'|trans,
+            'subblocks': [
+                {
+                    'title' : '',
+                    'useSpan': false,
+                    'data' : childrensDataBlocks|merge([
+                        dataGrid.renderGrid('children-by-customer-grid', {customer_id: entity.id}, { cssClass: 'inner-grid' })
+                    ])
+                }
+            ]
+        }
+    ]) %}
+
+    {% set customerUsersDataBlocks = [] %}
+    {% if is_granted('oro_customer_customer_user_create') %}
+        {% set customerUsersDataBlocks = customerUsersDataBlocks|merge([
+            UI.renderButtonsRow(UI.quickAccessAddButton({
+                'dataUrl': path('oro_customer_customer_user_create_for_customer', { customer: entity.id }),
+                'title': 'oro.customer.customeruser.quick_access_button.new_customeruser.label'|trans,
+                'label': 'oro.customer.customeruser.quick_access_button.new_customeruser.label'|trans,
+                'widget': {
+                    'reload-grid-name': 'customer-user-by-customer-grid',
+                    'options': {
+                        'alias': 'oro_customer_customer_user_create_for_customer_dialog',
+                        'dialogOptions': {
+                            'title': 'oro.customer.customeruser.quick_access_button.create_customeruser.widget.title'|trans,
+                        }
+                    }
+                }
+            }))
+        ]) %}
+    {% endif %}
+    {% set dataBlocks = dataBlocks|merge([
+        {
+            'title' : 'oro.customer.customeruser.entity_plural_label'|trans,
+            'subblocks': [
+                {
+                    'title' : '',
+                    'useSpan': false,
+                    'data' : customerUsersDataBlocks|merge([
+                        dataGrid.renderGrid('customer-user-by-customer-grid', {customer_id: entity.id}, { cssClass: 'inner-grid' })
+                    ])
+                }
+            ]
+        }
+    ]) %}
+
+    {% set id = 'customer-view' %}
+    {% set data = {'dataBlocks': dataBlocks} %}
+
+    {{ parent() }}
+{% endblock content_data %}
+
+{% block stats %}
+    {% set data = oro_ui_scroll_data_before('customer-stats-view', {}, entity) %}
+    {% if data.dataBlocks is defined %}
+        {% for scrollBlock in data.dataBlocks|oro_sort_by %}
+            {% for subblock in scrollBlock.subblocks %}
+                {% for dataBlock in subblock.data %}
+                    {{ dataBlock|raw }}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endblock stats %}

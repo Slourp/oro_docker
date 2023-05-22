@@ -1,0 +1,145 @@
+{% extends '@OroUI/actions/view.html.twig' %}
+{% import '@OroUI/macros.html.twig' as UI %}
+
+{% set fullname = entity|oro_format_name|default('N/A'|trans) %}
+{% oro_title_set({params : {"%username%": fullname }}) %}
+
+{% block navButtons %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    {% placeholder view_navButtons with {entity: entity} %}
+    {% if isDesktopVersion() %}
+        {% if is_granted('CONFIGURE', entity) and not isProfileView %}
+            {{ UI.button({
+                'path' : path('oro_user_config', { 'id': entity.id }),
+                'label': 'oro.user.user_configuration.label'|trans,
+                'title': 'oro.user.user_configuration.label'|trans,
+                'iCss': 'fa-cog',
+            }) }}
+        {% elseif isProfileView and is_granted('update_own_configuration') %}
+            {{ UI.button({
+                'path' : path('oro_user_profile_configuration'),
+                'label': 'oro.user.user_configuration.label'|trans,
+                'title': 'oro.user.user_configuration.label'|trans,
+                'iCss': 'fa-cog',
+            }) }}
+        {% endif %}
+    {% endif %}
+    {% if is_granted('EDIT', entity) and not isProfileView %}
+        {{ UI.editButton({
+            'path' : path('oro_user_update', { id: entity.id }),
+            'entity_label': 'oro.user.entity_label'|trans
+        }) }}
+    {% elseif isProfileView and is_granted('update_own_profile') %}
+        {{ UI.editButton({
+            'path': path('oro_user_profile_update'),
+            'entity_label': 'profile'|trans
+        }) }}
+    {% endif %}
+    {% if is_granted('DELETE', entity) and entity.id != app.user.id %}
+        {{ UI.deleteButton({
+            'dataUrl': path('oro_api_delete_user', {'id': entity.id}),
+            'dataRedirect': path('oro_user_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-user',
+            'dataId': entity.id,
+            'entity_label': 'oro.user.entity_label'|trans,
+            'disabled': not allow_delete
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      entity,
+        'indexLabel':  'oro.user.entity_plural_label'|trans,
+        'entityTitle': fullname,
+    } %}
+    {% if (feature_resource_enabled('oro_user_index', 'routes')) %}
+        {% set breadcrumbs = breadcrumbs|merge({'indexPath':  path('oro_user_index')}) %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block pageTitleIcon %}
+    <div class="page-title__icon">
+        {%- include '@OroAttachment/Twig/picture.html.twig' with {
+            file: entity.avatar,
+            filter: 'avatar_med',
+            img_attrs: { alt: entity|oro_format_name }
+        } -%}
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    {{ parent() }}
+    <span class="page-title__status">
+        {% if entity.enabled %}
+            {{ UI.badge('oro.user.enabled.enabled'|trans, 'enabled') }}
+        {% else %}
+            {{ UI.badge('oro.user.enabled.disabled'|trans, 'disabled') }}
+        {% endif %}
+
+        {% if entity.authStatus.id == 'expired' %}
+            {{ UI.badge(entity.authStatus.name, 'disabled', 'fa-unlock-alt') }}
+        {% elseif entity.authStatus.id == 'active' %}
+            {{ UI.badge(entity.authStatus.name, 'enabled', 'fa-unlock') }}
+        {% else %}
+            {{ UI.badge(entity.authStatus.name, 'tentatively', 'fa-lock') }}
+        {% endif %}
+        {% placeholder view_page_title_status with {entity: entity} %}
+    </span>
+{% endblock breadcrumbs %}
+
+{% block stats %}
+    {% if is_granted('oro_view_user_login_attempt') %}
+        {% set loginAttempts %}
+            {{ 'oro.user.last_login.label'|trans }}: <a title="{{ 'oro.user.userloginattempt.entity_description'|trans }}" href="{{ oro_datagrid_link('oro_user_login_attempts', 'user-login-attempts-grid', {'f[user][value]': entity.id}) }}">{{ entity.lastLogin ? entity.lastLogin|oro_format_datetime : 'N/A'|trans }}</a>
+        {% endset %}
+    {% else %}
+        {% set loginAttempts %}
+            {{ 'oro.user.last_login.label'|trans }}: {{ entity.lastLogin ? entity.lastLogin|oro_format_datetime : 'N/A'|trans }}
+        {% endset %}
+    {% endif %}
+    <li>{{ 'oro.ui.created_at'|trans }}: {{ entity.createdAt ? entity.createdAt|oro_format_datetime : 'N/A'|trans }}</li>
+    <li>{{ 'oro.ui.updated_at'|trans }}: {{ entity.updatedAt ? entity.updatedAt|oro_format_datetime : 'N/A'|trans }}</li>
+    <li>{{ loginAttempts }}</li>
+    <li>{{ 'oro.user.login_count.label'|trans }}: {{ entity.loginCount|default(0) }}</li>
+{% endblock stats %}
+
+{% block content_data %}
+    {% set userInformationWidget %}
+        {{ oro_widget_render({
+            'widgetType': 'block',
+            'url': path('oro_user_widget_info', {id: entity.id, viewProfile: isProfileView }),
+            'separateLayout': false
+        }) }}
+    {% endset %}
+    {% set apiKeyWidget %}
+        {% if isProfileView or app.user.id == entity.id or is_granted('MANAGE_API_KEY', entity) %}
+            {{ oro_widget_render({
+                'widgetType': 'block',
+                'url': path('oro_user_apigen', { id: entity.id }),
+                'alias': 'user-apikey-gen-widget',
+                'elementFirst': true,
+                'separateLayout': false
+            }) }}
+        {% endif %}
+    {% endset %}
+    {% set dataBlocks = [
+        {
+            'title': 'General Information'|trans,
+            'subblocks': [
+                {'data' : [userInformationWidget]},
+                {'data' : [apiKeyWidget]},
+            ]
+        }
+    ] %}
+
+    {% set id = 'userView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

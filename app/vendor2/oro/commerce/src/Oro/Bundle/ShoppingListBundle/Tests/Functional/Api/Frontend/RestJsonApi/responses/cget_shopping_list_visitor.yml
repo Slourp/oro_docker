@@ -1,0 +1,26 @@
+data:
+    -
+        type: shoppinglists
+        id: '<toString(@shopping_list1->id)>'
+        attributes:
+            name: 'Shopping List 1'
+            notes: 'Shopping List 1 Notes'
+            createdAt: '@shopping_list1->createdAt->format("Y-m-d\TH:i:s\Z")'
+            updatedAt: '@shopping_list1->updatedAt->format("Y-m-d\TH:i:s\Z")'
+            default: true
+            currency: USD
+            total: '49.79'
+            subTotal: '49.79'
+        relationships:
+            items:
+                data:
+                    -
+                        type: shoppinglistitems
+                        id: '<toString(@line_item1->id)>'
+                    -
+                        type: shoppinglistitems
+                        id: '<toString(@kit_line_item1->id)>'
+            customerUser:
+                data: null
+            customer:
+                data: null

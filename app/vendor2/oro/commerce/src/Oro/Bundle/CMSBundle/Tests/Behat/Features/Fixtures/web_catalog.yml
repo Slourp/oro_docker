@@ -1,0 +1,4 @@
+include:
+    - '@OroProductBundle:default_webcatalog.yml'
+    - '@OroCMSBundle:default_web_catalog_node.yml'
+    - '@OroProductBundle:system_variant.yml'

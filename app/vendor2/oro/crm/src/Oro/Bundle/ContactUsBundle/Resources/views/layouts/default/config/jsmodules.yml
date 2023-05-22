@@ -1,0 +1,5 @@
+app-modules:
+    - orocontactus/js/app/modules/validator-constraints-module
+dynamic-imports:
+    commons:
+        - orocontactus/js/validator/contact-request-callback

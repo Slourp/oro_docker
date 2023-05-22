@@ -1,0 +1,52 @@
+services:
+    _defaults:
+        public: true
+
+    Oro\Bundle\SalesBundle\Controller\Dashboard\DashboardController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+
+    Oro\Bundle\SalesBundle\Controller\OpportunityController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'oro_sales.opportunity.form' }
+
+    Oro\Bundle\SalesBundle\Controller\CustomerController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'oro_sales.customer.account_config_provider' }
+
+    Oro\Bundle\SalesBundle\Controller\LeadController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'oro_sales.lead.form' }
+            - { name: container.service_subscriber, id: 'oro_sales.lead.form.handler', key: Oro\Bundle\SalesBundle\Form\Handler\LeadHandler }
+
+    Oro\Bundle\SalesBundle\Controller\LeadAddressController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'oro_sales.lead_address.form' }
+            - { name: container.service_subscriber, id: 'oro_sales.lead_address.form.handler', key: Oro\Bundle\AddressBundle\Form\Handler\AddressHandler }
+
+    Oro\Bundle\SalesBundle\Controller\B2bCustomerController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: container.service_subscriber, id: 'oro_sales.b2bcustomer.form.handler', key: Oro\Bundle\SalesBundle\Form\Handler\B2bCustomerHandler }
+
+    Oro\Bundle\SalesBundle\Controller\AutocompleteController:
+        calls:
+            - ['setContainer', ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }

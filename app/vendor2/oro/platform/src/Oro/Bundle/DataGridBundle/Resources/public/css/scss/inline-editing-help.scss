@@ -1,0 +1,43 @@
+/* @theme: admin.oro; */
+
+// Not used
+.inline-editing-help-wrapper {
+    z-index: 10000;
+    border-radius: 50px;
+    background: $primary-inverse;
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    padding: 4px;
+
+    .inline-editing-help-content {
+        width: 474px;
+        background: $additional-extra-light;
+        top: 39px;
+        // stylelint-disable-next-line declaration-no-important
+        margin-left: -415px !important;
+        max-width: 457px;
+        z-index: 10000;
+        color: $additional-lighten;
+        font-size: 13px;
+        padding: 15px;
+
+        > .arrow {
+            left: 433px;
+        }
+    }
+}
+
+.inline-editing-help {
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    background: $secondary;
+    color: $primary-inverse;
+    font-size: 24px;
+    text-align: center;
+    line-height: 31px;
+    font-weight: font-weight('light');
+}

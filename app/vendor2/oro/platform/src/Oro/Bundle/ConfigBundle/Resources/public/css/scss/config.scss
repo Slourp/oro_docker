@@ -1,0 +1,166 @@
+/* @theme: admin.oro; */
+
+.left-panel-container {
+    background-color: $primary-inverse;
+
+    > .placeholder {
+        margin-left: 334px;
+        background-color: $primary-900;
+        border-left: 1px solid $primary-800;
+
+        > * {
+            margin-left: -335px;
+
+            > .left-panel {
+                float: left;
+                width: 334px;
+                border-top: 1px solid $primary-860;
+                margin: 0;
+            }
+
+            > .content {
+                margin-left: 335px;
+                padding: $content-padding-medium $content-padding-medium 0;
+                box-sizing: border-box;
+            }
+        }
+    }
+}
+
+.system-configuration-container {
+    padding: 0 $content-padding;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    overflow: hidden;
+
+    .controls {
+        &.control-subgroup {
+            width: auto;
+            margin: 0 $content-padding-medium 0 0;
+            float: left;
+
+            input,
+            textarea {
+                min-width: $field-width;
+            }
+        }
+    }
+
+    .control-subgroup {
+        &:not(.parent-scope-checkbox) {
+            input[type='checkbox'] {
+                margin-top: $content-padding-small;
+            }
+
+            td input[type='checkbox'],
+            .fallback-container input[type='checkbox'] {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .control-subgroup.parent-scope-checkbox {
+        margin-top: ($content-padding-small * .5);
+        margin-right: $content-padding-small;
+
+        label {
+            margin: 0 $content-padding-small 0 0;
+            line-height: 1.75;
+            white-space: nowrap;
+        }
+
+        .parent-scope-checkbox__wrapper {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+        }
+    }
+
+    .control-subgroup.value-hint-container {
+        margin-top: ($content-padding-small * .5);
+        margin-right: $content-padding-small;
+    }
+
+    .container-fluid::after {
+        clear: none;
+    }
+
+    .control-group {
+        .controls,
+        &.controls {
+            .control-subgroup {
+                margin-right: $content-padding-medium;
+            }
+        }
+    }
+
+    .ping-holder {
+        margin-top: -7px;
+        width: $field-width;
+
+        .btn {
+            width: 100%;
+        }
+    }
+
+    .form-text {
+        margin-top: $content-padding-small;
+    }
+
+    .control-subgroup-container {
+        min-width: $field-width;
+        max-width: $field-width;
+    }
+}
+
+.system-configuration-content-inner {
+    padding: $content-padding $content-padding $content-padding-medium;
+    width: 100%;
+    overflow-y: auto;
+    flex-grow: 1;
+
+    .form-horizontal {
+        margin-bottom: 26px;
+    }
+
+    .control-group-oro_warehouse_system_config {
+        .add-list-item {
+            margin-top: $content-padding-small;
+        }
+    }
+
+    .warning {
+        position: relative;
+        padding: $content-padding-small;
+        margin: 0 0 $content-padding-medium;
+        border: 1px solid $primary-860;
+        background: $danger-lighten;
+        border-radius: 4px;
+    }
+}
+
+.system-configuration-content {
+    height: 100%;
+
+    &-wrapper {
+        padding-left: $content-padding-medium;
+        padding-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        background: $primary-900;
+        border-radius: 4px;
+        padding: 6px 16px 5px;
+    }
+
+    &-title {
+        font-size: 14px;
+        font-weight: font-weight('bold');
+    }
+}

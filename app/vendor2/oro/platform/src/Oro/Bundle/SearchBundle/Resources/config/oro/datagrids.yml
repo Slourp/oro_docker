@@ -1,0 +1,16 @@
+datagrids:
+    search-grid:
+        source:
+            type: search
+            query:
+                select:
+                    - text.system_entity_name as name
+        columns:
+            entity:
+                label: Item
+                type: search-result
+                template: ~
+                frontend_type: html
+        properties: ~
+        sorters: ~
+        filters: ~

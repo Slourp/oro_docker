@@ -1,0 +1,45 @@
+/* @theme: default; */
+
+@use 'sass:selector';
+
+// More about placeholders https://github.com/sass/sass/issues/2808#issuecomment-574413393
+%base-floating-validation-message,
+.floating-validation-message {
+    display: block;
+    position: absolute;
+    top: $floating-validation-message-top;
+    bottom: $floating-validation-message-bottom;
+    z-index: 2;
+    width: auto;
+    height: 0;
+    margin: 0;
+    white-space: nowrap;
+    background-color: transparent;
+
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: $floating-validation-message-after-top;
+        left: $floating-validation-message-after-left;
+        margin-top: -6px;
+        border-style: solid;
+        border-color: $floating-validation-message-after-color;
+        border-width: 6px 4px 0;
+    }
+
+    > span {
+        position: absolute;
+        top: $floating-validation-message-label-top;
+        left: $floating-validation-message-label-left;
+        text-align: $floating-validation-message-label-text-align;
+        background-color: $floating-validation-message-label-background-color;
+        color: $floating-validation-message-label-color;
+        padding: $floating-validation-message-label-inner-offset;
+        border-radius: $floating-validation-message-label-border-radius;
+    }
+
+    @at-root #{selector.append(&, '__icon')} {
+        display: $floating-validation-message-icon-display;
+    }
+}

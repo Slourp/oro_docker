@@ -1,0 +1,32 @@
+/* @theme: default; */
+
+.datagrid-manager-search {
+    position: relative;
+
+    margin-bottom: $offset-y-m;
+
+    &.empty {
+        @include fa-icon($fa-var-search, after);
+
+        &::after {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+
+            z-index: z('base') - 1;
+
+            font-size: 15px;
+
+            color: $datagrid-manager-search-pseudo-color;
+            pointer-events: none;
+        }
+
+        > .clear {
+            display: none;
+        }
+    }
+
+    .input {
+        padding-right: 30px;
+    }
+}

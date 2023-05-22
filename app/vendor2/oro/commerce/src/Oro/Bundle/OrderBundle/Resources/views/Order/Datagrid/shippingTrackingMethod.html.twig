@@ -1,0 +1,4 @@
+{% set shippingMethod  =  record.getValue('method') %}
+{%- if shippingMethod -%}
+    {{ oro_order_format_shipping_tracking_method(shippingMethod)|trans }}
+{%- endif -%}

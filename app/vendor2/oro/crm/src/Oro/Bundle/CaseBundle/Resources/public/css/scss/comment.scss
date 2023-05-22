@@ -1,0 +1,11 @@
+/* @theme: admin.oro; */
+
+.notes.comments {
+    .list-item.private {
+        background: $primary-860;
+
+        span.label {
+            font-weight: font-weight('light');
+        }
+    }
+}

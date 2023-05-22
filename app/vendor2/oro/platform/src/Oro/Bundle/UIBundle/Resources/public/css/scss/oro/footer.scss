@@ -1,0 +1,28 @@
+/* @theme: admin.oro; */
+
+footer.footer {
+    .alert {
+        margin: 0;
+        border-radius: 0;
+        border: solid $primary;
+        border-width: 1px 0 0;
+        background: $primary-100;
+        text-shadow: none;
+        text-align: left;
+        padding: 10px 12px;
+        color: $primary-inverse;
+        font-weight: font-weight('bold');
+        font-size: 11px;
+        line-height: 12px;
+
+        .actions {
+            float: right;
+
+            .btn-close {
+                float: left;
+                color: $primary-inverse;
+                cursor: pointer;
+            }
+        }
+    }
+}

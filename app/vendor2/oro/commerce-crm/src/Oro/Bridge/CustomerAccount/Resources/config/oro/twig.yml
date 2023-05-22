@@ -1,0 +1,2 @@
+bundles:
+    - '@OroCustomerAccountBridge/Form/fields.html.twig'

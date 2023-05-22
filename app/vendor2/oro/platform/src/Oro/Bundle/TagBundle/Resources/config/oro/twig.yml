@@ -1,0 +1,2 @@
+bundles:
+    - '@OroTag/Form/Include/fields.html.twig'

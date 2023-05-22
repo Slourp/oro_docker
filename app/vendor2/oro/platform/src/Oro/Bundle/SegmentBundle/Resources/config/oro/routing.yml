@@ -1,0 +1,44 @@
+oro_segment:
+    resource:     "@OroSegmentBundle/Controller"
+    type:         annotation
+    prefix:       /segment
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_get_segment_items:
+    path: '/api/rest/{version}/segment/items.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\SegmentBundle\Controller\Api\Rest\SegmentController::getItemsAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json
+        version: latest|v1
+
+oro_api_delete_segment:
+    path: '/api/rest/{version}/segments/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'Oro\Bundle\SegmentBundle\Controller\Api\Rest\SegmentController::deleteAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1
+
+oro_api_post_segment_run:
+    path: '/api/rest/{version}/segments/{id}/runs.{_format}'
+    methods: [POST]
+    defaults:
+        _controller: 'Oro\Bundle\SegmentBundle\Controller\Api\Rest\SegmentController::postRunAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1

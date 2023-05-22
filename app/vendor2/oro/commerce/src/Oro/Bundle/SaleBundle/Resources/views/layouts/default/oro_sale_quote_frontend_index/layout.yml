@@ -1,0 +1,20 @@
+layout:
+    imports:
+        -
+            id: oro_customer_page
+        -
+            id: oro_sale_quote_grid
+            root: page_content
+            namespace: quotes
+
+    actions:
+        - '@setOption':
+            id: page_title
+            optionName: defaultValue
+            optionValue: 'oro.frontend.sale.quote.entity_plural_label'
+
+        - '@appendOption':
+            id: quotes_datagrid
+            optionName: grid_render_parameters.toolbarOptions.itemsCounter
+            optionValue:
+                transTemplate: 'oro_frontend.datagrid.pagination.totalRecords.quotes'

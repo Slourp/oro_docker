@@ -1,0 +1,10 @@
+{% if app.user %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+    <div {{ UI.renderPageComponentAttributes({
+        module: 'ororeminder/js/app/components/reminder-handler-component',
+        options: {
+            userId: app.user.id,
+            wampEnable: check_ws() ? true : false
+        }
+    }) }}></div>
+{% endif %}

@@ -1,0 +1,21 @@
+oro_report:
+    resource:     "@OroReportBundle/Controller"
+    type:         annotation
+    prefix:       /report
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_delete_report:
+    path: '/api/rest/{version}/reports/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'Oro\Bundle\ReportBundle\Controller\Api\Rest\ReportController::deleteAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1

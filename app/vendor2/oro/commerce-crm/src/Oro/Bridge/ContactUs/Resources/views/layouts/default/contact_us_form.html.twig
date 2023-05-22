@@ -1,0 +1,56 @@
+{% block contact_request_widget %}
+    <div class="contact-us-form" data-focusable>
+        {% set formAttr = {
+            'id': form.vars.id,
+            'novalidate': 'novalidate',
+        } %}
+
+        {% set preferredContactMethodAttr = {
+            "data-validation": {
+                "Oro\\Bundle\\ContactUsBundle\\Validator\\ContactRequestCallbackValidator": {
+                    "target": "preferredContactMethod",
+                    "deps": {
+                        "oro.contactus.contactrequest.method.both": ["emailAddress", "phone"],
+                        "oro.contactus.contactrequest.method.phone": "phone",
+                        "oro.contactus.contactrequest.method.email": "emailAddress"
+                    }
+                }
+            }|json_encode
+        } %}
+
+        {{ form_start(form, {'attr': formAttr}) }}
+        <div class="grid">
+            <div class="grid-col-6 grid-col-mobile-landscape-12">
+                {{ form_row(form.firstName) }}
+            </div>
+            <div class="grid-col-6 grid-col-mobile-landscape-12">
+                {{ form_row(form.lastName) }}
+            </div>
+            <div class="grid-col-12">
+                {{ form_row(form.organizationName) }}
+            </div>
+            <div class="grid-col-12">
+                {{ form_row(form.preferredContactMethod, {'attr': preferredContactMethodAttr}) }}
+            </div>
+            <div class="grid-col-6 grid-col-mobile-landscape-12">
+                {{ form_row(form.phone) }}
+            </div>
+            <div class="grid-col-6 grid-col-mobile-landscape-12">
+                {{ form_row(form.emailAddress) }}
+            </div>
+            {% if form.contactReason is defined %}
+            <div class="grid-col-12">
+                {{ form_row(form.contactReason) }}
+            </div>
+            {% endif %}
+            <div class="grid-col-12">
+                {{ form_row(form.comment, {attr: {rows: 25}}) }}
+            </div>
+            <div class="grid-col-12">
+                <button class="role-submit btn btn--info" type="submit">{{ 'oro.contactus.form.submit'|trans }}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {{ oro_form_js_validation(form, js_validation_options|default({})) }}
+    </div>
+{% endblock %}

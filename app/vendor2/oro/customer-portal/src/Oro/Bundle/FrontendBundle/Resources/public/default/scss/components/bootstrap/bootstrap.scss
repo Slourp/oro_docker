@@ -1,0 +1,22 @@
+/* @theme: default; */
+
+@import '~@oroinc/bootstrap/scss/tables';
+@import '~@oroinc/bootstrap/scss/transitions';
+@import 'utilities';
+
+/* rtl:begin:ignore */
+@import '~@oroinc/bootstrap/scss/popover';
+
+/* rtl:end:ignore */
+@import '~@oroinc/bootstrap/scss/dropdown';
+@import 'buttons';
+@import 'button-group';
+@import 'dropdown';
+@import 'nav';
+@import 'modal';
+@import 'hide-text';
+@import 'tooltip';
+@import 'dropdown-toggle-split';
+
+// Must be the last in the list
+@import 'placeholders';

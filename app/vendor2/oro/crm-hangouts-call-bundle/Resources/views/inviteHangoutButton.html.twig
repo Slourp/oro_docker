@@ -1,0 +1,7 @@
+{% extends "@OroHangoutsCall/inviteHangoutLink.html.twig" %}
+
+{% block action_controll %}
+    {% import '@OroUI/macros.html.twig' as UI %}
+
+    {{ UI.clientButton(options) }}
+{% endblock %}

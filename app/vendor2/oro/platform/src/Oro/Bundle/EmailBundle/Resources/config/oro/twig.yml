@@ -1,0 +1,2 @@
+bundles:
+    - '@OroEmail/Form/fields.html.twig'

@@ -1,0 +1,2 @@
+bundles:
+    - '@OroSecurity/Form/fields.html.twig'

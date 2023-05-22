@@ -1,0 +1,43 @@
+{% block _footer_menu_widget %}
+    {% set attr = layout_attr_defaults(attr, {
+        '~class': ' information-nav__list'
+    }) %}
+    {% set child_attr = layout_attr_defaults(child_attr, {
+        '~class': ' information-nav__item'
+    }) %}
+    {% set link_attr = layout_attr_defaults(link_attr, {
+        '~class': ' information-nav__item-content'
+    }) %}
+
+    {% if item.displayed and item.extras.isAllowed %}
+        {% apply spaceless %}
+            {% for child in item.children %}
+                {% if child.displayed and child.extras.isAllowed %}
+                    {% set label = child.extras.custom is defined and child.extras.custom == true ? child.label : child.label|trans %}
+                    {% set collapseOptions = {
+                        viewport: 'tablet-small',
+                        view: 'orofrontend/default/js/app/views/collapse-view',
+                        toggleAttrs: {
+                            'class': 'btn btn--plain btn--default-color information-nav__title',
+                            'data-text': label,
+                            'data-icon': 'fa-caret-right fa--offset-xl-r'
+                        },
+                        collapseAttrs: {
+                            'class': 'collapse',
+                            'data-trigger-icon-show-class': 'fa-caret-down',
+                            'data-trigger-icon-hide-class': 'fa-caret-right'
+                        }
+                    } %}
+                    <section class="information-nav information-nav--responsive">
+                        <div data-page-component-module="oroui/js/app/components/viewport-component"
+                             data-page-component-options="{{ collapseOptions|json_encode() }}">
+                            <h6 class="information-nav__title">{{- label -}}</h6>
+                            {% set item = child %}
+                            {{ block('menu_widget') }}
+                        </div>
+                    </section>
+                {% endif %}
+            {% endfor %}
+        {% endapply %}
+    {% endif %}
+{% endblock %}

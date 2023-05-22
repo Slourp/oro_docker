@@ -1,0 +1,15 @@
+/* @theme: default; */
+
+.editable {
+    padding: 6px 10px 3px;
+
+    background: $editable-background;
+
+    &__trigger {
+        margin-bottom: $offset-x-s;
+    }
+
+    &__editor-container {
+        display: none;
+    }
+}

@@ -1,0 +1,208 @@
+/* @theme: admin.oro; */
+
+@import '~@oroinc/bootstrap/scss/dropdown';
+
+.dropdown-menu {
+    box-shadow: $dropdown-menu-box-shadow;
+
+    &[x-adjusted-height] {
+        overflow-y: auto;
+    }
+
+    &[x-out-of-boundaries] {
+        display: none;
+    }
+
+    &[x-displayed-arrow] {
+        $arrow-offset: -4px;
+        $placeholder: 6px;
+
+        &::before {
+            position: absolute;
+
+            height: $placeholder;
+            width: 100%;
+
+            content: '';
+        }
+
+        &::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            border: 0 none;
+            left: 0;
+            z-index: -1;
+
+            background: inherit;
+            border-radius: inherit;
+
+            content: '';
+        }
+
+        .arrow {
+            position: absolute;
+            z-index: -1;
+
+            width: 11px;
+            height: 10px;
+
+            border: 0 none;
+            background: inherit;
+            box-shadow: $dropdown-menu-arrow-box-shadow;
+
+            transform: rotate(53deg) skewX(15deg);
+        }
+
+        &[x-placement^='top'] {
+            margin-bottom: $placeholder;
+
+            &::before {
+                top: 100%;
+            }
+
+            .arrow {
+                bottom: $arrow-offset;
+            }
+        }
+
+        &[x-placement^='right'] {
+            margin-left: $placeholder;
+
+            &::before {
+                top: 0;
+                right: 100%;
+
+                height: 100%;
+                width: $placeholder;
+            }
+
+            .arrow {
+                left: $arrow-offset;
+
+                transform: rotate(145deg) skewX(15deg);
+            }
+        }
+
+        &[x-placement^='bottom'] {
+            margin-top: $placeholder;
+
+            &::before {
+                bottom: 100%;
+            }
+
+            .arrow {
+                top: $arrow-offset;
+            }
+        }
+
+        &[x-placement^='left'] {
+            margin-right: $placeholder;
+
+            &::before {
+                top: 0;
+                left: 100%;
+
+                width: $placeholder;
+                height: 100%;
+            }
+
+            .arrow {
+                right: $arrow-offset;
+
+                transform: rotate(145deg) skewX(15deg);
+            }
+        }
+    }
+
+    .dropdown-close {
+        display: none;
+    }
+
+    &[x-fullscreen] {
+        border-radius: 0;
+        box-shadow: none;
+        overflow: auto;
+        right: 0;
+        bottom: 0;
+
+        .dropdown-close {
+            display: initial;
+            // to ignore scroll action within position fixed parent element
+            position: sticky;
+            top: 0;
+            left: calc(100vw - $btn-icon-mobile-width - $dropdown-padding-y);
+
+            > *:first-child {
+                position: absolute;
+            }
+        }
+    }
+
+    &[x-placement] {
+        /* rtl:ignore */
+        right: auto;
+
+        /* rtl:ignore */
+    }
+
+    // Support of old markup
+    &,
+    .dropdown-menu-items {
+        > li > a {
+            @extend %dropdown-item;
+        }
+    }
+
+    // Add offset like in "bootstrap .dropdown-item" element
+    > li > .btn-group {
+        padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+    }
+}
+
+.dropdown-toggle {
+    &::after {
+        vertical-align: $caret-width * .5;
+
+        margin-left: $content-padding-small;
+
+        border-top-width: 5px;
+        border-right-width: 5px;
+        border-left-width: 5px;
+    }
+
+    &--no-caret {
+        &::after {
+            // stylelint-disable-next-line declaration-no-important
+            content: none !important;
+        }
+    }
+}
+
+.dropleft > .dropdown-toggle--no-caret {
+    &::before {
+        // stylelint-disable-next-line declaration-no-important
+        content: none !important;
+    }
+}
+
+.dropdown-item {
+    line-height: $dropdown-item-line-height;
+
+    [class^='fa-'],
+    [class*=' fa-'] {
+        position: relative;
+
+        min-width: $dropdown-item-icon-fa-size;
+        height: $dropdown-item-icon-fa-size;
+        margin-right: $dropdown-item-icon-fa-offset;
+
+        text-align: center;
+        line-height: 1;
+
+        &::before {
+            font-size: $dropdown-item-icon-fa-font-size;
+        }
+    }
+}

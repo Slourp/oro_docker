@@ -1,0 +1,15 @@
+#
+# OLD REST API ROUTES
+#
+
+oro_api_slugify_slug:
+    path: '/api/rest/{version}/redirect/slugify/{string}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\RedirectBundle\Controller\Api\Rest\RedirectController::slugifyAction'
+        _format: json
+        version: latest
+    requirements:
+        string: .+
+        _format: json
+        version: latest|v1

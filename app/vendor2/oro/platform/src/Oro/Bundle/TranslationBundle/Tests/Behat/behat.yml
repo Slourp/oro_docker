@@ -1,0 +1,12 @@
+oro_behat_extension:
+  suites:
+    OroTranslationBundle:
+      contexts:
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bundle\TranslationBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FormContext
+        - Oro\Bundle\ConfigBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\DataGridBundle\Tests\Behat\Context\GridContext
+        - Oro\Bundle\SecurityBundle\Tests\Behat\Context\ACLContext
+      paths:
+        - '@OroTranslationBundle/Tests/Behat/Features'

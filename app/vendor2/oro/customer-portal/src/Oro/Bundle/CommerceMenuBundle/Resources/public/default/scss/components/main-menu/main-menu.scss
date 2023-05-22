@@ -1,0 +1,229 @@
+/* @theme: default; */
+
+.main-menu {
+    @include list-normalize();
+
+    &__back-trigger {
+        text-transform: $main-menu-back-trigger-text-transform;
+        font-weight: $main-menu-back-trigger-font-weight;
+
+        @include base-ui-element(
+            $use-base-style:   $main-menu-back-trigger-use-base-style,
+            $padding:          $main-menu-back-trigger-padding,
+            $border:           $main-menu-back-trigger-border,
+            $border-radius:    $main-menu-back-trigger-border-radius,
+            $background-color: $main-menu-back-trigger-background-color,
+            $color:            $main-menu-back-trigger-color,
+            $appearance:       $main-menu-back-trigger-appearance
+        );
+
+        margin: $main-menu-back-trigger-margin;
+        display: $main-menu-back-trigger-display;
+    }
+
+    @include fullscreen-mode {
+        .main-menu__back-trigger {
+            position: $main-menu-back-trigger-fullscreen-position;
+            top: $main-menu-back-trigger-fullscreen-top;
+
+            @include safe-area-property-left(left, $offset-x);
+
+            z-index: $main-menu-back-trigger-fullscreen-z-index;
+
+            display: $main-menu-back-trigger-fullscreen-display;
+            width: $main-menu-back-trigger-width;
+
+            text-align: $main-menu-back-trigger-align;
+        }
+    }
+}
+
+.main-menu-divider {
+    border-width: $main-menu-divider-border-width;
+    border-style: $main-menu-divider-border-style;
+    border-color: $main-menu-divider-border-color;
+    margin: $main-menu-divider-margin;
+}
+
+@include breakpoint('desktop') {
+    .main-menu {
+        display: $main-menu-display;
+        flex-grow: $main-menu-flex-grow;
+
+        &__actions {
+            display: $main-menu-actions-display;
+
+            &:not(:only-child) {
+                grid-template-columns: $main-menu-actions-not-only-child-grid-template-columns;
+            }
+        }
+
+        &__item {
+            flex-grow: $main-menu-item-flex-grow;
+
+            &.show {
+                background: $main-menu-item-hover-desktop-background;
+            }
+
+            @media (hover: hover) {
+                &:hover {
+                    background: $main-menu-item-hover-desktop-background;
+                }
+            }
+        }
+
+        &__link {
+            display: $main-menu-link-display;
+            padding: $main-menu-link-inner-offset;
+            line-height: $main-menu-link-line-height;
+            text-align: $main-menu-link-text-align;
+            text-decoration: $main-menu-link-text-decoration;
+            text-transform: $main-menu-link-text-transform;
+            color: $main-menu-link-color;
+            grid-column: $main-menu-link-grid-column;
+            grid-row: $main-menu-link-grid-row;
+
+            &:hover {
+                color: $main-menu-link-color-hover;
+            }
+
+            &:hover,
+            &:focus {
+                text-decoration: $main-menu-link-text-decoration-focus;
+            }
+        }
+
+        &__button {
+            color: $main-menu-link-color;
+            border: $main-menu-button-arrow-border;
+            background: $main-menu-button-arrow-background;
+            outline: $main-menu-button-arrow-outline;
+            position: $main-menu-button-arrow-position;
+            padding: $main-menu-button-arrow-inner-offset;
+            font-size: $main-menu-button-arrow-font-size;
+            cursor: $main-menu-button-arrow-cursor;
+            text-align: $main-menu-button-arrow-text-align;
+            grid-column: $main-menu-button-arrow-grid-column;
+            grid-row: $main-menu-button-arrow-grid-row;
+
+            @include fa-icon($main-menu-button-arrow-icon, before, true) {
+                display: $main-menu-button-arrow-display;
+            }
+        }
+
+        &__link + &__button {
+            span {
+                display: $main-menu-button-span-display;
+            }
+        }
+
+        &__actions:only-child &__button {
+            display: $main-menu-button-only-child-display;
+        }
+
+        &__actions:not(:only-child) &__link {
+            padding-inline-end: $main-menu-button-arrow-width;
+        }
+
+        &__inner-container {
+            border: $main-menu-sublist-container-d-border;
+            background: $main-menu-sublist-container-background;
+            box-shadow: $main-menu-sublist-container-shadow;
+        }
+
+        &__inner {
+            position: $main-menu-sublist-position;
+            // Must be above the dropdowns
+            z-index: $main-menu-sublist-z-index;
+            top: $main-menu-sublist-top;
+            right: $main-menu-sublist-right;
+            left: $main-menu-sublist-left;
+            display: $main-menu-sublist-display;
+
+            &--floated,
+            &--centered {
+                position: $main-menu-sublist-floated-position;
+                top: $main-menu-sublist-floated-top;
+                left: $main-menu-sublist-floated-left;
+                right: $main-menu-sublist-floated-right;
+
+                .main-menu__inner-container {
+                    position: $main-menu-sublist-container-floated-position;
+                    right: $main-menu-sublist-container-floated-right;
+                }
+            }
+
+            &--centered &-container {
+                left: $main-menu-sublist-container-centered-left;
+                transform: $main-menu-sublist-container-centered-translate;
+            }
+
+            [dir='rtl'] &--centered &-container {
+                transform: $main-menu-sublist-container-centered-translate-rtl;
+            }
+
+            &--fullheight {
+                background: $main-menu-sublist-fullheight-background;
+                box-shadow: $main-menu-sublist-fullheight-box-shadow;
+                bottom: $main-menu-sublist-fullheight-bottom;
+            }
+
+            &--edge {
+                justify-content: $main-menu-sublist-edge-justify-content;
+                inset-inline-start: $main-menu-sublist-edge-inset-inline-start;
+            }
+        }
+
+        &__item.show &__inner {
+            display: block;
+        }
+
+        &__item.show &__inner--edge {
+            display: $main-menu-sublist-edge-display;
+        }
+
+        @media (hover: hover) {
+            .is-hoverable &__item:hover &__inner {
+                display: block;
+            }
+        }
+    }
+}
+
+@include breakpoint('tablet') {
+    .main-menu {
+        @include main-menu-stack-items();
+
+        &__actions {
+            grid-template-columns: $main-menu-actions-grid-template-columns;
+        }
+
+        &__actions:only-child &__link:not(.focus-via-arrows-keys:focus) {
+            padding: $main-menu-link-only-child-keys-padding;
+        }
+
+        &__button {
+            padding: $main-menu-button-padding;
+        }
+
+        &__inner {
+            position: $main-menu-sublist-tablet-position;
+            top: $main-menu-sublist-tablet-top;
+            left: $main-menu-sublist-tablet-left;
+            bottom: $main-menu-sublist-tablet-bottom;
+            z-index: $main-menu-sublist-tablet-z-index;
+            width: $main-menu-sublist-tablet-width;
+            background: $main-menu-sublist-tablet-background;
+            transition: $main-menu-sublist-transition;
+        }
+
+        &__item.show &__inner {
+            left: $main-menu-sublist-current-tablet-left;
+        }
+
+        &__inner-container {
+            height: $main-menu-sublist-container-tablet-height;
+            overflow: $main-menu-sublist-container-tablet-overflow;
+        }
+    }
+}

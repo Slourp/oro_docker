@@ -1,0 +1,113 @@
+placeholders:
+    placeholders:
+        application_menu:
+            items:
+                frontend_menu:
+                    order: 100
+        user_menu:
+            items:
+                customer_user_login:
+                    order: 50
+                customer_menu_user:
+                    order: 50
+        dots_menu:
+            items:
+                customer_dots_menu:
+                    order: 100
+        right_panel:
+            items:
+                frontend_sidebar:
+                    order: 200
+        left_panel:
+            items:
+                frontend_sidebar:
+                    order: 200
+
+        content_before:
+            items:
+                page_state_routes:
+                    order: 100
+
+        view_before_content_addition:
+            items:
+                entity_pagination_frontend_view:
+                    order: 100
+
+        update_before_content_addition:
+            items:
+                entity_pagination_frontend_edit:
+                    order: 100
+
+        view_navButtons_before:
+            items:
+                customer_config_button: ~
+                customer_group_config_button: ~
+
+# Disabled as per BAP-9497
+#        change_history_block:
+#            items:
+#                frontend_change_history_link: ~
+
+    items:
+        frontend_menu:
+            template: '@@OroCustomer/Menu/frontendMenu.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isFrontendApplicable()"
+        customer_user_login:
+            template: '@@OroCustomer/Menu/menuLogin.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isLoginRequired()"
+        customer_menu_user:
+            template: '@@OroCustomer/Menu/menuProfile.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isUserApplicable()"
+        customer_dots_menu:
+            template: '@@OroCustomer/ApplicationMenu/dotsMenu.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isUserApplicable()"
+        frontend_sidebar:
+            template: '@@OroCustomer/Sidebar/sidebar.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isUserApplicable()"
+        page_state_routes:
+            template: '@@OroCustomer/Pagestate/pagestate.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isUserApplicable()"
+        entity_pagination_frontend_view:
+            template: '@@OroCustomer/EntityPagination/viewPagination.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isUserApplicable()"
+        entity_pagination_frontend_edit:
+            template: '@@OroCustomer/EntityPagination/editPagination.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isUserApplicable()"
+        customer_config_button:
+            template: '@@OroCustomer/CustomerConfiguration/button.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isCustomerPage($entity$)"
+        customer_group_config_button:
+            template: '@@OroCustomer/CustomerGroupConfiguration/button.html.twig'
+            applicable: "@oro_customer.placeholder.filter->isCustomerGroupPage($entity$)"
+        customer_create_subsidiary_link:
+            template: '@@OroCustomer/Customer/createSubsidiaryLink.html.twig'
+            applicable: '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\CustomerBundle\Entity\Customer)'
+            acl: [oro_customer_create]
+        customer_create_subsidiary_button:
+            template: '@@OroCustomer/Customer/createSubsidiaryButton.html.twig'
+            applicable: '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\CustomerBundle\Entity\Customer)'
+            acl: [oro_customer_create]
+        customer_create_for_customer_group_link:
+            template: '@@OroCustomer/Customer/createCustomerLink.html.twig'
+            applicable: '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\CustomerBundle\Entity\CustomerGroup)'
+            acl: [ oro_customer_create ]
+        customer_create_for_customer_group_button:
+            template: '@@OroCustomer/Customer/createCustomerButton.html.twig'
+            applicable: '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\CustomerBundle\Entity\CustomerGroup)'
+            acl: [ oro_customer_create ]
+        customer_user_create_for_customer_link:
+            template: '@@OroCustomer/CustomerUser/createCustomerUserLink.html.twig'
+            applicable: '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\CustomerBundle\Entity\Customer)'
+            acl: [oro_customer_customer_user_create]
+        customer_user_create_for_customer_button:
+            template: '@@OroCustomer/CustomerUser/createCustomerUserButton.html.twig'
+            applicable: '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\CustomerBundle\Entity\Customer)'
+            acl: [oro_customer_customer_user_create]
+
+# Disabled as per BAP-9497
+#        frontend_change_history_link:
+#            template: '@@OroCustomer/DataAudit/change_history_link.html.twig'
+#            applicable:
+#                - "@oro_dataaudit.placeholder.filter->isEntityAuditable($entity$, $audit_show_change_history$)"
+#                - "@oro_customer.placeholder.filter->isUserApplicable()"
+#            acl: oro_customer_dataaudit_history

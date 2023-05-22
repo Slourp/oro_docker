@@ -1,0 +1,161 @@
+data:
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision->id)>'
+        attributes:
+            precision: 0
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision1->id)>'
+        attributes:
+            precision: 1
+            conversionRate: 10
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@set->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision2->id)>'
+        attributes:
+            precision: 0
+            conversionRate: null
+            sell: false
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@piece->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product1_precision3->id)>'
+        attributes:
+            precision: 0
+            conversionRate: null
+            sell: false
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@kg->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product2_precision->id)>'
+        attributes:
+            precision: 1
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product2->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product3_precision->id)>'
+        attributes:
+            precision: 1
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product3->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@product4_precision->id)>'
+        attributes:
+            precision: 1
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@product4->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@configurable_product1_precision->id)>'
+        attributes:
+            precision: 0
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@configurable_product1->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@configurable_product2_precision->id)>'
+        attributes:
+            precision: 0
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@configurable_product2->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'
+    -
+        type: productunitprecisions
+        id: '<toString(@configurable_product3_precision->id)>'
+        attributes:
+            precision: 0
+            conversionRate: 1
+            sell: true
+        relationships:
+            product:
+                data:
+                    type: products
+                    id: '<toString(@configurable_product3->id)>'
+            unit:
+                data:
+                    type: productunits
+                    id: '<toString(@item->code)>'

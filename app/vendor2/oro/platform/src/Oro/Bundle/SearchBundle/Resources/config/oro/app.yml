@@ -1,0 +1,39 @@
+doctrine:
+    dbal:
+        connections:
+            search:
+                url:            '%database_dsn%'
+                server_version: '%database_server_version%'
+    orm:
+        entity_managers:
+            search:
+                connection: search
+                mappings:
+                    OroSearchBundle:
+                        mapping:   true
+                        is_bundle: true
+                metadata_cache_driver:
+                    type: service
+                    id:   oro_search.cache.doctrine_metadata
+                query_cache_driver:
+                    type: service
+                    id:   oro_search.cache.doctrine_query
+
+fos_rest:
+    exception:
+        messages:
+            'Oro\Bundle\SearchBundle\Exception\ExpressionSyntaxError': true
+        codes:
+            'Oro\Bundle\SearchBundle\Exception\ExpressionSyntaxError': HTTP_BAD_REQUEST
+
+oro_api:
+    filters:
+        simpleSearch:
+            class: Oro\Bundle\SearchBundle\Api\Filter\SimpleSearchFilter
+            supported_operators: ['=']
+        searchQuery:
+            factory: ['@oro_search.api.filter_factory.search_query', 'createFilter']
+            supported_operators: ['=']
+        searchAggregation:
+            factory: ['@oro_search.api.filter_factory.search_aggregation', 'createFilter']
+            supported_operators: ['=']

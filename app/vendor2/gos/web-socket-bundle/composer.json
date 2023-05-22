@@ -1,0 +1,92 @@
+{
+    "name": "gos/web-socket-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony Web Socket Bundle",
+    "keywords": ["Web Socket Bundle", "Websocket", "WAMP", "IO", "Ratchet"],
+    "homepage": "https://github.com/GeniusesOfSymfony/WebSocketBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeremy Dare",
+            "email": "jeremy.d.dare@gmail.com"
+        },
+        {
+            "name": "Johann Saunier",
+            "email": "johann_27@hotmail.fr"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "cboden/ratchet": "^0.4.4",
+        "gos/pubsub-router-bundle": "^2.2",
+        "gos/websocket-client": "^1.1",
+        "psr/log": "^1.1 || ^2.0 || ^3.0",
+        "react/event-loop": "^1.2",
+        "react/socket": "^1.9",
+        "symfony/config": "^4.4 || ^5.4 || ^6.0",
+        "symfony/console": "^4.4 || ^5.4 || ^6.0",
+        "symfony/dependency-injection": "^4.4 || ^5.4 || ^6.0",
+        "symfony/deprecation-contracts": "^2.1 || ^3.0",
+        "symfony/event-dispatcher": "^4.4 || ^5.4 || ^6.0",
+        "symfony/http-foundation": "^4.4 || ^5.4 || ^6.0",
+        "symfony/http-kernel": "^4.4 || ^5.4 || ^6.0",
+        "symfony/polyfill-php80": "^1.15",
+        "symfony/security-core": "^4.4 || ^5.4 || ^6.0",
+        "symfony/serializer": "^4.4 || ^5.4 || ^6.0",
+        "symfony/string": "^5.4 || ^6.0",
+        "symfony/yaml": "^4.4 || ^5.4 || ^6.0"
+    },
+    "require-dev": {
+        "doctrine/cache": "^1.11 || ^2.0",
+        "doctrine/dbal": "^2.13.1 || ^3.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.2",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan": "1.8.5",
+        "phpstan/phpstan-phpunit": "1.1.1",
+        "phpstan/phpstan-symfony": "1.2.13",
+        "phpunit/phpunit": "^9.5",
+        "symfony/cache": "^4.4 || ^5.4 || ^6.0",
+        "symfony/options-resolver": "^4.4 || ^5.4 || ^6.0",
+        "symfony/phpunit-bridge": "^5.4 || ^6.0",
+        "symfony/stopwatch": "^4.4 || ^5.4 || ^6.0",
+        "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.0",
+        "symfony/web-profiler-bundle": "^4.4 || ^5.4 || ^6.0"
+    },
+    "conflict": {
+        "doctrine/cache": "<1.11",
+        "doctrine/dbal": "<2.13.1 || ~3.0.0",
+        "gos/react-amqp": "<0.3",
+        "symfony/cache": "<4.4 || >=5.0,<5.3",
+        "symfony/monolog-bundle": "<3.0",
+        "symfony/options-resolver": "<4.4 || >=5.0,<5.3",
+        "symfony/stopwatch": "<4.4 || >=5.0,<5.3",
+        "symfony/twig-bundle": "<4.4 || >=5.0,<5.3",
+        "symfony/web-profiler-bundle": "<4.4 || >=5.0,<5.3",
+        "twig/twig": "<1.36 || >=2.0,<2.6"
+    },
+    "autoload": {
+        "psr-4": { "Gos\\Bundle\\WebSocketBundle\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Gos\\Bundle\\WebSocketBundle\\Tests\\": "tests/" }
+    },
+    "suggest": {
+        "ext-amqp": "* to use the amqp pusher",
+        "ext-pcntl": "* to handle process signals",
+        "ext-pdo": "* to use PDO ping services",
+        "doctrine/cache": "to use doctrine/cache as a client driver",
+        "doctrine/dbal": "to use Doctrine ping services",
+        "gos/react-amqp": "to use the amqp server push handler",
+        "symfony/cache": "to use symfony/cache as an authentication storage driver",
+        "symfony/options-resolver": "to use the pushers",
+        "symfony/serializer": "to use the pushers",
+        "symfony/stopwatch": "to use the data collectors"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev"
+}

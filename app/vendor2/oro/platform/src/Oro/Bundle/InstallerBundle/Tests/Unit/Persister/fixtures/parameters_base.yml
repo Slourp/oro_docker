@@ -1,0 +1,19 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_dsn: 'postgresql://oro_db_user:oro_db_pass@database/oro_db?driverOptions[!php/const PHP_INT_MAX]=const_as_key&driverOptions[const_as_value]=!php/const PHP_INT_MAX'
+    mailer_dsn: null://null
+    websocket_server_dsn: '//0.0.0.0:8080'
+    websocket_frontend_dsn: '//*:8080/ws'
+    websocket_backend_dsn: 'tcp://127.0.0.1:8080'
+    search_engine_dsn: 'orm:'
+    website_search_engine_dsn: 'orm:'
+    web_backend_prefix: /admin
+    session_handler: null
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+    enterprise_licence: null
+    message_queue_transport_dsn: 'dbal:'
+    enable_price_sharding: false
+
+imports:
+  - { resource: ./../../vendor/oro/commerce/src/Oro/Bundle/AuthorizeNetBundle/Tests/Behat/parameters.yml }

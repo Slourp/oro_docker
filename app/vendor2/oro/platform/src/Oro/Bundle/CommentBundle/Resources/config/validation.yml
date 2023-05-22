@@ -1,0 +1,7 @@
+Oro\Bundle\CommentBundle\Entity\Comment:
+    properties:
+        message:
+            - NotBlank: ~
+    getters:
+        target:
+            - NotBlank: ~

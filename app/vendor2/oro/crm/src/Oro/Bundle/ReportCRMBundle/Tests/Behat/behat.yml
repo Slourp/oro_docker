@@ -1,0 +1,25 @@
+oro_behat_extension:
+  suites:
+    OroReportCRMBundle:
+      contexts:
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bundle\FormBundle\Tests\Behat\Context\FormContext
+        - Oro\Bundle\DataGridBundle\Tests\Behat\Context\GridContext
+        - Oro\Bundle\ReportCRMBundle\Tests\Behat\Context\FeatureContext
+        - Oro\Bundle\QueryDesignerBundle\Tests\Behat\Context\QueryDesignerContext
+        - Oro\Bundle\FilterBundle\Tests\Behat\Context\FilterContext
+      paths:
+        - '@OroReportCRMBundle/Tests/Behat/Features'
+
+  elements:
+    Accounts By Opportunities Grid:
+      selector: 'div[data-page-component-name="oro_reportcrm-accounts-by_opportunities"]'
+      class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
+
+    Leads By Date Grid:
+      selector: 'div[data-page-component-name="oro_reportcrm-leads-by_date"]'
+      class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
+
+    Opportunities By Status Grid:
+      selector: 'div[data-page-component-name="oro_reportcrm-opportunities-by_status"]'
+      class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid

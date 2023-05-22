@@ -1,0 +1,11 @@
+Oro\Bundle\PricingBundle\Entity\PriceList:
+    pricelist1:
+        name: 'first price list'
+        __calls:
+            - setCurrencies: [['USD', 'EUR']]
+        organization: '@organization'
+    pricelist2:
+        name: 'second price list'
+        __calls:
+            - setCurrencies: [['USD', 'EUR']]
+        organization: '@organization'

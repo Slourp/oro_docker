@@ -1,0 +1,23 @@
+include:
+    - '@OroProductBundle:ConfigurableAttributeFamily.yml'
+
+Oro\Bundle\ProductBundle\Entity\ProductName:
+    localProductName:
+        string: 'Product-name'
+
+Oro\Bundle\ProductBundle\Entity\ProductUnitPrecision:
+    productUnitPrecision:
+        unit: '@item'
+        precision: '1'
+
+Oro\Bundle\ProductBundle\Entity\Product:
+    product:
+        type: 'simple'
+        sku: '87-13'
+        primaryUnitPrecision: '@productUnitPrecision'
+        __calls:
+            - addName: ['@localProductName']
+        inventoryStatus: '@enumInventoryStatuses'
+        status: 'enabled'
+        organization: '@organization'
+        attributeFamily: '@productAttributeFamily'

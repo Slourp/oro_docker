@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mariadb:${MARIADB_VERSION}
+    container_name: OROCOMMERCE_TEST_MYSQL
+    networks:
+      - project-network
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    env_file:
+      - .env-app
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  project-network:
+    name: OROCOMMERCE_TEST-NETWORK
+    internal: true
+
+volumes:
+  mysql_data:
+    name: OROCOMMERCE_TEST_MYSQL_DATA

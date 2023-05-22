@@ -1,0 +1,89 @@
+services:
+    oro_workflow.rest_api.entity_serializer:
+        alias: oro_soap.entity_serializer
+        public: true
+
+    oro_workflow.workflow_item_serializer:
+        class: Oro\Bundle\WorkflowBundle\Serializer\WorkflowItem\WorkflowItemSerializer
+        public: true
+        arguments:
+            - '@oro_workflow.workflow_result_object_serializer'
+
+    oro_workflow.workflow_result_object_serializer:
+        class: Oro\Bundle\WorkflowBundle\Serializer\WorkflowItem\EntityWorkflowResultObjectSerializer
+        arguments:
+            - '@oro_entity.doctrine_helper'
+
+    # Services for WorkflowData serialization
+    oro_workflow.serializer.data.serializer:
+        class: Oro\Bundle\WorkflowBundle\Serializer\WorkflowDataSerializer
+        public: true
+        arguments:
+            - ['@oro_workflow.serializer.data.normalizer']
+            - ['@serializer.encoder.json']
+        calls:
+            - [setWorkflowRegistry,  ['@oro_workflow.registry.system']]
+
+    oro_workflow.serializer.data.normalizer:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\WorkflowDataNormalizer
+        arguments:
+            - !tagged_iterator oro_workflow.attribute_normalizer
+
+    oro_workflow.serializer.variable.normalizer:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\WorkflowVariableNormalizer
+        parent: oro_workflow.serializer.data.normalizer
+        arguments:
+            - '@doctrine'
+
+    oro_workflow.serializer.data.attribute_normalizer.standard:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\StandardAttributeNormalizer
+        tags:
+            - { name: oro_workflow.attribute_normalizer }
+
+    oro_workflow.serializer.data.attribute_normalizer.entity:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\EntityAttributeNormalizer
+        arguments:
+            - '@doctrine'
+            - '@oro_entity.doctrine_helper'
+        tags:
+            - { name: oro_workflow.attribute_normalizer }
+
+    oro_workflow.serializer.data.attribute_normalizer.multiple_entity:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\MultipleEntityAttributeNormalizer
+        arguments:
+            - '@doctrine'
+            - '@oro_entity.doctrine_helper'
+        tags:
+            - { name: oro_workflow.attribute_normalizer }
+
+    # Services for ProcessData serialization
+    oro_workflow.serializer.process.serializer:
+        class: Symfony\Component\Serializer\Serializer
+        arguments:
+          -
+              - '@oro_workflow.serializer.process.normalizer.process_data'
+              - '@oro_workflow.serializer.process.normalizer.entity'
+              - '@oro_workflow.serializer.process.normalizer.object'
+              - '@oro_workflow.serializer.process.normalizer.traversable'
+              - '@oro_workflow.serializer.process.normalizer.scalar'
+          - ['@serializer.encoder.json']
+
+    oro_workflow.serializer.process.normalizer.process_data:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\ProcessDataNormalizer
+        arguments:
+            - '@oro_entity.doctrine_helper'
+
+    oro_workflow.serializer.process.normalizer.entity:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\ProcessEntityNormalizer
+        arguments:
+            - '@doctrine'
+            - '@oro_entity.doctrine_helper'
+
+    oro_workflow.serializer.process.normalizer.object:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\ProcessObjectNormalizer
+
+    oro_workflow.serializer.process.normalizer.traversable:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\ProcessTraversableNormalizer
+
+    oro_workflow.serializer.process.normalizer.scalar:
+        class: Oro\Bundle\WorkflowBundle\Serializer\Normalizer\ProcessScalarNormalizer

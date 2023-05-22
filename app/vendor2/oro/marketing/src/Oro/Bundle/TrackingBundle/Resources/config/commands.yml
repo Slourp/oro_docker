@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        public: false
+
+    Oro\Bundle\TrackingBundle\Command\ImportLogsCommand:
+        arguments:
+            - '@oro_batch.job.repository'
+            - '@oro_importexport.job_executor'
+            - '@oro_config.user'
+            - '@oro_tracking.tools.data_folder_selector'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\TrackingBundle\Command\TrackCommand:
+        arguments:
+            - '@oro_tracking.processor.tracking_processor'
+        tags:
+            - { name: console.command }

@@ -1,0 +1,26 @@
+oro_contactus:
+    resource: "@OroContactUsBundle/Controller/ContactRequestController.php"
+    type:     annotation
+    prefix:   /contact-us
+
+oro_contact_reason:
+    resource: "@OroContactUsBundle/Controller/ContactReasonController.php"
+    type:     annotation
+    prefix:   /contact-reason
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_get_contactrequest:
+    path: '/api/rest/{version}/contactrequests/{id}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\ContactUsBundle\Controller\Api\Rest\ContactRequestController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json
+        version: latest|v1

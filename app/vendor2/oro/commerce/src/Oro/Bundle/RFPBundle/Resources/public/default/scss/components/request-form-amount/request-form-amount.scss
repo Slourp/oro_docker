@@ -1,0 +1,13 @@
+.request-form-amount {
+    &__piece {
+        font-weight: font-weight('light');
+    }
+
+    &__price {
+        margin-top: 2px;
+    }
+
+    &__label {
+        margin-right: 4px;
+    }
+}

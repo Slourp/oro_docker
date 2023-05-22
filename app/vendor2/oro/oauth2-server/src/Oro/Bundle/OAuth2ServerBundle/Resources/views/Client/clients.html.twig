@@ -1,0 +1,38 @@
+{% import '@OroUI/macros.html.twig' as UI %}
+{% import '@OroDataGrid/macros.html.twig' as dataGrid %}
+
+{% if not encryptionKeysExist %}
+    <div class="alert alert-warning">{{ 'oro.oauth2server.no_encryption_keys'|trans }}</div>
+{% endif %}
+<div class="oauth-clients-container">
+    {% if creationGranted %}
+    <div class="user-fieldset-block-actions clearfix">
+        <div class="pull-right">
+            {{ UI.clientButton({
+                'dataUrl': path('oro_oauth2_server_client_create', {entityClass: entityClass, entityId: entityId}),
+                'aCss': 'no-hash btn-medium',
+                'label': 'oro.oauth2server.client.action.add'|trans,
+                'widget': {
+                    'type': 'dialog',
+                    'multiple': false,
+                    'reload-grid-name': 'oauth-client-with-owner-grid',
+                    'options': {
+                        'alias': 'oauth-client-dialog',
+                        'dialogOptions': {
+                            'title': 'oro.oauth2server.client.dialog.create_title'|trans,
+                            'modal': true,
+                            'width': 500
+                        }
+                    }
+                }
+            }) }}
+        </div>
+    </div>
+    {% endif %}
+
+    {{ dataGrid.renderGrid(
+        'oauth-client-with-owner-grid',
+        { ownerEntityClass: entityClass, ownerEntityId: entityId, '_grid_view': {'_disabled': true} },
+        { cssClass: 'inner-grid' }
+    ) }}
+</div>

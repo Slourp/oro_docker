@@ -1,0 +1,2 @@
+bundles:
+  - '@OroCase/Form/fields.html.twig'

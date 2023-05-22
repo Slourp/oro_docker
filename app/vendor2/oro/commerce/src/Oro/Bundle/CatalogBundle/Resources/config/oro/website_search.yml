@@ -1,0 +1,24 @@
+Oro\Bundle\ProductBundle\Entity\Product:
+    fields:
+        -
+            name: category_id
+            type: integer
+        -
+            name: category_path
+            type: text
+            fulltext: false
+        -
+            name: category_title_LOCALIZATION_ID
+            type: text
+            fulltext: false
+        -
+            name: category_id_with_parent_categories_LOCALIZATION_ID
+            type: text
+            fulltext: false
+        -
+            name: category_paths.CATEGORY_PATH
+            type: integer
+        -
+            name: category_sort_order
+            type: decimal
+            group: category_sort_order

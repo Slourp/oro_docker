@@ -1,0 +1,2 @@
+bundles:
+    - '@OroCalendar/Form/fields.html.twig'

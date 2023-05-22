@@ -1,0 +1,10 @@
+placeholders:
+    placeholders:
+        js_modules_config:
+            items:
+                window_js_modules_config:
+                    order: 100
+
+    items:
+        window_js_modules_config:
+            template: '@@OroWindows/js_modules_config.html.twig'

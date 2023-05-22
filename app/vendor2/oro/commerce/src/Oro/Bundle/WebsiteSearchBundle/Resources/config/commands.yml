@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        public: false
+
+    Oro\Bundle\WebsiteSearchBundle\Command\ReindexCommand:
+        arguments:
+            - '@doctrine'
+            - '@event_dispatcher'
+            - '@oro_website_search.provider.search_mapping'
+        tags:
+            - { name: console.command }
+
+    Oro\Bundle\WebsiteSearchBundle\Command\ActualizeSearchTermReportCronCommand:
+        arguments:
+            - '@oro_website_search.search_result_history.manager'
+        tags:
+            - { name: console.command }

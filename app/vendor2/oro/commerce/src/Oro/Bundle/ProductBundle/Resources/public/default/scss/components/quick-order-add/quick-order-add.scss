@@ -1,0 +1,220 @@
+/* @theme: default; */
+
+.quick-order-add {
+    grid-area: $quick-order-add-grid-area;
+
+    &__content {
+        ~ .validation-failed {
+            margin-top: 15px;
+        }
+    }
+
+    &__col {
+        &::before {
+            display: none;
+            margin: $quick-order-add-label-margin;
+
+            content: attr(data-label);
+        }
+    }
+
+    &__row {
+        &:first-child {
+            .quick-order-add__col::before {
+                display: block;
+            }
+        }
+
+        &.stale {
+            display: none;
+        }
+    }
+
+    &__row-content {
+        position: $quick-order-add-row-content-position;
+        display: $quick-order-add-row-content-display;
+        grid-template-areas: $quick-order-add-row-content-grid-template-areas;
+        grid-template-columns: $quick-order-add-row-content-grid-template-columns;
+        gap: $quick-order-add-row-content-gap;
+    }
+
+    &__result-sku {
+        display: $quick-order-add-result-sku-display;
+    }
+
+    &__product {
+        grid-area: $quick-order-add-product-grid-area;
+    }
+
+    &__quantity {
+        grid-area: $quick-order-add-quantity-grid-area;
+    }
+
+    &__unit {
+        grid-area: $quick-order-add-unit-grid-area;
+    }
+
+    &__quantity-input {
+        text-align: $quick-order-add-quantity-input-text-align;
+    }
+
+    &__quantity,
+    &__quantity-input {
+        &.input {
+            opacity: 1;
+        }
+    }
+
+    &__remove-row {
+        position: absolute;
+        bottom: 11px;
+        right: -28px;
+
+        @include fa-icon($fa-var-close, before, true) {
+            font-size: $base-font-size--m;
+
+            cursor: pointer;
+        }
+    }
+
+    &__fields {
+        .validation-failed {
+            grid-column-end: $quick-order-add-fields-validation-failed-grid-column-end;
+        }
+    }
+
+    &__clear-button {
+        float: $quick-order-add-clear-button-float;
+    }
+
+    &__buttons-wrapper {
+        @include clearfix();
+
+        &:first-child {
+            padding-bottom: $offset-y;
+
+            border-bottom: $quick-order-add-buttons-first-child-border-bottom;
+        }
+    }
+
+    &__buttons {
+        float: $quick-order-add-buttons-float;
+
+        .widget-content {
+            // override platform styles
+            .action-button {
+                &.btn-inactive {
+                    background-color: $quick-order-add-buttons-inactive;
+                }
+            }
+        }
+
+        .btn-group {
+            // override platform styles
+            margin-left: $offset-x-m;
+
+            .btn-group {
+                margin: 0;
+            }
+        }
+
+        .add-to-shopping-list-button:not(.dropdown-item) {
+            .fa {
+                display: none;
+            }
+        }
+    }
+
+    &__error,
+    &__error-autocomplete {
+        .validation-failed,
+        .notification--error {
+            // override platform styles
+            margin: $quick-order-add-error-margins;
+
+            background: none;
+        }
+    }
+}
+
+@include breakpoint('tablet-small') {
+    .quick-order-add {
+        &__clear-button {
+            width: 100%;
+            margin: $quick-order-add-mobile-bottom-margin;
+        }
+
+        &__buttons {
+            width: 100%;
+
+            .pull-left {
+                width: 100%;
+                margin: $quick-order-add-mobile-bottom-margin;
+            }
+
+            .btn-group {
+                // override platform styles
+                margin-left: 0;
+                width: 100%;
+
+                .mass-action-controls {
+                    width: 100%;
+                }
+
+                .dropdown-toggle {
+                    flex-grow: 0;
+                }
+
+                a:not(.dropdown-toggle) {
+                    width: 100%;
+
+                    &.add-to-shopping-list-button:not(.dropdown-item) {
+                        width: $quick-order-add-mobile-add-to-shopping-list-button;
+                        flex-grow: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include breakpoint('mobile-landscape') {
+    .quick-order-add {
+        &__row-content {
+            grid-template-areas: $quick-order-add-mobile-row-content-grid-template-areas;
+            grid-template-columns: $quick-order-add-mobile-row-content-grid-template-columns;
+            padding-bottom: $quick-order-add-mobile-row-content-padding-bottom;
+        }
+
+        &__quantity-input {
+            text-align: left;
+        }
+
+        &__row {
+            border-bottom: $quick-order-add-mobile-row-border;
+
+            .quick-order-add__col::before {
+                display: block;
+            }
+        }
+
+        &__remove-row {
+            bottom: auto;
+            top: -2px;
+            right: 0;
+        }
+
+        &__error,
+        &__error-autocomplete {
+            .validation-failed,
+            .notification--error {
+                // override platform styles
+                margin: $quick-order-add-mobile-error-margins;
+            }
+        }
+
+        .product-tier-prices {
+            bottom: $quick-order-add-mobile-price-dropdown-bottom;
+        }
+    }
+}

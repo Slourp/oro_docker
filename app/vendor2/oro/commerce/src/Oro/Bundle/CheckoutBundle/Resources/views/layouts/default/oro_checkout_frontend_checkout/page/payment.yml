@@ -1,0 +1,21 @@
+layout:
+    imports:
+        - 'oro_payment_method_options'
+    actions:
+        - '@setBlockTheme':
+            themes:
+                - '@OroCheckout/layouts/default/oro_checkout_frontend_checkout/templates/payment.html.twig'
+
+        - '@add':
+            id: payment_methods
+            parentId: checkout_information_body
+            blockType: payment_methods
+            prepend: true
+            options:
+                attr:
+                    class: 'grid-col-6 grid-col-mobile-landscape-12'
+                class_prefix: 'checkout'
+                views: '=data["oro_payment_method_views_provider"].getViews(data["checkout_payment_context"].getContext(data["checkout"]))'
+                currentPaymentMethod: '=data["checkout"].getPaymentMethod()'
+
+    conditions: 'context["workflowStepName"]=="enter_payment"'

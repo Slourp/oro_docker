@@ -1,0 +1,160 @@
+/* @theme: default; */
+
+.product-view {
+    &-attribute {
+        font-weight: $product-view-attribute-font-weight;
+        display: inline-flex;
+    }
+
+    &__attribute-image {
+        max-width: 100%;
+        max-height: $desktop-product-view-attribute-image-size;
+        border: $product-view-attribute-image-border;
+    }
+
+    &__attribute-images {
+        &-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: $product-view-attribute-images-item-space;
+
+            &.show-less {
+                height: $desktop-product-view-attribute-image-size;
+                overflow: hidden;
+            }
+        }
+
+        &-item {
+            display: flex;
+            width: $desktop-product-view-attribute-image-size;
+            height: $desktop-product-view-attribute-image-size;
+            cursor: pointer;
+        }
+    }
+
+    &__attribute-files {
+        @include clearfix();
+
+        .grid-cell .filename {
+            [class^='fa-'],
+            [class*=' fa-'] {
+                color: $product-view-attribute-files-icon-color;
+            }
+        }
+
+        &.show-less {
+            .table-responsive table {
+                position: relative;
+                margin-bottom: 0;
+
+                &::after {
+                    display: block;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: $product-view-attribute-files-gradient-height;
+                    background: $product-view-attribute-files-gradient-background;
+                    content: '';
+                }
+            }
+        }
+    }
+
+    &__attribute-panel {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: $product-view-attribute-panel-offset-top;
+    }
+}
+
+@include breakpoint('mobile-big') {
+    .product-view {
+        &__attribute-image {
+            max-height: $mobile-big-product-view-attribute-image-size;
+        }
+
+        &__attribute-images {
+            &-container {
+                &.show-less {
+                    height: $mobile-big-product-view-attribute-image-size;
+                }
+            }
+
+            &-item {
+                width: $mobile-big-product-view-attribute-image-size;
+                height: $mobile-big-product-view-attribute-image-size;
+            }
+        }
+    }
+}
+
+@include breakpoint('mobile-landscape') {
+    .product-view {
+        &__attribute-files {
+            th {
+                display: none;
+
+                &:first-child {
+                    display: block;
+                    flex-basis: 100%;
+                }
+            }
+
+            tr {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            td {
+                display: block;
+                padding: $mobile-product-view-attribute-files-item-inner-padding;
+
+                &:first-child {
+                    flex-basis: 100%;
+                    border: 0 none;
+                    padding-top: $mobile-product-view-attribute-files-item-outer-padding;
+                }
+
+                &:nth-child(2),
+                &:nth-child(3) {
+                    border: 0 none;
+                }
+
+                &:last-child {
+                    flex-basis: 100%;
+                    padding-bottom: $mobile-product-view-attribute-files-item-outer-padding;
+                }
+            }
+
+            &.show-less .table-responsive table::after {
+                height: $mobile-product-view-attribute-files-gradient-height;
+            }
+        }
+    }
+}
+
+@include breakpoint('mobile') {
+    .product-view {
+        &__attribute-image {
+            max-height: $mobile-product-view-attribute-image-size;
+        }
+
+        &__attribute-images {
+            &-container {
+                &.show-less {
+                    height: $mobile-product-view-attribute-image-size;
+                }
+            }
+
+            &-item {
+                width: $mobile-product-view-attribute-image-size;
+                height: $mobile-product-view-attribute-image-size;
+            }
+        }
+
+        &__attribute-panel {
+            justify-content: center;
+        }
+    }
+}

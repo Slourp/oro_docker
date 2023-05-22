@@ -1,0 +1,25 @@
+/* @theme: admin.oro; */
+
+.schedule-intervals {
+    .schedule-interval__row {
+        .fields-row {
+            display: flex;
+        }
+
+        input[type='text'] {
+            width: 40%;
+        }
+    }
+
+    .schedule-interval__row.has-row-error {
+        input[type='text'] {
+            border-color: $danger;
+        }
+    }
+
+    .schedule-interval__error-row {
+        td {
+            border-top: none;
+        }
+    }
+}
